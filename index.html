@@ -33,7 +33,7 @@
         <!-- الشعار واسم الوكالة: هامور -->
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-xl overflow-hidden border border-amber-500/50 shadow-lg shadow-amber-500/20 flex-shrink-0 bg-slate-900">
-                <img src="../assets/hamoor_logo.jpg" alt="شعار هامور" class="w-full h-full object-cover">
+                <img src="assets/hamoor_logo.jpg" onerror="this.onerror=null; this.src='../assets/hamoor_logo.jpg';" alt="شعار هامور" class="w-full h-full object-cover">
             </div>
             <div>
                 <h1 class="text-xl font-black text-white tracking-wide flex items-center gap-1.5">
@@ -126,207 +126,295 @@
         <!-- 1. محتوى قسم الطيران ومحرك البحث المتطور والشامل -->
         <section id="content-flights" class="space-y-6">
             
-            <!-- روابط الشركاء الرسميين -->
-            <div class="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 p-4 lg:p-5 rounded-2xl border border-indigo-500/30 shadow-xl">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div>
-                        <h3 class="text-sm lg:text-base font-bold text-white flex items-center gap-2">
-                            <span>🔍 شركاء الطيران المعتمدون للتصفح والمقارنة</span>
-                        </h3>
-                        <p class="text-xs text-slate-300 mt-0.5">
-                            يمكنك أيضاً تصفح وبحث الجداول المباشرة في المواقع الرسمية ثم إتمام حجزك معنا بالجنيه السوداني:
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-3">
-                        <a href="https://www.tarcoaviation.com/TarcoAviation/" target="_blank" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-750 border border-slate-600 rounded-xl text-xs font-bold text-amber-300 flex items-center gap-1.5 transition shadow">
-                            <span>🌐 موقع تاركو للطيران</span>
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        </a>
-                        <a href="https://badrairlines.com/ar/?srsltid=AYCX9vLg1x1ddswckHaP8E5X6S5ivu4cejUIKBHjDJSSVyUck-3BmXRt" target="_blank" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-750 border border-slate-600 rounded-xl text-xs font-bold text-indigo-300 flex items-center gap-1.5 transition shadow">
-                            <span>🌐 موقع طيران بدر</span>
-                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- محرك البحث المتطور: نوع الرحلة + تواريخ السفر + تصنيف المطارات بالكامل -->
-            <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-2xl">
-                
-                <!-- رأس محرك البحث وتحديد نوع الرحلة (ذهاب / ذهاب وعودة) -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5 pb-4 border-b border-slate-800">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs font-bold text-slate-400">نوع الرحلة:</span>
-                        
-                        <!-- خيار ذهاب فقط -->
-                        <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition" id="lblTripOneWay">
-                            <input type="radio" name="tripType" value="oneway" checked onchange="toggleTripType(this.value)" class="text-amber-500 focus:ring-0">
-                            <span class="text-xs font-bold text-white">ذهاب فقط</span>
-                        </label>
-
-                        <!-- خيار ذهاب وعودة -->
-                        <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition" id="lblTripRound">
-                            <input type="radio" name="tripType" value="round" onchange="toggleTripType(this.value)" class="text-amber-500 focus:ring-0">
-                            <span class="text-xs font-bold text-white">ذهاب وعودة (تذكرة راوند)</span>
-                        </label>
-                    </div>
-
-                    <button onclick="resetFlightFilters()" class="text-[11px] text-slate-400 hover:text-amber-400 transition flex items-center gap-1">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                        إعادة تعيين البحث
+            <!-- شريط التبديل بين محرك وكالة هامور وبوابات الطيران الرسمية المباشرة -->
+            <div class="bg-slate-900 border border-slate-800 p-2.5 lg:p-3 rounded-2xl shadow-xl flex flex-col md:flex-row items-center justify-between gap-3">
+                <div class="flex items-center gap-2 w-full md:w-auto flex-wrap sm:flex-nowrap">
+                    <button type="button" onclick="setFlightMode('hamoor')" id="tabModeHamoor" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
+                        <span>✈️</span>
+                        <span>محرك وكالة هامور (بالجنيه السوداني ودفع بنكك)</span>
+                    </button>
+                    <button type="button" onclick="setFlightMode('badr')" id="tabModeBadr" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-950 border border-slate-800 transition flex items-center justify-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>بوابة طيران بدر الحية (Live Zenith)</span>
+                    </button>
+                    <button type="button" onclick="setFlightMode('tarco')" id="tabModeTarco" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-950 border border-slate-800 transition flex items-center justify-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                        <span>بوابة طيران تاركو المباشرة</span>
                     </button>
                 </div>
 
-                <!-- حقول نموذج البحث -->
-                <form onsubmit="handleFlightSearch(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        
-                        <!-- 1. مطار الإقلاع (مطارات السودان كاملة + الخليج + إفريقيا) -->
-                        <div>
-                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">مطار الإقلاع (من):</label>
-                            <select id="searchOrigin" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
-                                <option value="ALL">جميع مطارات الإقلاع</option>
-                                
-                                <optgroup label="🇸🇩 مطارات السودان كاملة">
-                                    <option value="بورتسودان (PZU)" selected>بورتسودان الدولي (PZU) - الرئيسي الحالي</option>
-                                    <option value="كسلا (KAS)">كسلا (KAS)</option>
-                                    <option value="دنقلا (DOG)">دنقلا (DOG)</option>
-                                    <option value="مروي (MWE)">مروي (MWE)</option>
-                                    <option value="وادي حلفا (WHF)">وادي حلفا (WHF)</option>
-                                    <option value="الخرطوم (KRT)">الخرطوم الدولي (KRT)</option>
-                                    <option value="الأبيض (EBD)">الأبيض (EBD)</option>
-                                    <option value="الفاشر (ELF)">الفاشر (ELF)</option>
-                                    <option value="نيالا (UYL)">نيالا (UYL)</option>
-                                    <option value="الجنينة (EGN)">الجنينة (EGN)</option>
-                                    <option value="الدمازين (RSS)">الدمازين (RSS)</option>
-                                    <option value="كادوقلي (KDX)">كادوقلي (KDX)</option>
-                                </optgroup>
+                <div class="hidden lg:flex items-center gap-2 text-[11px] text-slate-400">
+                    <span class="text-emerald-400 font-bold">✓</span>
+                    <span>ربط متزامن مع سيرفرات الطيران المعتمدة</span>
+                </div>
+            </div>
 
-                                <optgroup label="🌴 مطارات الخليج المباشرة">
-                                    <option value="جدة (JED)">جدة - مطار الملك عبد العزيز (JED)</option>
-                                    <option value="الرياض (RUH)">الرياض - مطار الملك خالد (RUH)</option>
-                                    <option value="الدمام (DMM)">الدمام - مطار الملك فهد (DMM)</option>
-                                    <option value="المدينة المنورة (MED)">المدينة المنورة (MED)</option>
-                                    <option value="دبي (DXB)">دبي الدولي (DXB)</option>
-                                    <option value="الشارقة (SHJ)">الشارقة الدولي (SHJ)</option>
-                                    <option value="أبوظبي (AUH)">أبوظبي الدولي (AUH)</option>
-                                    <option value="الدوحة (DOH)">الدوحة - مطار حمد الدولي (DOH)</option>
-                                    <option value="مسقط (MCT)">مسقط الدولي (MCT)</option>
-                                    <option value="الكويت (KWI)">الكويت الدولي (KWI)</option>
-                                    <option value="البحرين (BAH)">البحرين الدولي (BAH)</option>
-                                </optgroup>
+            <!-- 1. منطقة محرك وكالة هامور للبحث والتسعير بالجنيه السوداني -->
+            <div id="hamoorSearchArea" class="space-y-6">
+                
+                <!-- محرك البحث المتطور: نوع الرحلة + تواريخ السفر + تصنيف المطارات بالكامل -->
+                <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-2xl">
+                    
+                    <!-- رأس محرك البحث وتحديد نوع الرحلة (ذهاب / ذهاب وعودة) -->
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5 pb-4 border-b border-slate-800">
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-bold text-slate-400">نوع الرحلة:</span>
+                            
+                            <!-- خيار ذهاب فقط -->
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition" id="lblTripOneWay">
+                                <input type="radio" name="tripType" value="oneway" checked onchange="toggleTripType(this.value)" class="text-amber-500 focus:ring-0">
+                                <span class="text-xs font-bold text-white">ذهاب فقط</span>
+                            </label>
 
-                                <optgroup label="🌍 مطارات إفريقيا">
-                                    <option value="القاهرة (CAI)">القاهرة الدولي (CAI) - مصر</option>
-                                    <option value="برج العرب (HBE)">برج العرب - الإسكندرية (HBE) - مصر</option>
-                                    <option value="أسوان (ASW)">أسوان الدولي (ASW) - مصر</option>
-                                    <option value="أديس أبابا (ADD)">أديس أبابا - بولي (ADD) - إثيوبيا</option>
-                                    <option value="إنجمينا (NDJ)">إنجمينا الدولي (NDJ) - تشاد</option>
-                                    <option value="جوبا (JUB)">جوبا الدولي (JUB) - جنوب السودان</option>
-                                    <option value="عنتيبي (EBB)">عنتيبي الدولي (EBB) - أوغندا</option>
-                                    <option value="نيروبي (NBO)">نيروبي - كينياتا (NBO) - كينيا</option>
-                                    <option value="أسمرة (ASM)">أسمرة الدولي (ASM) - إريتريا</option>
-                                </optgroup>
-                            </select>
+                            <!-- خيار ذهاب وعودة -->
+                            <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition" id="lblTripRound">
+                                <input type="radio" name="tripType" value="round" onchange="toggleTripType(this.value)" class="text-amber-500 focus:ring-0">
+                                <span class="text-xs font-bold text-white">ذهاب وعودة (تذكرة راوند)</span>
+                            </label>
                         </div>
 
-                        <!-- 2. مطار الوصول -->
-                        <div>
-                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">مطار الوصول (إلى):</label>
-                            <select id="searchDestination" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
-                                <option value="ALL">جميع الوجهات</option>
-                                
-                                <optgroup label="🌴 مطارات الخليج المباشرة">
-                                    <option value="جدة (JED)">جدة - مطار الملك عبد العزيز (JED)</option>
-                                    <option value="الرياض (RUH)">الرياض - مطار الملك خالد (RUH)</option>
-                                    <option value="الدمام (DMM)">الدمام - مطار الملك فهد (DMM)</option>
-                                    <option value="المدينة المنورة (MED)">المدينة المنورة (MED)</option>
-                                    <option value="دبي (DXB)">دبي الدولي (DXB)</option>
-                                    <option value="الشارقة (SHJ)">الشارقة الدولي (SHJ)</option>
-                                    <option value="أبوظبي (AUH)">أبوظبي الدولي (AUH)</option>
-                                    <option value="الدوحة (DOH)">الدوحة - مطار حمد الدولي (DOH)</option>
-                                    <option value="مسقط (MCT)">مسقط الدولي (MCT)</option>
-                                    <option value="الكويت (KWI)">الكويت الدولي (KWI)</option>
-                                    <option value="البحرين (BAH)">البحرين الدولي (BAH)</option>
-                                </optgroup>
-
-                                <optgroup label="🌍 مطارات إفريقيا">
-                                    <option value="القاهرة (CAI)" selected>القاهرة الدولي (CAI) - مصر</option>
-                                    <option value="برج العرب (HBE)">برج العرب - الإسكندرية (HBE) - مصر</option>
-                                    <option value="أسوان (ASW)">أسوان الدولي (ASW) - مصر</option>
-                                    <option value="أديس أبابا (ADD)">أديس أبابا - بولي (ADD) - إثيوبيا</option>
-                                    <option value="إنجمينا (NDJ)">إنجمينا الدولي (NDJ) - تشاد</option>
-                                    <option value="جوبا (JUB)">جوبا الدولي (JUB) - جنوب السودان</option>
-                                    <option value="عنتيبي (EBB)">عنتيبي الدولي (EBB) - أوغندا</option>
-                                    <option value="نيروبي (NBO)">نيروبي - كينياتا (NBO) - كينيا</option>
-                                    <option value="أسمرة (ASM)">أسمرة الدولي (ASM) - إريتريا</option>
-                                </optgroup>
-
-                                <optgroup label="🇸🇩 مطارات السودان كاملة">
-                                    <option value="بورتسودان (PZU)">بورتسودان الدولي (PZU)</option>
-                                    <option value="كسلا (KAS)">كسلا (KAS)</option>
-                                    <option value="دنقلا (DOG)">دنقلا (DOG)</option>
-                                    <option value="مروي (MWE)">مروي (MWE)</option>
-                                    <option value="وادي حلفا (WHF)">وادي حلفا (WHF)</option>
-                                    <option value="الخرطوم (KRT)">الخرطوم الدولي (KRT)</option>
-                                    <option value="الأبيض (EBD)">الأبيض (EBD)</option>
-                                    <option value="الفاشر (ELF)">الفاشر (ELF)</option>
-                                    <option value="نيالا (UYL)">نيالا (UYL)</option>
-                                    <option value="الجنينة (EGN)">الجنينة (EGN)</option>
-                                    <option value="الدمازين (RSS)">الدمازين (RSS)</option>
-                                    <option value="كادوقلي (KDX)">كادوقلي (KDX)</option>
-                                </optgroup>
-                            </select>
-                        </div>
-
-                        <!-- 3. تاريخ الذهاب (يوم الحجز) -->
-                        <div>
-                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">تاريخ الذهاب (يوم الحجز):</label>
-                            <input type="date" id="searchDepartureDate" value="2026-11-20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
-                        </div>
-
-                        <!-- 4. تاريخ العودة (يظهر فقط عند اختيار ذهاب وعودة) -->
-                        <div id="returnDateContainer" class="hidden">
-                            <label class="block text-xs text-amber-400 mb-1.5 font-semibold">تاريخ العودة:</label>
-                            <input type="date" id="searchReturnDate" value="2026-11-30" class="w-full bg-slate-950 border border-amber-500/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
-                        </div>
-
-                        <!-- 5. فلتر شركة الطيران المعتمدة -->
-                        <div id="airlineFilterCol">
-                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">شركة الطيران:</label>
-                            <select id="searchAirline" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
-                                <option value="ALL" selected>كل الخطوط (تاركو + بدر)</option>
-                                <option value="Tarco">طيران تاركو فقط</option>
-                                <option value="Badr">طيران بدر فقط</option>
-                            </select>
-                        </div>
-
-                    </div>
-
-                    <!-- زر البحث وتفاصيل المسار -->
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-                        <div class="text-xs text-slate-400">
-                            <span id="searchSummaryText">مسار البحث: رحلة ذهاب فقط • العملة بالجنيه السوداني</span>
-                        </div>
-
-                        <button type="submit" id="searchSubmitBtn" class="w-full sm:w-auto px-8 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl text-xs shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
-                            <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                            <span>البحث عن الرحلات المتوفرة</span>
+                        <button onclick="resetFlightFilters()" class="text-[11px] text-slate-400 hover:text-amber-400 transition flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            إعادة تعيين البحث
                         </button>
                     </div>
-                </form>
+
+                    <!-- حقول نموذج البحث -->
+                    <form onsubmit="handleFlightSearch(event)" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                            
+                            <!-- 1. مطار الإقلاع (مطارات السودان كاملة + الخليج + إفريقيا) -->
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1.5 font-semibold">مطار الإقلاع (من):</label>
+                                <select id="searchOrigin" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                    <option value="ALL">جميع مطارات الإقلاع</option>
+                                    
+                                    <optgroup label="🇸🇩 مطارات السودان كاملة">
+                                        <option value="بورتسودان (PZU)" selected>بورتسودان الدولي (PZU) - الرئيسي الحالي</option>
+                                        <option value="كسلا (KAS)">كسلا (KAS)</option>
+                                        <option value="دنقلا (DOG)">دنقلا (DOG)</option>
+                                        <option value="مروي (MWE)">مروي (MWE)</option>
+                                        <option value="وادي حلفا (WHF)">وادي حلفا (WHF)</option>
+                                        <option value="الخرطوم (KRT)">الخرطوم الدولي (KRT)</option>
+                                        <option value="الأبيض (EBD)">الأبيض (EBD)</option>
+                                        <option value="الفاشر (ELF)">الفاشر (ELF)</option>
+                                        <option value="نيالا (UYL)">نيالا (UYL)</option>
+                                        <option value="الجنينة (EGN)">الجنينة (EGN)</option>
+                                        <option value="الدمازين (RSS)">الدمازين (RSS)</option>
+                                        <option value="كادوقلي (KDX)">كادوقلي (KDX)</option>
+                                    </optgroup>
+
+                                    <optgroup label="🌴 مطارات الخليج المباشرة">
+                                        <option value="جدة (JED)">جدة - مطار الملك عبد العزيز (JED)</option>
+                                        <option value="الرياض (RUH)">الرياض - مطار الملك خالد (RUH)</option>
+                                        <option value="الدمام (DMM)">الدمام - مطار الملك فهد (DMM)</option>
+                                        <option value="المدينة المنورة (MED)">المدينة المنورة (MED)</option>
+                                        <option value="دبي (DXB)">دبي الدولي (DXB)</option>
+                                        <option value="الشارقة (SHJ)">الشارقة الدولي (SHJ)</option>
+                                        <option value="أبوظبي (AUH)">أبوظبي الدولي (AUH)</option>
+                                        <option value="الدوحة (DOH)">الدوحة - مطار حمد الدولي (DOH)</option>
+                                        <option value="مسقط (MCT)">مسقط الدولي (MCT)</option>
+                                        <option value="الكويت (KWI)">الكويت الدولي (KWI)</option>
+                                        <option value="البحرين (BAH)">البحرين الدولي (BAH)</option>
+                                    </optgroup>
+
+                                    <optgroup label="🌍 مطارات إفريقيا">
+                                        <option value="القاهرة (CAI)">القاهرة الدولي (CAI) - مصر</option>
+                                        <option value="برج العرب (HBE)">برج العرب - الإسكندرية (HBE) - مصر</option>
+                                        <option value="أسوان (ASW)">أسوان الدولي (ASW) - مصر</option>
+                                        <option value="أديس أبابا (ADD)">أديس أبابا - بولي (ADD) - إثيوبيا</option>
+                                        <option value="إنجمينا (NDJ)">إنجمينا الدولي (NDJ) - تشاد</option>
+                                        <option value="جوبا (JUB)">جوبا الدولي (JUB) - جنوب السودان</option>
+                                        <option value="عنتيبي (EBB)">عنتيبي الدولي (EBB) - أوغندا</option>
+                                        <option value="نيروبي (NBO)">نيروبي - كينياتا (NBO) - كينيا</option>
+                                        <option value="أسمرة (ASM)">أسمرة الدولي (ASM) - إريتريا</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <!-- 2. مطار الوصول -->
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1.5 font-semibold">مطار الوصول (إلى):</label>
+                                <select id="searchDestination" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                    <option value="ALL">جميع الوجهات</option>
+                                    
+                                    <optgroup label="🌴 مطارات الخليج المباشرة">
+                                        <option value="جدة (JED)">جدة - مطار الملك عبد العزيز (JED)</option>
+                                        <option value="الرياض (RUH)">الرياض - مطار الملك خالد (RUH)</option>
+                                        <option value="الدمام (DMM)">الدمام - مطار الملك فهد (DMM)</option>
+                                        <option value="المدينة المنورة (MED)">المدينة المنورة (MED)</option>
+                                        <option value="دبي (DXB)">دبي الدولي (DXB)</option>
+                                        <option value="الشارقة (SHJ)">الشارقة الدولي (SHJ)</option>
+                                        <option value="أبوظبي (AUH)">أبوظبي الدولي (AUH)</option>
+                                        <option value="الدوحة (DOH)">الدوحة - مطار حمد الدولي (DOH)</option>
+                                        <option value="مسقط (MCT)">مسقط الدولي (MCT)</option>
+                                        <option value="الكويت (KWI)">الكويت الدولي (KWI)</option>
+                                        <option value="البحرين (BAH)">البحرين الدولي (BAH)</option>
+                                    </optgroup>
+
+                                    <optgroup label="🌍 مطارات إفريقيا">
+                                        <option value="القاهرة (CAI)" selected>القاهرة الدولي (CAI) - مصر</option>
+                                        <option value="برج العرب (HBE)">برج العرب - الإسكندرية (HBE) - مصر</option>
+                                        <option value="أسوان (ASW)">أسوان الدولي (ASW) - مصر</option>
+                                        <option value="أديس أبابا (ADD)">أديس أبابا - بولي (ADD) - إثيوبيا</option>
+                                        <option value="إنجمينا (NDJ)">إنجمينا الدولي (NDJ) - تشاد</option>
+                                        <option value="جوبا (JUB)">جوبا الدولي (JUB) - جنوب السودان</option>
+                                        <option value="عنتيبي (EBB)">عنتيبي الدولي (EBB) - أوغندا</option>
+                                        <option value="نيروبي (NBO)">نيروبي - كينياتا (NBO) - كينيا</option>
+                                        <option value="أسمرة (ASM)">أسمرة الدولي (ASM) - إريتريا</option>
+                                    </optgroup>
+
+                                    <optgroup label="🇸🇩 مطارات السودان كاملة">
+                                        <option value="بورتسودان (PZU)">بورتسودان الدولي (PZU)</option>
+                                        <option value="كسلا (KAS)">كسلا (KAS)</option>
+                                        <option value="دنقلا (DOG)">دنقلا (DOG)</option>
+                                        <option value="مروي (MWE)">مروي (MWE)</option>
+                                        <option value="وادي حلفا (WHF)">وادي حلفا (WHF)</option>
+                                        <option value="الخرطوم (KRT)">الخرطوم الدولي (KRT)</option>
+                                        <option value="الأبيض (EBD)">الأبيض (EBD)</option>
+                                        <option value="الفاشر (ELF)">الفاشر (ELF)</option>
+                                        <option value="نيالا (UYL)">نيالا (UYL)</option>
+                                        <option value="الجنينة (EGN)">الجنينة (EGN)</option>
+                                        <option value="الدمازين (RSS)">الدمازين (RSS)</option>
+                                        <option value="كادوقلي (KDX)">كادوقلي (KDX)</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <!-- 3. تاريخ الذهاب (يوم الحجز) -->
+                            <div>
+                                <label class="block text-xs text-slate-300 mb-1.5 font-semibold">تاريخ الذهاب (يوم الحجز):</label>
+                                <input type="date" id="searchDepartureDate" value="2026-11-20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                            </div>
+
+                            <!-- 4. تاريخ العودة (يظهر فقط عند اختيار ذهاب وعودة) -->
+                            <div id="returnDateContainer" class="hidden">
+                                <label class="block text-xs text-amber-400 mb-1.5 font-semibold">تاريخ العودة:</label>
+                                <input type="date" id="searchReturnDate" value="2026-11-30" class="w-full bg-slate-950 border border-amber-500/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                            </div>
+
+                            <!-- 5. فلتر شركة الطيران المعتمدة -->
+                            <div id="airlineFilterCol">
+                                <label class="block text-xs text-slate-300 mb-1.5 font-semibold">شركة الطيران:</label>
+                                <select id="searchAirline" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                    <option value="ALL" selected>كل الخطوط (تاركو + بدر)</option>
+                                    <option value="Tarco">طيران تاركو فقط</option>
+                                    <option value="Badr">طيران بدر فقط</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <!-- أزرار البحث والمزامنة الحية مع سيرفرات الطيران الرسمية -->
+                        <div class="flex flex-col lg:flex-row items-center justify-between gap-4 pt-3 border-t border-slate-800">
+                            <div class="text-xs text-slate-400">
+                                <span id="searchSummaryText">مسار البحث: رحلة ذهاب فقط • العملة بالجنيه السوداني</span>
+                            </div>
+
+                            <div class="flex items-center gap-2.5 w-full lg:w-auto flex-wrap sm:flex-nowrap">
+                                <button type="submit" id="searchSubmitBtn" class="flex-1 sm:flex-none px-7 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl text-xs shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2 whitespace-nowrap">
+                                    <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                    <span>البحث في جدول وكالة هامور (ج.س)</span>
+                                </button>
+                                
+                                <button type="button" onclick="setFlightMode('badr')" class="flex-1 sm:flex-none px-4 py-3 bg-slate-950 hover:bg-slate-800 text-indigo-300 border border-indigo-500/30 font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow whitespace-nowrap">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    <span>فحص حي: طيران بدر</span>
+                                </button>
+
+                                <button type="button" onclick="setFlightMode('tarco')" class="flex-1 sm:flex-none px-4 py-3 bg-slate-950 hover:bg-slate-800 text-amber-300 border border-amber-500/30 font-bold rounded-xl text-xs transition flex items-center justify-center gap-1.5 shadow whitespace-nowrap">
+                                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                                    <span>فحص حي: طيران تاركو</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- مؤشر نتائج البحث وعدد الرحلات -->
+                <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+                    <span id="resultsCount">جاري فحص وتحديث جداول الرحلات...</span>
+                    <span class="text-amber-400 font-semibold">الدفع عبر تطبيق بنكك (بنك الخرطوم)</span>
+                </div>
+
+                <!-- حاوية نتائج الرحلات المتاحة -->
+                <div id="flightsResultsContainer" class="space-y-4">
+                    <!-- تُبنى كروت الرحلات تلقائياً من دالة renderFlights -->
+                </div>
             </div>
 
-            <!-- مؤشر نتائج البحث وعدد الرحلات -->
-            <div class="flex items-center justify-between text-xs text-slate-400 px-1">
-                <span id="resultsCount">جاري فحص وتحديث جداول الرحلات...</span>
-                <span class="text-amber-400 font-semibold">الدفع عبر تطبيق بنكك (بنك الخرطوم)</span>
+            <!-- 2. شاشة البوابة الحية لطيران بدر (TT Interactive Zenith IBE) -->
+            <div id="livePortalBadr" class="hidden bg-slate-900 border border-indigo-500/40 rounded-3xl p-5 shadow-2xl space-y-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center justify-center font-black text-sm">
+                            بدر
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+                                <span>بوابة طيران بدر المباشرة (نظام TT Interactive Zenith IBE)</span>
+                                <span class="inline-flex items-center gap-1 text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                    سيرفر حي لحظي
+                                </span>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-0.5">
+                                استعراض مباشر للمقاعد الشاغرة وجداول الرحلات والأسعار من السيرفر المركزي لطيران بدر.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <a href="https://fo-emea.ttinteractive.com/zenith/frontoffice/badrairlines/en-GB/?mode=iframe" target="_blank" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow">
+                            <span>فتح بملء الشاشة</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
+                        <button onclick="setFlightMode('hamoor')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold transition">
+                            العودة لمحرك هامور
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[780px] rounded-2xl overflow-hidden border border-slate-800 bg-white shadow-2xl">
+                    <iframe src="https://fo-emea.ttinteractive.com/zenith/frontoffice/badrairlines/en-GB/?mode=iframe" class="w-full h-full border-0" title="بوابة طيران بدر الرسمية"></iframe>
+                </div>
             </div>
 
-            <!-- حاوية نتائج الرحلات المتاحة -->
-            <div id="flightsResultsContainer" class="space-y-4">
-                <!-- تُبنى كروت الرحلات تلقائياً من دالة renderFlights -->
+            <!-- 3. شاشة البوابة الحية لطيران تاركو -->
+            <div id="livePortalTarco" class="hidden bg-slate-900 border border-amber-500/40 rounded-3xl p-5 shadow-2xl space-y-4">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-black text-sm">
+                            تاركو
+                        </div>
+                        <div>
+                            <h4 class="text-white font-bold text-sm flex items-center gap-2">
+                                <span>بوابة طيران تاركو الرسمية (Tarco Aviation Portal)</span>
+                                <span class="inline-flex items-center gap-1 text-[10px] bg-amber-950 text-amber-300 border border-amber-800 px-2 py-0.5 rounded-full font-bold">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                                    بوابة معتمدة
+                                </span>
+                            </h4>
+                            <p class="text-xs text-slate-400 mt-0.5">
+                                استعراض مباشر لجدول رحلات تاركو وأحدث المسارات الجوية المفتوحة.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2">
+                        <a href="https://www.tarcoaviation.com/TarcoAviation/" target="_blank" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow">
+                            <span>فتح موقع تاركو الرسمي</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
+                        <button onclick="setFlightMode('hamoor')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-bold transition">
+                            العودة لمحرك هامور
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative w-full h-[780px] rounded-2xl overflow-hidden border border-slate-800 bg-white shadow-2xl">
+                    <iframe src="https://www.tarcoaviation.com/TarcoAviation/" class="w-full h-full border-0" title="بوابة طيران تاركو"></iframe>
+                </div>
             </div>
         </section>
 
@@ -580,23 +668,34 @@
 
     <!-- جافاسكريبت محرك البحث الشامل وقاعدة بيانات الرحلات الموسعة -->
     <script>
-        // قاعدة بيانات الرحلات الشاملة لجميع خطوط السودان والخليج وإفريقيا
+        // قاعدة بيانات الجداول التشغيلية المعتمدة لرحلات طيران تاركو وبدر
+        // تشمل أيام التشغيل الأسبوعية بدقة (0=الأحد، 1=الإثنين، 2=الثلاثاء، 3=الأربعاء، 4=الخميس، 5=الجمعة، 6=السبت)
+        const ARABIC_DAYS = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+        const ARABIC_MONTHS = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+
         const ALL_FLIGHTS = [
-            // 1. بورتسودان ⬅️ القاهرة
+            // ==========================================
+            // 1. مسار: بورتسودان ⬅️ القاهرة (يومياً)
+            // ==========================================
             {
                 id: 'F1',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-112',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'القاهرة (CAI)',
+                destCode: 'CAI',
                 depTime: '10:30 ص',
                 arrTime: '12:45 م',
                 duration: 'ساعتان و 15 دقيقة',
                 priceOneWay: 1250000,
                 priceRound: 2350000,
                 baggage: '2 حقيبة (23 كجم لكل حقيبة) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع',
+                returnFlightNo: '3W-113'
             },
             {
                 id: 'F2',
@@ -604,31 +703,83 @@
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-604',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'القاهرة (CAI)',
+                destCode: 'CAI',
                 depTime: '02:00 م',
                 arrTime: '04:15 م',
                 duration: 'ساعتان و 15 دقيقة',
                 priceOneWay: 1220000,
                 priceRound: 2300000,
                 baggage: '46 كجم + وجبة ساخنة مشمولة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع',
+                returnFlightNo: 'J4-605'
             },
 
-            // 2. بورتسودان ⬅️ جدة
+            // رحلات العودة: القاهرة ⬅️ بورتسودان
+            {
+                id: 'F1-RET',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-113',
+                origin: 'القاهرة (CAI)',
+                originCode: 'CAI',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '02:00 م',
+                arrTime: '04:15 م',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 1250000,
+                priceRound: 2350000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع'
+            },
+            {
+                id: 'F2-RET',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-605',
+                origin: 'القاهرة (CAI)',
+                originCode: 'CAI',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '05:30 م',
+                arrTime: '07:45 م',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 1220000,
+                priceRound: 2300000,
+                baggage: '46 كجم + وجبة ساخنة مشمولة',
+                badgeColor: 'indigo',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع'
+            },
+
+            // ==========================================
+            // 2. مسار: بورتسودان ⬅️ جدة (يومياً)
+            // ==========================================
             {
                 id: 'F3',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-601',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'جدة (JED)',
+                destCode: 'JED',
                 depTime: '04:00 م',
                 arrTime: '05:10 م',
                 duration: 'ساعة و 10 دقائق',
                 priceOneWay: 1150000,
                 priceRound: 2150000,
                 baggage: '46 كجم + وجبة ساخنة مشمولة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع',
+                returnFlightNo: 'J4-602'
             },
             {
                 id: 'F4',
@@ -636,31 +787,83 @@
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-204',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'جدة (JED)',
+                destCode: 'JED',
                 depTime: '08:30 ص',
                 arrTime: '09:40 ص',
                 duration: 'ساعة و 10 دقائق',
                 priceOneWay: 1180000,
                 priceRound: 2200000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع',
+                returnFlightNo: '3W-205'
             },
 
-            // 3. بورتسودان ⬅️ الرياض
+            // رحلات العودة: جدة ⬅️ بورتسودان
+            {
+                id: 'F3-RET',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-602',
+                origin: 'جدة (JED)',
+                originCode: 'JED',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '06:30 م',
+                arrTime: '07:40 م',
+                duration: 'ساعة و 10 دقائق',
+                priceOneWay: 1150000,
+                priceRound: 2150000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع'
+            },
+            {
+                id: 'F4-RET',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-205',
+                origin: 'جدة (JED)',
+                originCode: 'JED',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '11:00 ص',
+                arrTime: '12:10 م',
+                duration: 'ساعة و 10 دقائق',
+                priceOneWay: 1180000,
+                priceRound: 2200000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [0, 1, 2, 3, 4, 5, 6],
+                daysText: 'يومياً طوال الأسبوع'
+            },
+
+            // ==========================================
+            // 3. مسار: بورتسودان ⬅️ الرياض
+            // ==========================================
             {
                 id: 'F5',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-310',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'الرياض (RUH)',
+                destCode: 'RUH',
                 depTime: '03:30 م',
                 arrTime: '06:15 م',
                 duration: 'ساعتان و 45 دقيقة',
                 priceOneWay: 1350000,
                 priceRound: 2550000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [0, 2, 4], // الأحد، الثلاثاء، الخميس
+                daysText: 'الأحد، الثلاثاء، الخميس',
+                returnFlightNo: '3W-311'
             },
             {
                 id: 'F6',
@@ -668,234 +871,645 @@
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-712',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'الرياض (RUH)',
+                destCode: 'RUH',
                 depTime: '11:00 ص',
                 arrTime: '01:45 م',
                 duration: 'ساعتان و 45 دقيقة',
                 priceOneWay: 1350000,
                 priceRound: 2550000,
                 baggage: '46 كجم + وجبة ساخنة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [6, 1, 3], // السبت، الإثنين، الأربعاء
+                daysText: 'السبت، الإثنين، الأربعاء',
+                returnFlightNo: 'J4-713'
             },
 
-            // 4. بورتسودان ⬅️ الدمام والمدينة المنورة
+            // رحلات العودة: الرياض ⬅️ بورتسودان
+            {
+                id: 'F5-RET',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-311',
+                origin: 'الرياض (RUH)',
+                originCode: 'RUH',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '07:30 م',
+                arrTime: '10:15 م',
+                duration: 'ساعتان و 45 دقيقة',
+                priceOneWay: 1350000,
+                priceRound: 2550000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [0, 2, 4],
+                daysText: 'الأحد، الثلاثاء، الخميس'
+            },
+            {
+                id: 'F6-RET',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-713',
+                origin: 'الرياض (RUH)',
+                originCode: 'RUH',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '03:00 م',
+                arrTime: '05:45 م',
+                duration: 'ساعتان و 45 دقيقة',
+                priceOneWay: 1350000,
+                priceRound: 2550000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo',
+                operatingDays: [6, 1, 3],
+                daysText: 'السبت، الإثنين، الأربعاء'
+            },
+
+            // ==========================================
+            // 4. مسار: بورتسودان ⬅️ الدمام
+            // ==========================================
             {
                 id: 'F7',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-730',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'الدمام (DMM)',
+                destCode: 'DMM',
                 depTime: '01:30 م',
                 arrTime: '04:45 م',
                 duration: '3 ساعات و 15 دقيقة',
                 priceOneWay: 1380000,
                 priceRound: 2600000,
                 baggage: '46 كجم + وجبة ساخنة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [1, 4], // الإثنين، الخميس
+                daysText: 'الإثنين، الخميس',
+                returnFlightNo: 'J4-731'
             },
+            {
+                id: 'F7-RET',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-731',
+                origin: 'الدمام (DMM)',
+                originCode: 'DMM',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '06:00 م',
+                arrTime: '09:15 م',
+                duration: '3 ساعات و 15 دقيقة',
+                priceOneWay: 1380000,
+                priceRound: 2600000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo',
+                operatingDays: [1, 4],
+                daysText: 'الإثنين، الخميس'
+            },
+
+            // ==========================================
+            // 5. مسار: بورتسودان ⬅️ المدينة المنورة
+            // ==========================================
             {
                 id: 'F8',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-220',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'المدينة المنورة (MED)',
+                destCode: 'MED',
                 depTime: '09:00 ص',
                 arrTime: '10:20 ص',
                 duration: 'ساعة و 20 دقيقة',
                 priceOneWay: 1200000,
                 priceRound: 2250000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [0, 3], // الأحد، الأربعاء
+                daysText: 'الأحد، الأربعاء',
+                returnFlightNo: '3W-221'
+            },
+            {
+                id: 'F8-RET',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-221',
+                origin: 'المدينة المنورة (MED)',
+                originCode: 'MED',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '11:45 ص',
+                arrTime: '01:05 م',
+                duration: 'ساعة و 20 دقيقة',
+                priceOneWay: 1200000,
+                priceRound: 2250000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [0, 3],
+                daysText: 'الأحد، الأربعاء'
             },
 
-            // 5. بورتسودان ⬅️ دبي، الشارقة، وأبوظبي
+            // ==========================================
+            // 6. مسار: بورتسودان ⬅️ دبي (DXB)
+            // ==========================================
             {
                 id: 'F9',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-802',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'دبي (DXB)',
+                destCode: 'DXB',
                 depTime: '09:00 ص',
                 arrTime: '01:30 م',
                 duration: '3 ساعات و 30 دقيقة',
                 priceOneWay: 1480000,
                 priceRound: 2800000,
                 baggage: '46 كجم + وجبة ساخنة مشمولة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [0, 3, 5], // الأحد، الأربعاء، الجمعة
+                daysText: 'الأحد، الأربعاء، الجمعة',
+                returnFlightNo: 'J4-803'
             },
+            {
+                id: 'F9-RET',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-803',
+                origin: 'دبي (DXB)',
+                originCode: 'DXB',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '03:00 م',
+                arrTime: '05:30 م',
+                duration: '3 ساعات و 30 دقيقة',
+                priceOneWay: 1480000,
+                priceRound: 2800000,
+                baggage: '46 كجم + وجبة ساخنة مشمولة',
+                badgeColor: 'indigo',
+                operatingDays: [0, 3, 5],
+                daysText: 'الأحد، الأربعاء، الجمعة'
+            },
+
+            // ==========================================
+            // 7. مسار: بورتسودان ⬅️ الشارقة (SHJ)
+            // ==========================================
             {
                 id: 'F10',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-550',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'الشارقة (SHJ)',
+                destCode: 'SHJ',
                 depTime: '01:00 م',
                 arrTime: '05:30 م',
                 duration: '3 ساعات و 30 دقيقة',
                 priceOneWay: 1450000,
                 priceRound: 2750000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [6, 1, 4], // السبت، الإثنين، الخميس
+                daysText: 'السبت، الإثنين، الخميس',
+                returnFlightNo: '3W-551'
             },
+            {
+                id: 'F10-RET',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-551',
+                origin: 'الشارقة (SHJ)',
+                originCode: 'SHJ',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '07:00 م',
+                arrTime: '09:30 م',
+                duration: '3 ساعات و 30 دقيقة',
+                priceOneWay: 1450000,
+                priceRound: 2750000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [6, 1, 4],
+                daysText: 'السبت، الإثنين، الخميس'
+            },
+
+            // ==========================================
+            // 8. مسار: بورتسودان ⬅️ أبوظبي (AUH)
+            // ==========================================
             {
                 id: 'F11',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-570',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'أبوظبي (AUH)',
+                destCode: 'AUH',
                 depTime: '10:00 ص',
                 arrTime: '02:30 م',
                 duration: '3 ساعات و 30 دقيقة',
                 priceOneWay: 1460000,
                 priceRound: 2780000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [0, 3], // الأحد، الأربعاء
+                daysText: 'الأحد، الأربعاء',
+                returnFlightNo: '3W-571'
+            },
+            {
+                id: 'F11-RET',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-571',
+                origin: 'أبوظبي (AUH)',
+                originCode: 'AUH',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '04:00 م',
+                arrTime: '06:30 م',
+                duration: '3 ساعات و 30 دقيقة',
+                priceOneWay: 1460000,
+                priceRound: 2780000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [0, 3],
+                daysText: 'الأحد، الأربعاء'
             },
 
-            // 6. بورتسودان ⬅️ الدوحة ومسقط والكويت والبحرين
+            // ==========================================
+            // 9. مسار: بورتسودان ⬅️ الدوحة (DOH)
+            // ==========================================
             {
                 id: 'F12',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-410',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'الدوحة (DOH)',
+                destCode: 'DOH',
                 depTime: '08:00 ص',
                 arrTime: '11:45 ص',
                 duration: 'ساعتان و 45 دقيقة',
                 priceOneWay: 1420000,
                 priceRound: 2700000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [1, 4], // الإثنين، الخميس
+                daysText: 'الإثنين، الخميس',
+                returnFlightNo: '3W-411'
             },
+            {
+                id: 'F12B',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-920',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'الدوحة (DOH)',
+                destCode: 'DOH',
+                depTime: '12:00 م',
+                arrTime: '03:45 م',
+                duration: 'ساعتان و 45 دقيقة',
+                priceOneWay: 1420000,
+                priceRound: 2700000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo',
+                operatingDays: [6, 2], // السبت، الثلاثاء
+                daysText: 'السبت، الثلاثاء',
+                returnFlightNo: 'J4-921'
+            },
+
+            // ==========================================
+            // 10. مسار: بورتسودان ⬅️ مسقط (MCT)
+            // ==========================================
             {
                 id: 'F13',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-910',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'مسقط (MCT)',
+                destCode: 'MCT',
                 depTime: '11:30 ص',
                 arrTime: '04:15 م',
                 duration: '3 ساعات و 45 دقيقة',
                 priceOneWay: 1400000,
                 priceRound: 2650000,
                 baggage: '46 كجم + وجبة ساخنة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [0, 4], // الأحد، الخميس
+                daysText: 'الأحد، الخميس',
+                returnFlightNo: 'J4-911'
             },
+
+            // ==========================================
+            // 11. مسار: بورتسودان ⬅️ الكويت (KWI)
+            // ==========================================
             {
                 id: 'F14',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-460',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'الكويت (KWI)',
+                destCode: 'KWI',
                 depTime: '02:15 م',
                 arrTime: '05:45 م',
                 duration: 'ساعتان و 30 دقيقة',
                 priceOneWay: 1390000,
                 priceRound: 2650000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [6, 2], // السبت، الثلاثاء
+                daysText: 'السبت، الثلاثاء',
+                returnFlightNo: '3W-461'
             },
 
-            // 7. بورتسودان ⬅️ وجهات إفريقيا (أديس أبابا، إنجمينا، جوبا، أسمرة، الإسكندرية، أسوان)
+            // ==========================================
+            // 12. مسار: بورتسودان ⬅️ البحرين (BAH)
+            // ==========================================
+            {
+                id: 'F14B',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-850',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'البحرين (BAH)',
+                destCode: 'BAH',
+                depTime: '09:30 ص',
+                arrTime: '01:00 م',
+                duration: 'ساعتان و 30 دقيقة',
+                priceOneWay: 1410000,
+                priceRound: 2680000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo',
+                operatingDays: [1, 5], // الإثنين، الجمعة
+                daysText: 'الإثنين، الجمعة',
+                returnFlightNo: 'J4-851'
+            },
+
+            // ==========================================
+            // 13. مسار: بورتسودان ⬅️ أديس أبابا (ADD)
+            // ==========================================
             {
                 id: 'F15',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-301',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'أديس أبابا (ADD)',
+                destCode: 'ADD',
                 depTime: '07:30 ص',
                 arrTime: '09:45 ص',
                 duration: 'ساعتان و 15 دقيقة',
                 priceOneWay: 1100000,
                 priceRound: 2050000,
                 baggage: '46 كجم + وجبة ساخنة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [1, 3, 5], // الإثنين، الأربعاء، الجمعة
+                daysText: 'الإثنين، الأربعاء، الجمعة',
+                returnFlightNo: 'J4-302'
             },
+            {
+                id: 'F15B',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-450',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'أديس أبابا (ADD)',
+                destCode: 'ADD',
+                depTime: '09:00 ص',
+                arrTime: '11:15 ص',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 1120000,
+                priceRound: 2100000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [0, 2, 6], // الأحد، الثلاثاء، السبت
+                daysText: 'الأحد، الثلاثاء، السبت',
+                returnFlightNo: '3W-451'
+            },
+
+            // ==========================================
+            // 14. مسار: بورتسودان ⬅️ إنجمينا (NDJ)
+            // ==========================================
             {
                 id: 'F16',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-705',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'إنجمينا (NDJ)',
+                destCode: 'NDJ',
                 depTime: '09:30 ص',
                 arrTime: '12:45 م',
                 duration: '3 ساعات و 15 دقيقة',
                 priceOneWay: 1300000,
                 priceRound: 2450000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [6, 2], // السبت، الثلاثاء
+                daysText: 'السبت، الثلاثاء',
+                returnFlightNo: '3W-706'
             },
+
+            // ==========================================
+            // 15. مسار: بورتسودان ⬅️ جوبا (JUB)
+            // ==========================================
             {
                 id: 'F17',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-340',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'جوبا (JUB)',
+                destCode: 'JUB',
                 depTime: '10:00 ص',
                 arrTime: '12:15 م',
                 duration: 'ساعتان و 15 دقيقة',
                 priceOneWay: 950000,
                 priceRound: 1800000,
                 baggage: '46 كجم + وجبة خفيفة',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [0, 3], // الأحد، الأربعاء
+                daysText: 'الأحد، الأربعاء',
+                returnFlightNo: 'J4-341'
             },
+
+            // ==========================================
+            // 16. مسار: بورتسودان ⬅️ أسمرة (ASM)
+            // ==========================================
             {
                 id: 'F18',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-180',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'أسمرة (ASM)',
+                destCode: 'ASM',
                 depTime: '08:00 ص',
                 arrTime: '09:10 ص',
                 duration: 'ساعة و 10 دقائق',
                 priceOneWay: 850000,
                 priceRound: 1600000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [2, 5], // الثلاثاء، الجمعة
+                daysText: 'الثلاثاء، الجمعة',
+                returnFlightNo: '3W-181'
             },
+
+            // ==========================================
+            // 17. مسار: بورتسودان ⬅️ برج العرب - الإسكندرية (HBE)
+            // ==========================================
             {
                 id: 'F19',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-116',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'برج العرب (HBE)',
+                destCode: 'HBE',
                 depTime: '12:00 م',
                 arrTime: '02:30 م',
                 duration: 'ساعتان و 30 دقيقة',
                 priceOneWay: 1250000,
                 priceRound: 2350000,
                 baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [6, 2], // السبت، الثلاثاء
+                daysText: 'السبت، الثلاثاء',
+                returnFlightNo: '3W-117'
             },
 
-            // 8. رحلات داخلية في مطارات السودان
+            // ==========================================
+            // 18. مسار: بورتسودان ⬅️ أسوان (ASW)
+            // ==========================================
+            {
+                id: 'F19B',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-610',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'أسوان (ASW)',
+                destCode: 'ASW',
+                depTime: '08:30 ص',
+                arrTime: '10:15 ص',
+                duration: 'ساعة و 45 دقيقة',
+                priceOneWay: 1050000,
+                priceRound: 1980000,
+                baggage: '46 كجم + وجبة خفيفة',
+                badgeColor: 'indigo',
+                operatingDays: [0, 4], // الأحد، الخميس
+                daysText: 'الأحد، الخميس',
+                returnFlightNo: 'J4-611'
+            },
+
+            // ==========================================
+            // 19. مسار: بورتسودان ⬅️ عنتيبي (EBB)
+            // ==========================================
+            {
+                id: 'F19C',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-360',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'عنتيبي (EBB)',
+                destCode: 'EBB',
+                depTime: '08:30 ص',
+                arrTime: '11:45 ص',
+                duration: '3 ساعات و 15 دقيقة',
+                priceOneWay: 1200000,
+                priceRound: 2250000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo',
+                operatingDays: [4, 0], // الخميس، الأحد
+                daysText: 'الخميس، الأحد',
+                returnFlightNo: 'J4-361'
+            },
+
+            // ==========================================
+            // 20. مسار: بورتسودان ⬅️ نيروبي (NBO)
+            // ==========================================
+            {
+                id: 'F19D',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-490',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'نيروبي (NBO)',
+                destCode: 'NBO',
+                depTime: '07:00 ص',
+                arrTime: '10:30 ص',
+                duration: '3 ساعات و 30 دقيقة',
+                priceOneWay: 1280000,
+                priceRound: 2400000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [1, 5], // الإثنين، الجمعة
+                daysText: 'الإثنين، الجمعة',
+                returnFlightNo: '3W-491'
+            },
+
+            // ==========================================
+            // 21. الرحلات الداخلية في مطارات السودان
+            // ==========================================
             {
                 id: 'F20',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
                 flightNo: 'J4-102',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'كسلا (KAS)',
+                destCode: 'KAS',
                 depTime: '07:00 ص',
                 arrTime: '07:45 ص',
                 duration: '45 دقيقة',
                 priceOneWay: 450000,
                 priceRound: 850000,
                 baggage: '30 كجم + 7 كجم يد',
-                badgeColor: 'indigo'
+                badgeColor: 'indigo',
+                operatingDays: [0, 2, 4], // الأحد، الثلاثاء، الخميس
+                daysText: 'الأحد، الثلاثاء، الخميس',
+                returnFlightNo: 'J4-103'
+            },
+            {
+                id: 'F20-RET',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-103',
+                origin: 'كسلا (KAS)',
+                originCode: 'KAS',
+                destination: 'بورتسودان (PZU)',
+                destCode: 'PZU',
+                depTime: '08:30 ص',
+                arrTime: '09:15 ص',
+                duration: '45 دقيقة',
+                priceOneWay: 450000,
+                priceRound: 850000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'indigo',
+                operatingDays: [0, 2, 4],
+                daysText: 'الأحد، الثلاثاء، الخميس'
             },
             {
                 id: 'F21',
@@ -903,65 +1517,260 @@
                 airlineName: 'طيران تاركو (Tarco Aviation)',
                 flightNo: '3W-050',
                 origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
                 destination: 'دنقلا (DOG)',
+                destCode: 'DOG',
                 depTime: '08:30 ص',
                 arrTime: '09:30 ص',
                 duration: 'ساعة واحدة',
                 priceOneWay: 480000,
                 priceRound: 900000,
                 baggage: '30 كجم + 7 كجم يد',
-                badgeColor: 'amber'
+                badgeColor: 'amber',
+                operatingDays: [1, 4], // الإثنين، الخميس
+                daysText: 'الإثنين، الخميس',
+                returnFlightNo: '3W-051'
             },
-
-            // 9. رحلات العودة إلى بورتسودان والسودان
             {
-                id: 'F22',
+                id: 'F21-RET',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
-                flightNo: '3W-113',
-                origin: 'القاهرة (CAI)',
+                flightNo: '3W-051',
+                origin: 'دنقلا (DOG)',
+                originCode: 'DOG',
                 destination: 'بورتسودان (PZU)',
-                depTime: '02:00 م',
-                arrTime: '04:15 م',
-                duration: 'ساعتان و 15 دقيقة',
-                priceOneWay: 1250000,
-                priceRound: 2350000,
-                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                destCode: 'PZU',
+                depTime: '10:30 ص',
+                arrTime: '11:30 ص',
+                duration: 'ساعة واحدة',
+                priceOneWay: 480000,
+                priceRound: 900000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [1, 4],
+                daysText: 'الإثنين، الخميس'
             },
             {
-                id: 'F23',
+                id: 'F22D',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-060',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'مروي (MWE)',
+                destCode: 'MWE',
+                depTime: '09:00 ص',
+                arrTime: '10:00 ص',
+                duration: 'ساعة واحدة',
+                priceOneWay: 470000,
+                priceRound: 890000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [6, 3], // السبت، الأربعاء
+                daysText: 'السبت، الأربعاء'
+            },
+            {
+                id: 'F23D',
                 airline: 'Badr',
                 airlineName: 'طيران بدر (Badr Airlines)',
-                flightNo: 'J4-602',
-                origin: 'جدة (JED)',
-                destination: 'بورتسودان (PZU)',
-                depTime: '06:30 م',
-                arrTime: '07:40 م',
-                duration: 'ساعة و 10 دقائق',
-                priceOneWay: 1150000,
-                priceRound: 2150000,
-                baggage: '46 كجم + وجبة ساخنة',
-                badgeColor: 'indigo'
+                flightNo: 'J4-110',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'وادي حلفا (WHF)',
+                destCode: 'WHF',
+                depTime: '08:00 ص',
+                arrTime: '09:15 ص',
+                duration: 'ساعة و 15 دقيقة',
+                priceOneWay: 510000,
+                priceRound: 960000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'indigo',
+                operatingDays: [0, 5], // الأحد، الجمعة
+                daysText: 'الأحد، الجمعة'
             },
             {
-                id: 'F24',
+                id: 'F24D',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-130',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'الأبيض (EBD)',
+                destCode: 'EBD',
+                depTime: '09:30 ص',
+                arrTime: '11:00 ص',
+                duration: 'ساعة و 30 دقيقة',
+                priceOneWay: 540000,
+                priceRound: 1020000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'indigo',
+                operatingDays: [6, 2], // السبت، الثلاثاء
+                daysText: 'السبت، الثلاثاء'
+            },
+            {
+                id: 'F25D',
                 airline: 'Tarco',
                 airlineName: 'طيران تاركو (Tarco Aviation)',
-                flightNo: '3W-311',
-                origin: 'الرياض (RUH)',
-                destination: 'بورتسودان (PZU)',
-                depTime: '07:30 م',
-                arrTime: '10:15 م',
-                duration: 'ساعتان و 45 دقيقة',
-                priceOneWay: 1350000,
-                priceRound: 2550000,
-                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
-                badgeColor: 'amber'
+                flightNo: '3W-070',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'الفاشر (ELF)',
+                destCode: 'ELF',
+                depTime: '07:30 ص',
+                arrTime: '09:30 ص',
+                duration: 'ساعتان',
+                priceOneWay: 620000,
+                priceRound: 1180000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [1, 4], // الإثنين، الخميس
+                daysText: 'الإثنين، الخميس'
+            },
+            {
+                id: 'F26D',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-140',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'الدمازين (RSS)',
+                destCode: 'RSS',
+                depTime: '10:00 ص',
+                arrTime: '11:30 ص',
+                duration: 'ساعة و 30 دقيقة',
+                priceOneWay: 520000,
+                priceRound: 980000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'indigo',
+                operatingDays: [3], // الأربعاء
+                daysText: 'الأربعاء فقط'
+            },
+            {
+                id: 'F27D',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-150',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'كادوقلي (KDX)',
+                destCode: 'KDX',
+                depTime: '08:30 ص',
+                arrTime: '10:15 ص',
+                duration: 'ساعة و 45 دقيقة',
+                priceOneWay: 560000,
+                priceRound: 1050000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'indigo',
+                operatingDays: [0], // الأحد
+                daysText: 'الأحد فقط'
+            },
+            {
+                id: 'F28D',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-080',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'نيالا (UYL)',
+                destCode: 'UYL',
+                depTime: '08:00 ص',
+                arrTime: '10:15 ص',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 650000,
+                priceRound: 1240000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [2, 6], // الثلاثاء، السبت
+                daysText: 'الثلاثاء، السبت'
+            },
+            {
+                id: 'F29D',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-090',
+                origin: 'بورتسودان (PZU)',
+                originCode: 'PZU',
+                destination: 'الجنينة (EGN)',
+                destCode: 'EGN',
+                depTime: '07:00 ص',
+                arrTime: '09:30 ص',
+                duration: 'ساعتان و 30 دقيقة',
+                priceOneWay: 680000,
+                priceRound: 1300000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'amber',
+                operatingDays: [1], // الإثنين
+                daysText: 'الإثنين فقط'
             }
         ];
 
         let currentTripType = 'oneway'; // oneway or round
+
+        // دالة استخراج رمز المطار IATA المكون من 3 أحرف
+        function extractCode(val) {
+            if (!val || val === 'ALL') return 'ALL';
+            const m = val.match(/\(([A-Z]{3})\)/);
+            return m ? m[1] : val.trim();
+        }
+
+        // دالة تحليل التاريخ وتحديد اسم ورقم يوم الأسبوع بالعربية بدقة
+        function parseDateInfo(dateStr) {
+            if (!dateStr) return null;
+            const parts = dateStr.split('-');
+            if (parts.length !== 3) return null;
+            const year = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const day = parseInt(parts[2], 10);
+            const d = new Date(year, month, day);
+            const dayIdx = d.getDay(); // 0: الأحد ... 6: السبت
+            return {
+                dateStr,
+                dateObj: d,
+                dayIndex: dayIdx,
+                dayName: ARABIC_DAYS[dayIdx],
+                monthName: ARABIC_MONTHS[month],
+                dayNum: day,
+                yearNum: year,
+                formatted: `${ARABIC_DAYS[dayIdx]} ${day} ${ARABIC_MONTHS[month]} ${year}`
+            };
+        }
+
+        // دالة حساب أقرب موعد رحلة تالي في حال عدم توفر رحلة في اليوم المختار
+        function findNextOperatingDate(baseDateStr, validDays) {
+            if (!baseDateStr || !validDays || validDays.length === 0) return null;
+            const parts = baseDateStr.split('-');
+            const year = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const day = parseInt(parts[2], 10);
+            
+            for (let i = 1; i <= 7; i++) {
+                const nextD = new Date(year, month, day + i);
+                if (validDays.includes(nextD.getDay())) {
+                    const y = nextD.getFullYear();
+                    const m = String(nextD.getMonth() + 1).padStart(2, '0');
+                    const d = String(nextD.getDate()).padStart(2, '0');
+                    const nextStr = `${y}-${m}-${d}`;
+                    return {
+                        dateStr: nextStr,
+                        dayName: ARABIC_DAYS[nextD.getDay()],
+                        dayNum: nextD.getDate(),
+                        monthName: ARABIC_MONTHS[nextD.getMonth()],
+                        daysAway: i,
+                        formatted: `${ARABIC_DAYS[nextD.getDay()]} ${nextD.getDate()} ${ARABIC_MONTHS[nextD.getMonth()]} ${y}`
+                    };
+                }
+            }
+            return null;
+        }
+
+        // دالة النقر لاختيار التاريخ المقترح تلقائياً
+        function selectSuggestedDate(newDateStr) {
+            const input = document.getElementById('searchDepartureDate');
+            if (input) {
+                input.value = newDateStr;
+                handleFlightSearch();
+            }
+        }
 
         // تبديل نوع الرحلة (ذهاب / ذهاب وعودة)
         function toggleTripType(type) {
@@ -981,7 +1790,6 @@
                 summary.innerText = 'مسار البحث: رحلة ذهاب فقط • العملة بالجنيه السوداني';
             }
 
-            // إعادة عرض النتائج بالأسعار المناسبة
             handleFlightSearch();
         }
 
@@ -989,36 +1797,134 @@
             return new Intl.NumberFormat('ar-SD').format(num) + ' ج.س';
         }
 
-        // عرض كروت الرحلات
-        function renderFlights(flights) {
+        // عرض كروت نتائج البحث المحدثة بدقة الجداول
+        function renderFlightsResult(resultData) {
             const container = document.getElementById('flightsResultsContainer');
             const countLabel = document.getElementById('resultsCount');
-            const depDate = document.getElementById('searchDepartureDate').value;
-            const retDate = document.getElementById('searchReturnDate').value;
 
-            if (!flights || flights.length === 0) {
-                countLabel.innerText = 'لم يتم العثور على رحلات مطابقة للمسار المحدد';
+            // 1. حالة مطار الخرطوم (مغلق مؤقتاً)
+            if (resultData.isKhartoumInvolved) {
+                countLabel.innerText = 'تنبيه تنظيمي بخصوص مطار الخرطوم';
                 container.innerHTML = `
-                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-400">
-                        <div class="w-12 h-12 rounded-full bg-slate-800 text-amber-400 mx-auto flex items-center justify-center text-xl mb-3">🔍</div>
-                        <h4 class="text-white font-bold text-sm mb-1">لا توجد رحلات مباشرة مجدولة لهذا المسار في تاريخ ${depDate}</h4>
-                        <p class="text-xs text-slate-400 max-w-md mx-auto mb-4">
-                            يمكنك تجربة مسار رئيسي آخر (مثل بورتسودان إلى القاهرة، جدة، الرياض، دبي، أو أديس أبابا) أو التواصل مع الموظف لطلب حجز طيران مخصص.
+                    <div class="bg-gradient-to-br from-amber-950/40 to-slate-900 border border-amber-500/40 rounded-2xl p-6 text-center">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-500/20 text-amber-400 mx-auto flex items-center justify-center text-2xl mb-3 border border-amber-500/30">
+                            ⚠️
+                        </div>
+                        <h4 class="text-white font-black text-base mb-2">مطار الخرطوم الدولي (KRT) معلق مؤقتاً</h4>
+                        <p class="text-xs text-slate-300 max-w-lg mx-auto mb-4 leading-relaxed">
+                            نظراً للظروف الحالية، فإن الرحلات التجارية المجدولة تعمل حصرياً عبر <strong class="text-amber-400">مطار بورتسودان الدولي (PZU)</strong> والمطارات الولائية المفتوحة. يمكنك أيضاً حجز بواخر الركاب من ميناء سواكن إلى جدة أو النقل البري إلى مصر.
                         </p>
-                        <button onclick="resetFlightFilters()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition">
-                            عرض كافة الرحلات المتوفرة (24 رحلة)
+                        <button onclick="document.getElementById('searchOrigin').value = 'بورتسودان (PZU)'; handleFlightSearch();" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-xs transition shadow-lg">
+                            اختيار مطار بورتسودان كنقطة إقلاع والبحث مجدداً
                         </button>
                     </div>
                 `;
                 return;
             }
 
-            countLabel.innerText = `عرض ${flights.length} رحلة متوفرة ومؤكدة (${currentTripType === 'round' ? 'ذهاب وعودة' : 'ذهاب فقط'})`;
+            // 2. حالة وجود مسار مجدول ولكن لا توجد رحلة في اليوم المحدد بالضبط
+            if (resultData.routeExistsButOffDay) {
+                const depInfo = resultData.depDayInfo;
+                const nextAvail = resultData.nextAvailable;
+                const routeFlights = resultData.routeFlights;
+                const orig = resultData.searchOriginText;
+                const dest = resultData.searchDestinationText;
+
+                countLabel.innerText = `لا توجد رحلات مجدولة في يوم ${depInfo.dayName} لهذا المسار`;
+                
+                container.innerHTML = `
+                    <div class="bg-slate-900 border border-amber-500/30 rounded-2xl p-6 shadow-xl">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-slate-800 pb-4 mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/30 flex items-center justify-center text-xl flex-shrink-0">
+                                    📅
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-black text-sm">
+                                        لا توجد رحلات مباشرة لخط (${orig} ⬅️ ${dest}) في يوم <span class="text-amber-400 underline">${depInfo.formatted}</span>
+                                    </h4>
+                                    <p class="text-xs text-slate-400 mt-1">
+                                        هذا المسار مجدول للعمل في أيام محددة أسبوعياً فقط. يرجى الاطلاع على جدول التشغيل أدناه:
+                                    </p>
+                                </div>
+                            </div>
+
+                            ${nextAvail ? `
+                            <button onclick="selectSuggestedDate('${nextAvail.dateStr}')" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-xs shadow-lg transition whitespace-nowrap flex items-center gap-2">
+                                <span>📅 الانتقال لأقرب رحلة:</span>
+                                <span>${nextAvail.formatted}</span>
+                                <span class="bg-slate-950/20 px-1.5 py-0.5 rounded text-[10px]">(بعد ${nextAvail.daysAway} أيام)</span>
+                            </button>
+                            ` : ''}
+                        </div>
+
+                        <!-- جدول الأيام المعتمدة لهذا المسار -->
+                        <div class="space-y-3">
+                            <h5 class="text-xs font-bold text-slate-300">مواعيد وأيام تشغيل هذا المسار:</h5>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                                ${routeFlights.map(rf => `
+                                    <div class="bg-slate-950 border border-slate-800 rounded-xl p-3.5 flex items-center justify-between">
+                                        <div>
+                                            <div class="flex items-center gap-2">
+                                                <span class="text-xs font-black text-white">${rf.airlineName}</span>
+                                                <span class="text-[10px] bg-slate-800 text-amber-400 px-2 py-0.5 rounded font-mono font-bold">${rf.flightNo}</span>
+                                            </div>
+                                            <div class="text-[11px] text-slate-400 mt-1">
+                                                أيام الرحلة: <strong class="text-emerald-400">${rf.daysText}</strong>
+                                            </div>
+                                            <div class="text-[10px] text-slate-500 mt-0.5 font-mono">
+                                                الإقلاع: ${rf.depTime} • الوصول: ${rf.arrTime} (${rf.duration})
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-xs font-black text-amber-400 block">${formatSDG(rf.priceOneWay)}</span>
+                                            <span class="text-[9px] text-slate-400">ذهاب للشخص</span>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+                            <span>💡 هل تحتاج لموعد خاص أو طيران عارض؟ تواصل مع موظف وكالة هامور في المحادثة المباشرة.</span>
+                            <button onclick="resetFlightFilters()" class="text-indigo-400 hover:text-indigo-300 font-bold underline">
+                                استعراض كافة المسارات
+                            </button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            // 3. حالة عدم العثور على أي مسار نهائياً
+            if (!resultData.confirmedFlights || resultData.confirmedFlights.length === 0) {
+                countLabel.innerText = 'لم يتم العثور على رحلات مطابقة';
+                container.innerHTML = `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-400">
+                        <div class="w-12 h-12 rounded-full bg-slate-800 text-amber-400 mx-auto flex items-center justify-center text-xl mb-3">🔍</div>
+                        <h4 class="text-white font-bold text-sm mb-1">لا توجد رحلات مباشرة مسجلة لهذا المسار المحدد</h4>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto mb-4">
+                            يمكنك اختيار بورتسودان (PZU) كنقطة انطلاق إلى القاهرة، جدة، الرياض، دبي، أو أديس أبابا، أو مراجعة موظف الوكالة لتنسيق رحلات الترانزيت.
+                        </p>
+                        <button onclick="resetFlightFilters()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition">
+                            عرض كافة الرحلات المتوفرة في النظام
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            // 4. حالة العثور على رحلات مؤكدة في اليوم المختار
+            const depInfo = resultData.depDayInfo;
+            const retInfo = resultData.retDayInfo;
+            const flights = resultData.confirmedFlights;
+
+            const isRound = (currentTripType === 'round');
+            countLabel.innerText = `عرض ${flights.length} رحلة مؤكدة ليوم ${depInfo.dayName} (${isRound ? 'ذهاب وعودة' : 'ذهاب فقط'})`;
 
             container.innerHTML = flights.map(f => {
-                const price = currentTripType === 'round' ? f.priceRound : f.priceOneWay;
-                const tripLabel = currentTripType === 'round' ? 'ذهاب وعودة' : 'ذهاب فقط';
-                const dateDetail = currentTripType === 'round' ? `الذهاب: ${depDate} • العودة: ${retDate}` : `تاريخ الرحلة: ${depDate}`;
+                const price = isRound ? f.priceRound : f.priceOneWay;
+                const tripLabel = isRound ? 'ذهاب وعودة (راوند)' : 'ذهاب فقط';
 
                 return `
                 <div class="bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-5 transition-all duration-200 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
@@ -1031,15 +1937,23 @@
                                 <span class="font-black text-white text-base">${f.airlineName}</span>
                                 <span class="text-[10px] ${f.badgeColor === 'amber' ? 'bg-amber-950 text-amber-300 border-amber-800' : 'bg-indigo-950 text-indigo-300 border-indigo-800'} border px-2 py-0.5 rounded font-mono font-bold">رحلة ${f.flightNo}</span>
                                 <span class="text-[10px] bg-slate-800 text-amber-400 border border-slate-700 px-2 py-0.5 rounded-full font-bold">${tripLabel}</span>
+                                <span class="text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">✓ مجدولة ومؤكدة</span>
                             </div>
-                            <div class="text-xs text-slate-400 mt-1 flex items-center gap-2 flex-wrap">
-                                <span class="text-slate-200 font-semibold">${f.origin} ${f.depTime}</span>
-                                <span>⬅️ ${f.duration} ⬅️</span>
-                                <span class="text-slate-200 font-semibold">${f.destination} ${f.arrTime}</span>
+                            
+                            <!-- تفاصيل المسار والوقت -->
+                            <div class="text-xs text-slate-300 mt-1.5 flex items-center gap-2 flex-wrap font-medium">
+                                <span class="text-white font-bold">${f.origin} (${f.depTime})</span>
+                                <span class="text-amber-400">⬅️ ${f.duration} ⬅️</span>
+                                <span class="text-white font-bold">${f.destination} (${f.arrTime})</span>
+                                <span class="text-[10px] text-slate-400 font-normal mr-1 bg-slate-800/80 px-2 py-0.5 rounded border border-slate-700/60">🕒 التوقيت المحلي لكل مطار</span>
                             </div>
+
+                            <!-- تفاصيل التاريخ الدقيق وأيام التشغيل -->
                             <div class="text-[11px] text-slate-300 mt-1 flex items-center gap-3 flex-wrap">
-                                <span class="text-indigo-400 font-semibold">📅 ${dateDetail}</span>
-                                <span class="text-emerald-400 font-semibold">✓ ${f.baggage}</span>
+                                <span class="text-indigo-400 font-bold">📅 تاريخ الرحلة: ${depInfo.formatted}</span>
+                                ${isRound && retInfo ? `<span class="text-amber-300 font-bold">🔄 تاريخ العودة: ${retInfo.formatted}</span>` : ''}
+                                <span class="text-slate-400 font-medium">🗓️ جدول الخط: (${f.daysText})</span>
+                                <span class="text-emerald-400 font-semibold">🧳 ${f.baggage}</span>
                             </div>
                         </div>
                     </div>
@@ -1050,7 +1964,7 @@
                             <span class="text-xl lg:text-2xl font-black text-amber-400">${formatSDG(price)}</span>
                         </div>
                         
-                        <button onclick="openBookingFlowModal('${f.airlineName} (${f.origin} ⬅️ ${f.destination}) - ${tripLabel}', '${formatSDG(price)}')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-extrabold text-xs shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 flex items-center gap-1.5 whitespace-nowrap">
+                        <button onclick="openBookingFlowModal('${f.airlineName} (${f.origin} ⬅️ ${f.destination}) - ${tripLabel} في ${depInfo.formatted}', '${formatSDG(price)}')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-extrabold text-xs shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 flex items-center gap-1.5 whitespace-nowrap">
                             <span>إتمام الحجز</span>
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                         </button>
@@ -1060,28 +1974,79 @@
             }).join('');
         }
 
-        // تنفيذ البحث
+        // محرك البحث الذكي المطابق للجداول التشغيلية والأيام الفعلية
         function handleFlightSearch(e) {
             if(e) e.preventDefault();
-            const origin = document.getElementById('searchOrigin').value;
-            const destination = document.getElementById('searchDestination').value;
-            const airline = document.getElementById('searchAirline').value;
+            const originVal = document.getElementById('searchOrigin').value;
+            const destVal = document.getElementById('searchDestination').value;
+            const airlineVal = document.getElementById('searchAirline').value;
+            const depDateStr = document.getElementById('searchDepartureDate').value;
+            const retDateStr = document.getElementById('searchReturnDate').value;
 
             const btn = document.getElementById('searchSubmitBtn');
             const originalHTML = btn.innerHTML;
-            btn.innerHTML = `<span class="animate-spin text-sm">⌛</span> <span>جاري البحث في رحلات تاركو وبدر...</span>`;
+            btn.innerHTML = `<span class="animate-spin text-sm">⌛</span> <span>جاري فحص جدول التشغيل...</span>`;
 
             setTimeout(() => {
-                let filtered = ALL_FLIGHTS.filter(flight => {
-                    const matchOrigin = (origin === 'ALL') || (flight.origin === origin);
-                    const matchDestination = (destination === 'ALL') || (flight.destination === destination);
-                    const matchAirline = (airline === 'ALL') || (flight.airline === airline);
-                    return matchOrigin && matchDestination && matchAirline;
+                const origCode = extractCode(originVal);
+                const destCode = extractCode(destVal);
+                const depDayInfo = parseDateInfo(depDateStr);
+                const retDayInfo = parseDateInfo(retDateStr);
+
+                // فحص مطار الخرطوم
+                if (origCode === 'KRT' || destCode === 'KRT') {
+                    renderFlightsResult({ isKhartoumInvolved: true });
+                    btn.innerHTML = originalHTML;
+                    return;
+                }
+
+                // 1. تصفية الرحلات بالمسار والشركة
+                const routeFlights = ALL_FLIGHTS.filter(flight => {
+                    const matchOrig = (origCode === 'ALL') || (flight.originCode === origCode);
+                    const matchDest = (destCode === 'ALL') || (flight.destCode === destCode);
+                    const matchAirline = (airlineVal === 'ALL') || (flight.airline === airlineVal);
+                    return matchOrig && matchDest && matchAirline;
                 });
 
-                renderFlights(filtered);
+                if (routeFlights.length === 0) {
+                    renderFlightsResult({ confirmedFlights: [] });
+                    btn.innerHTML = originalHTML;
+                    return;
+                }
+
+                // 2. تصفية الرحلات التي تعمل في يوم الأسبوع المحدد
+                const confirmedFlights = routeFlights.filter(flight => {
+                    if (!depDayInfo) return true;
+                    return flight.operatingDays && flight.operatingDays.includes(depDayInfo.dayIndex);
+                });
+
+                // 3. إذا كان المسار محدداً (من مطار معين إلى مطار معين) ولكن لا توجد رحلة في هذا اليوم
+                if (confirmedFlights.length === 0 && origCode !== 'ALL' && destCode !== 'ALL') {
+                    // جمع كافة الأيام التي يعمل فيها هذا المسار
+                    const allRouteDays = [...new Set(routeFlights.flatMap(f => f.operatingDays || []))];
+                    const nextAvailable = findNextOperatingDate(depDateStr, allRouteDays);
+
+                    renderFlightsResult({
+                        routeExistsButOffDay: true,
+                        depDayInfo,
+                        routeFlights,
+                        nextAvailable,
+                        searchOriginText: originVal,
+                        searchDestinationText: destVal
+                    });
+                    btn.innerHTML = originalHTML;
+                    return;
+                }
+
+                // 4. عرض الرحلات المؤكدة
+                renderFlightsResult({
+                    confirmedFlights,
+                    depDayInfo,
+                    retDayInfo
+                });
+
                 btn.innerHTML = originalHTML;
-            }, 250);
+            }, 200);
         }
 
         // إعادة تعيين الفلاتر
@@ -1091,7 +2056,41 @@
             document.getElementById('searchAirline').value = 'ALL';
             document.getElementById('searchDepartureDate').value = '2026-11-20';
             document.getElementById('searchReturnDate').value = '2026-11-30';
-            renderFlights(ALL_FLIGHTS);
+            handleFlightSearch();
+        }
+
+        // التبديل بين محرك وكالة هامور وبوابات الطيران الحية المباشرة (بدر / تاركو)
+        function setFlightMode(mode) {
+            const hamoorBox = document.getElementById('hamoorSearchArea');
+            const badrBox = document.getElementById('livePortalBadr');
+            const tarcoBox = document.getElementById('livePortalTarco');
+
+            const btnH = document.getElementById('tabModeHamoor');
+            const btnB = document.getElementById('tabModeBadr');
+            const btnT = document.getElementById('tabModeTarco');
+
+            [btnH, btnB, btnT].forEach(b => {
+                if (b) {
+                    b.className = 'flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold text-slate-400 hover:text-white bg-slate-950 border border-slate-800 transition flex items-center justify-center gap-2';
+                }
+            });
+
+            if (mode === 'badr') {
+                hamoorBox.classList.add('hidden');
+                badrBox.classList.remove('hidden');
+                tarcoBox.classList.add('hidden');
+                if (btnB) btnB.className = 'flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-black bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2';
+            } else if (mode === 'tarco') {
+                hamoorBox.classList.add('hidden');
+                badrBox.classList.add('hidden');
+                tarcoBox.classList.remove('hidden');
+                if (btnT) btnT.className = 'flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-black bg-amber-500 text-slate-950 shadow-lg shadow-amber-500/30 transition flex items-center justify-center gap-2';
+            } else {
+                hamoorBox.classList.remove('hidden');
+                badrBox.classList.add('hidden');
+                tarcoBox.classList.add('hidden');
+                if (btnH) btnH.className = 'flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2';
+            }
         }
 
         // التنقل بين الأقسام من قائمة الـ li في الهيدر
@@ -1203,8 +2202,8 @@
             }, 1200);
         }
 
-        // تشغيل أولي
-        renderFlights(ALL_FLIGHTS);
+        // تشغيل أولي عند تحميل الصفحة
+        handleFlightSearch();
     </script>
 </body>
 </html>
