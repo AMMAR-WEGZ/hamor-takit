@@ -3,607 +3,1208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الموظفين - وكالة السفر الرقمية الذكية</title>
+    <title>وكالة السفر الذكية - بوابتك الشاملة للطيران، البواخر، التأشيرات والبصات</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; }
+        .nav-active {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+            color: #ffffff !important;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.35);
+        }
+        optgroup {
+            background-color: #0f172a;
+            color: #fbbf24;
+            font-weight: 800;
+        }
+        option {
+            background-color: #1e293b;
+            color: #f8fafc;
+        }
     </style>
 </head>
-<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white">
 
-    <!-- شريط التنقل العلوي للموظف -->
-    <header class="bg-slate-800/90 border-b border-slate-700/80 sticky top-0 z-50 backdrop-blur-md px-4 lg:px-8 py-3.5 flex items-center justify-between">
+    <!-- شريط التنقل العلوي للعملاء (قائمة التنقل li في الهيدر) -->
+    <header class="bg-slate-900/95 border-b border-slate-800 sticky top-0 z-40 backdrop-blur-md px-4 lg:px-8 py-3.5 flex items-center justify-between">
+        
+        <!-- الشعار واسم الوكالة: هامور -->
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 rounded-xl overflow-hidden border border-amber-500/50 shadow-lg shadow-amber-500/20 flex-shrink-0 bg-slate-900">
                 <img src="../assets/hamoor_logo.jpg" alt="شعار هامور" class="w-full h-full object-cover">
             </div>
             <div>
-                <h1 class="text-lg font-bold text-white flex items-center gap-2">
+                <h1 class="text-xl font-black text-white tracking-wide flex items-center gap-1.5">
                     <span>هامور</span>
-                    <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-semibold">لوحة تحكم الموظفين والعمليات</span>
+                    <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-md font-bold">HAMOOR</span>
                 </h1>
-                <p class="text-xs text-slate-400">وكالة هامور للسفر والسياحة • إصدار تذاكر تاركو وبدر عبر TT Interactive</p>
+                <p class="text-[10px] text-amber-400 font-semibold">وكالة هامور للسفر والسياحة والحجوزات الذكية</p>
             </div>
         </div>
 
-        <!-- حالة الموظف والمعلومات -->
-        <div class="flex items-center gap-4">
-            <div class="hidden md:flex items-center gap-2 bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-700/60 text-xs">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                <span class="text-slate-300">الحالة: <strong class="text-emerald-400">متصل (متاح لاستقبال الحجوزات)</strong></span>
-            </div>
+        <!-- قائمة التنقل الرئيسية (li) للتنقل بين كافة الخدمات -->
+        <nav class="hidden lg:flex items-center">
+            <ul class="flex items-center gap-1.5 bg-slate-950/80 p-1.5 rounded-2xl border border-slate-800/90 text-xs font-bold">
+                <li>
+                    <button onclick="switchTab('flights')" id="nav-flights" class="nav-active flex items-center gap-1.5 px-4 py-2 rounded-xl transition-all">
+                        <span>✈️</span>
+                        <span>حجوزات الطيران</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('ferries')" id="nav-ferries" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all">
+                        <span>🚢</span>
+                        <span>البواخر البحرية</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('visas')" id="nav-visas" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all">
+                        <span>📄</span>
+                        <span>خدمات التأشيرات</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('buses')" id="nav-buses" class="flex items-center gap-1.5 px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all">
+                        <span>🚌</span>
+                        <span>بصات السفر</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
 
-            <div class="flex items-center gap-3 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
-                <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-sm font-bold text-white">
-                    م.أ
-                </div>
-                <div class="text-right">
-                    <div class="text-xs font-bold text-white">محمد أحمد عثمان</div>
-                    <div class="text-[10px] text-amber-400">مشرف حجوزات طيران تاركو وبدر (موظف 1 من 10)</div>
-                </div>
-            </div>
-
-            <!-- رابط سريع لواجهة العميل للتجربة -->
-            <a href="index.html" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-xl transition flex items-center gap-1 font-semibold shadow-md">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                معاينة واجهة العميل
+        <!-- أزرار الإجراءات في الهيدر -->
+        <div class="flex items-center gap-2.5">
+            <a href="employee_dashboard.html" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-750 border border-slate-700 text-xs text-amber-300 font-bold flex items-center gap-1.5 transition shadow">
+                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                دخول الموظفين
             </a>
+
+            <button onclick="openBookingFlowModal('تسجيل دخول العميل', 'حسابك الشخصي')" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition shadow-lg shadow-indigo-600/30">
+                تسجيل الدخول
+            </button>
         </div>
     </header>
 
-    <!-- بطاقة بوابة الطيران التفاعلية المركزية (المطلوبة في الخطة بدقة) -->
-    <div class="max-w-7xl mx-auto w-full px-4 lg:px-8 mt-5">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 border-2 border-indigo-500/40 p-5 shadow-2xl hover:border-indigo-400 transition-all duration-300 group">
-            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
-                <div class="flex items-center gap-5 w-full lg:w-auto">
-                    <!-- صورة الطيران التفاعلية التي تفتح الرابط عند الضغط عليها -->
-                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" title="اضغط لفتح بوابة TT Interactive لإصدار التذاكر" class="relative block rounded-xl overflow-hidden shadow-2xl border-2 border-amber-400/80 group-hover:scale-105 transition duration-300 flex-shrink-0 cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80" alt="نظام طيران TT Interactive" class="w-36 h-24 object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-2 text-center">
-                            <span class="text-[11px] font-extrabold text-amber-300 flex items-center justify-center gap-1">
-                                ✈️ فتح النظام
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                            </span>
-                        </div>
-                    </a>
+    <!-- شريط تنقل للأجهزة الذكية (Mobile Navigation Bar) -->
+    <div class="lg:hidden bg-slate-900 border-b border-slate-800 px-4 py-2 overflow-x-auto">
+        <ul class="flex items-center gap-2 text-xs font-bold whitespace-nowrap">
+            <li>
+                <button onclick="switchTab('flights')" id="mob-flights" class="nav-active px-3 py-1.5 rounded-xl">✈️ الطيران</button>
+            </li>
+            <li>
+                <button onclick="switchTab('ferries')" id="mob-ferries" class="text-slate-400 hover:text-white px-3 py-1.5 rounded-xl">🚢 البواخر</button>
+            </li>
+            <li>
+                <button onclick="switchTab('visas')" id="mob-visas" class="text-slate-400 hover:text-white px-3 py-1.5 rounded-xl">📄 التأشيرات</button>
+            </li>
+            <li>
+                <button onclick="switchTab('buses')" id="mob-buses" class="text-slate-400 hover:text-white px-3 py-1.5 rounded-xl">🚌 البصات</button>
+            </li>
+        </ul>
+    </div>
 
+    <!-- قسم الهيرو التعريفي -->
+    <section class="relative overflow-hidden py-8 lg:py-10 px-4 lg:px-8 border-b border-slate-800 bg-gradient-to-b from-slate-900 via-slate-900/70 to-slate-950">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30 mb-3">
+                <span>🇸🇩 شبكة مطارات السودان كاملة • جميع رحلات الخليج المباشرة • وجهات إفريقيا</span>
+            </div>
+            <h2 class="text-2xl lg:text-4xl font-black text-white leading-tight">
+                محرك بحث الطيران المباشر <span class="bg-gradient-to-r from-amber-400 to-indigo-400 bg-clip-text text-transparent">بالجنيه السوداني</span>
+            </h2>
+            <p class="text-slate-300 text-xs lg:text-sm mt-2 max-w-2xl mx-auto">
+                اختر نوع الرحلة (ذهاب فقط أو ذهاب وعودة)، وحدد يوم السفر من وإلى أي مطار في السودان أو الخليج أو إفريقيا.
+            </p>
+        </div>
+    </section>
+
+    <!-- المحتوى الرئيسي للخدمات -->
+    <main class="max-w-6xl mx-auto w-full px-4 lg:px-8 py-8 flex-1">
+        
+        <!-- 1. محتوى قسم الطيران ومحرك البحث المتطور والشامل -->
+        <section id="content-flights" class="space-y-6">
+            
+            <!-- روابط الشركاء الرسميين -->
+            <div class="bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 p-4 lg:p-5 rounded-2xl border border-indigo-500/30 shadow-xl">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 mb-1.5">
-                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-                            بوابة إصدار التذاكر العالمية للموظفين (GDS Portal)
-                        </div>
-                        <h2 class="text-xl font-black text-white flex items-center gap-2">
-                            نظام TT Interactive لحجوزات وإصدار التذاكر
-                        </h2>
-                        <p class="text-sm text-slate-300 mt-1 max-w-xl">
-                            البوابة المعتمدة لموظفي الوكالة لإصدار التذاكر وتثبيت المقاعد الرسمية لشركات الطيران (طيران تاركو وطيران بدر والخطوط المرتبطة) مباشرة أثناء محادثة العميل.
+                        <h3 class="text-sm lg:text-base font-bold text-white flex items-center gap-2">
+                            <span>🔍 شركاء الطيران المعتمدون للتصفح والمقارنة</span>
+                        </h3>
+                        <p class="text-xs text-slate-300 mt-0.5">
+                            يمكنك أيضاً تصفح وبحث الجداول المباشرة في المواقع الرسمية ثم إتمام حجزك معنا بالجنيه السوداني:
                         </p>
                     </div>
-                </div>
 
-                <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-end">
-                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/20 transition-all transform hover:-translate-y-0.5">
-                        <svg class="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-                        دخول بوابة TT Interactive
-                    </a>
-                    
-                    <button onclick="toggleIframeModal()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-bold text-xs flex items-center gap-2 transition">
-                        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
-                        عرض داخل الشاشة
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- النافذة المنبثقة لإطار TT Interactive داخل الشاشة -->
-    <div id="ttModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700 w-full max-w-6xl h-[85vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl">
-            <div class="px-5 py-3 bg-slate-800 border-b border-slate-700 flex items-center justify-between">
-                <div class="flex items-center gap-2">
-                    <span class="text-sm font-bold text-white">نظام TT Interactive السحابي</span>
-                    <span class="text-xs text-slate-400">(emea.ttinteractive.com)</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" class="text-xs text-amber-400 hover:underline flex items-center gap-1 font-semibold">
-                        فتح في نافذة جديدة
-                    </a>
-                    <button onclick="toggleIframeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-700">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
-            </div>
-            <div class="flex-1 bg-white relative">
-                <iframe src="https://emea.ttinteractive.com/otds/index.asp" class="w-full h-full border-0"></iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- شبكة مساحة عمل الموظف الرئيسية -->
-    <main class="max-w-7xl mx-auto w-full px-4 lg:px-8 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-        <!-- العمود الأيمن: قائمة طلبات الحجوزات الواردة (4 أعمدة) -->
-        <section class="lg:col-span-4 flex flex-col gap-4">
-            
-            <!-- شريط التصفية والبحث في الحجوزات -->
-            <div class="bg-slate-800/80 rounded-2xl p-4 border border-slate-700/80 shadow-lg">
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="font-bold text-white text-sm flex items-center gap-2">
-                        <span>قائمة الحجوزات الواردة</span>
-                        <span id="bookingCountBadge" class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">4 طلبات</span>
-                    </h3>
-                    <div class="flex items-center gap-1">
-                        <button onclick="filterBookings('all')" class="text-[11px] bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg font-bold hover:bg-slate-600">الكل</button>
-                        <button onclick="filterBookings('flight')" class="text-[11px] bg-indigo-900/60 text-indigo-300 border border-indigo-700/50 px-2 py-1 rounded-lg font-bold">طيران</button>
-                        <button onclick="filterBookings('cruise')" class="text-[11px] bg-teal-900/60 text-teal-300 border border-teal-700/50 px-2 py-1 rounded-lg font-bold">بواخر</button>
-                        <button onclick="filterBookings('visa')" class="text-[11px] bg-amber-900/60 text-amber-300 border border-amber-700/50 px-2 py-1 rounded-lg font-bold">تأشيرة</button>
+                    <div class="flex items-center gap-3">
+                        <a href="https://www.tarcoaviation.com/TarcoAviation/" target="_blank" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-750 border border-slate-600 rounded-xl text-xs font-bold text-amber-300 flex items-center gap-1.5 transition shadow">
+                            <span>🌐 موقع تاركو للطيران</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
+                        <a href="https://badrairlines.com/ar/?srsltid=AYCX9vLg1x1ddswckHaP8E5X6S5ivu4cejUIKBHjDJSSVyUck-3BmXRt" target="_blank" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-750 border border-slate-600 rounded-xl text-xs font-bold text-indigo-300 flex items-center gap-1.5 transition shadow">
+                            <span>🌐 موقع طيران بدر</span>
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
                     </div>
                 </div>
-
-                <!-- شريط البحث السريع -->
-                <div class="relative">
-                    <input type="text" id="bookingSearch" placeholder="بحث برقم الحجز، اسم العميل، الوجهة..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl py-2 px-9 text-xs text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500">
-                    <svg class="w-4 h-4 text-slate-400 absolute right-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                </div>
             </div>
 
-            <!-- بطاقات الحجوزات التفاعلية (مع مبالغ بالجنيه السوداني) -->
-            <div id="bookingsList" class="flex flex-col gap-3 overflow-y-auto max-h-[640px] pr-1">
+            <!-- محرك البحث المتطور: نوع الرحلة + تواريخ السفر + تصنيف المطارات بالكامل -->
+            <div class="bg-slate-900 p-5 rounded-3xl border border-slate-800 shadow-2xl">
                 
-                <!-- حجز 1: طيران تاركو (نشط حالياً) -->
-                <div onclick="selectBooking(1)" id="bookingCard-1" class="cursor-pointer bg-slate-800 hover:bg-slate-750 border-2 border-indigo-500 rounded-2xl p-4 transition-all shadow-md relative">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800">BK-2026-TR884</span>
-                        <span class="text-[11px] font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-700">مستندات مرفوعة ✅</span>
+                <!-- رأس محرك البحث وتحديد نوع الرحلة (ذهاب / ذهاب وعودة) -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-5 pb-4 border-b border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs font-bold text-slate-400">نوع الرحلة:</span>
+                        
+                        <!-- خيار ذهاب فقط -->
+                        <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition" id="lblTripOneWay">
+                            <input type="radio" name="tripType" value="oneway" checked onchange="toggleTripType(this.value)" class="text-amber-500 focus:ring-0">
+                            <span class="text-xs font-bold text-white">ذهاب فقط</span>
+                        </label>
+
+                        <!-- خيار ذهاب وعودة -->
+                        <label class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-700 bg-slate-950 hover:border-amber-400 transition" id="lblTripRound">
+                            <input type="radio" name="tripType" value="round" onchange="toggleTripType(this.value)" class="text-amber-500 focus:ring-0">
+                            <span class="text-xs font-bold text-white">ذهاب وعودة (تذكرة راوند)</span>
+                        </label>
                     </div>
-                    <div class="text-sm font-bold text-white">عبد العزيز سليمان أحمد</div>
-                    <div class="text-xs text-indigo-300 flex items-center gap-1 mt-1 font-semibold">
-                        <span>✈️ طيران تاركو</span> • <span>بورتسودان (PZU) ⬅️ القاهرة (CAI)</span>
-                    </div>
-                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
-                        <span>20 نوفمبر 2026 • 1 مسافر</span>
-                        <span class="text-amber-300 font-bold">1,250,000 ج.س</span>
-                    </div>
+
+                    <button onclick="resetFlightFilters()" class="text-[11px] text-slate-400 hover:text-amber-400 transition flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                        إعادة تعيين البحث
+                    </button>
                 </div>
 
-                <!-- حجز 2: طيران بدر -->
-                <div onclick="selectBooking(2)" id="bookingCard-2" class="cursor-pointer bg-slate-800/80 hover:bg-slate-750 border border-slate-700 rounded-2xl p-4 transition-all shadow-md">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-bold text-slate-300 bg-slate-900 px-2 py-0.5 rounded border border-slate-700">BK-2026-BD502</span>
-                        <span class="text-[11px] font-bold text-yellow-400 bg-yellow-950/80 px-2 py-0.5 rounded-full border border-yellow-700">بانتظار الدفع ⏳</span>
-                    </div>
-                    <div class="text-sm font-bold text-white">مريم عبد القادر إبراهيم</div>
-                    <div class="text-xs text-indigo-300 flex items-center gap-1 mt-1 font-semibold">
-                        <span>✈️ طيران بدر</span> • <span>بورتسودان (PZU) ⬅️ جدة (JED)</span>
-                    </div>
-                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
-                        <span>24 نوفمبر 2026 • 2 مسافرين</span>
-                        <span class="text-amber-300 font-bold">2,300,000 ج.س</span>
-                    </div>
-                </div>
+                <!-- حقول نموذج البحث -->
+                <form onsubmit="handleFlightSearch(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        
+                        <!-- 1. مطار الإقلاع (مطارات السودان كاملة + الخليج + إفريقيا) -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">مطار الإقلاع (من):</label>
+                            <select id="searchOrigin" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                <option value="ALL">جميع مطارات الإقلاع</option>
+                                
+                                <optgroup label="🇸🇩 مطارات السودان كاملة">
+                                    <option value="بورتسودان (PZU)" selected>بورتسودان الدولي (PZU) - الرئيسي الحالي</option>
+                                    <option value="كسلا (KAS)">كسلا (KAS)</option>
+                                    <option value="دنقلا (DOG)">دنقلا (DOG)</option>
+                                    <option value="مروي (MWE)">مروي (MWE)</option>
+                                    <option value="وادي حلفا (WHF)">وادي حلفا (WHF)</option>
+                                    <option value="الخرطوم (KRT)">الخرطوم الدولي (KRT)</option>
+                                    <option value="الأبيض (EBD)">الأبيض (EBD)</option>
+                                    <option value="الفاشر (ELF)">الفاشر (ELF)</option>
+                                    <option value="نيالا (UYL)">نيالا (UYL)</option>
+                                    <option value="الجنينة (EGN)">الجنينة (EGN)</option>
+                                    <option value="الدمازين (RSS)">الدمازين (RSS)</option>
+                                    <option value="كادوقلي (KDX)">كادوقلي (KDX)</option>
+                                </optgroup>
 
-                <!-- حجز 3: بواخر بحرية -->
-                <div onclick="selectBooking(3)" id="bookingCard-3" class="cursor-pointer bg-slate-800/80 hover:bg-slate-750 border border-slate-700 rounded-2xl p-4 transition-all shadow-md">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-bold text-teal-400 bg-teal-950/60 px-2 py-0.5 rounded border border-teal-800">BK-2026-CR104</span>
-                        <span class="text-[11px] font-bold text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded-full border border-cyan-700">طلب جديد 💬</span>
-                    </div>
-                    <div class="text-sm font-bold text-white">عثمان طه الأمين</div>
-                    <div class="text-xs text-teal-300 flex items-center gap-1 mt-1 font-semibold">
-                        <span>🚢 باخرة الركاب السريعة</span> • <span>سواكن ⬅️ ميناء جدة الإسلامي</span>
-                    </div>
-                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
-                        <span>28 نوفمبر 2026 • كابينة أولى</span>
-                        <span class="text-amber-300 font-bold">750,000 ج.س</span>
-                    </div>
-                </div>
+                                <optgroup label="🌴 مطارات الخليج المباشرة">
+                                    <option value="جدة (JED)">جدة - مطار الملك عبد العزيز (JED)</option>
+                                    <option value="الرياض (RUH)">الرياض - مطار الملك خالد (RUH)</option>
+                                    <option value="الدمام (DMM)">الدمام - مطار الملك فهد (DMM)</option>
+                                    <option value="المدينة المنورة (MED)">المدينة المنورة (MED)</option>
+                                    <option value="دبي (DXB)">دبي الدولي (DXB)</option>
+                                    <option value="الشارقة (SHJ)">الشارقة الدولي (SHJ)</option>
+                                    <option value="أبوظبي (AUH)">أبوظبي الدولي (AUH)</option>
+                                    <option value="الدوحة (DOH)">الدوحة - مطار حمد الدولي (DOH)</option>
+                                    <option value="مسقط (MCT)">مسقط الدولي (MCT)</option>
+                                    <option value="الكويت (KWI)">الكويت الدولي (KWI)</option>
+                                    <option value="البحرين (BAH)">البحرين الدولي (BAH)</option>
+                                </optgroup>
 
-                <!-- حجز 4: تأشيرة -->
-                <div onclick="selectBooking(4)" id="bookingCard-4" class="cursor-pointer bg-slate-800/80 hover:bg-slate-750 border border-slate-700 rounded-2xl p-4 transition-all shadow-md">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800">BK-2026-VS319</span>
-                        <span class="text-[11px] font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-700">تم إصدار التأشيرة 📄</span>
-                    </div>
-                    <div class="text-sm font-bold text-white">ياسر بشير الفاضل</div>
-                    <div class="text-xs text-amber-300 flex items-center gap-1 mt-1 font-semibold">
-                        <span>📄 تأشيرة دخول للمملكة العربية السعودية</span> • <span>زيارة متعددة 1 سنة</span>
-                    </div>
-                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
-                        <span>جاهزة للتحميل</span>
-                        <span class="text-amber-300 font-bold">520,000 ج.س</span>
-                    </div>
-                </div>
+                                <optgroup label="🌍 مطارات إفريقيا">
+                                    <option value="القاهرة (CAI)">القاهرة الدولي (CAI) - مصر</option>
+                                    <option value="برج العرب (HBE)">برج العرب - الإسكندرية (HBE) - مصر</option>
+                                    <option value="أسوان (ASW)">أسوان الدولي (ASW) - مصر</option>
+                                    <option value="أديس أبابا (ADD)">أديس أبابا - بولي (ADD) - إثيوبيا</option>
+                                    <option value="إنجمينا (NDJ)">إنجمينا الدولي (NDJ) - تشاد</option>
+                                    <option value="جوبا (JUB)">جوبا الدولي (JUB) - جنوب السودان</option>
+                                    <option value="عنتيبي (EBB)">عنتيبي الدولي (EBB) - أوغندا</option>
+                                    <option value="نيروبي (NBO)">نيروبي - كينياتا (NBO) - كينيا</option>
+                                    <option value="أسمرة (ASM)">أسمرة الدولي (ASM) - إريتريا</option>
+                                </optgroup>
+                            </select>
+                        </div>
 
+                        <!-- 2. مطار الوصول -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">مطار الوصول (إلى):</label>
+                            <select id="searchDestination" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                <option value="ALL">جميع الوجهات</option>
+                                
+                                <optgroup label="🌴 مطارات الخليج المباشرة">
+                                    <option value="جدة (JED)">جدة - مطار الملك عبد العزيز (JED)</option>
+                                    <option value="الرياض (RUH)">الرياض - مطار الملك خالد (RUH)</option>
+                                    <option value="الدمام (DMM)">الدمام - مطار الملك فهد (DMM)</option>
+                                    <option value="المدينة المنورة (MED)">المدينة المنورة (MED)</option>
+                                    <option value="دبي (DXB)">دبي الدولي (DXB)</option>
+                                    <option value="الشارقة (SHJ)">الشارقة الدولي (SHJ)</option>
+                                    <option value="أبوظبي (AUH)">أبوظبي الدولي (AUH)</option>
+                                    <option value="الدوحة (DOH)">الدوحة - مطار حمد الدولي (DOH)</option>
+                                    <option value="مسقط (MCT)">مسقط الدولي (MCT)</option>
+                                    <option value="الكويت (KWI)">الكويت الدولي (KWI)</option>
+                                    <option value="البحرين (BAH)">البحرين الدولي (BAH)</option>
+                                </optgroup>
+
+                                <optgroup label="🌍 مطارات إفريقيا">
+                                    <option value="القاهرة (CAI)" selected>القاهرة الدولي (CAI) - مصر</option>
+                                    <option value="برج العرب (HBE)">برج العرب - الإسكندرية (HBE) - مصر</option>
+                                    <option value="أسوان (ASW)">أسوان الدولي (ASW) - مصر</option>
+                                    <option value="أديس أبابا (ADD)">أديس أبابا - بولي (ADD) - إثيوبيا</option>
+                                    <option value="إنجمينا (NDJ)">إنجمينا الدولي (NDJ) - تشاد</option>
+                                    <option value="جوبا (JUB)">جوبا الدولي (JUB) - جنوب السودان</option>
+                                    <option value="عنتيبي (EBB)">عنتيبي الدولي (EBB) - أوغندا</option>
+                                    <option value="نيروبي (NBO)">نيروبي - كينياتا (NBO) - كينيا</option>
+                                    <option value="أسمرة (ASM)">أسمرة الدولي (ASM) - إريتريا</option>
+                                </optgroup>
+
+                                <optgroup label="🇸🇩 مطارات السودان كاملة">
+                                    <option value="بورتسودان (PZU)">بورتسودان الدولي (PZU)</option>
+                                    <option value="كسلا (KAS)">كسلا (KAS)</option>
+                                    <option value="دنقلا (DOG)">دنقلا (DOG)</option>
+                                    <option value="مروي (MWE)">مروي (MWE)</option>
+                                    <option value="وادي حلفا (WHF)">وادي حلفا (WHF)</option>
+                                    <option value="الخرطوم (KRT)">الخرطوم الدولي (KRT)</option>
+                                    <option value="الأبيض (EBD)">الأبيض (EBD)</option>
+                                    <option value="الفاشر (ELF)">الفاشر (ELF)</option>
+                                    <option value="نيالا (UYL)">نيالا (UYL)</option>
+                                    <option value="الجنينة (EGN)">الجنينة (EGN)</option>
+                                    <option value="الدمازين (RSS)">الدمازين (RSS)</option>
+                                    <option value="كادوقلي (KDX)">كادوقلي (KDX)</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <!-- 3. تاريخ الذهاب (يوم الحجز) -->
+                        <div>
+                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">تاريخ الذهاب (يوم الحجز):</label>
+                            <input type="date" id="searchDepartureDate" value="2026-11-20" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500">
+                        </div>
+
+                        <!-- 4. تاريخ العودة (يظهر فقط عند اختيار ذهاب وعودة) -->
+                        <div id="returnDateContainer" class="hidden">
+                            <label class="block text-xs text-amber-400 mb-1.5 font-semibold">تاريخ العودة:</label>
+                            <input type="date" id="searchReturnDate" value="2026-11-30" class="w-full bg-slate-950 border border-amber-500/50 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-400">
+                        </div>
+
+                        <!-- 5. فلتر شركة الطيران المعتمدة -->
+                        <div id="airlineFilterCol">
+                            <label class="block text-xs text-slate-300 mb-1.5 font-semibold">شركة الطيران:</label>
+                            <select id="searchAirline" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                                <option value="ALL" selected>كل الخطوط (تاركو + بدر)</option>
+                                <option value="Tarco">طيران تاركو فقط</option>
+                                <option value="Badr">طيران بدر فقط</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- زر البحث وتفاصيل المسار -->
+                    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                        <div class="text-xs text-slate-400">
+                            <span id="searchSummaryText">مسار البحث: رحلة ذهاب فقط • العملة بالجنيه السوداني</span>
+                        </div>
+
+                        <button type="submit" id="searchSubmitBtn" class="w-full sm:w-auto px-8 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl text-xs shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
+                            <svg class="w-4 h-4 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <span>البحث عن الرحلات المتوفرة</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- مؤشر نتائج البحث وعدد الرحلات -->
+            <div class="flex items-center justify-between text-xs text-slate-400 px-1">
+                <span id="resultsCount">جاري فحص وتحديث جداول الرحلات...</span>
+                <span class="text-amber-400 font-semibold">الدفع عبر تطبيق بنكك (بنك الخرطوم)</span>
+            </div>
+
+            <!-- حاوية نتائج الرحلات المتاحة -->
+            <div id="flightsResultsContainer" class="space-y-4">
+                <!-- تُبنى كروت الرحلات تلقائياً من دالة renderFlights -->
             </div>
         </section>
 
-        <!-- العمود الأوسط واليسار: الدردشة الحية + فحص المستندات + إجراءات الحجز -->
-        <section class="lg:col-span-8 flex flex-col gap-5">
-            
-            <!-- لوحة تفاصيل الحجز النشط وشريط الإجراءات -->
-            <div class="bg-slate-800 rounded-2xl p-4 border border-slate-700 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                <div>
-                    <div class="flex items-center gap-2 mb-1">
-                        <span id="activeRef" class="text-xs font-mono font-bold bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-md border border-amber-500/30">BK-2026-TR884</span>
-                        <span id="activeProvider" class="text-xs font-bold bg-indigo-900/70 text-indigo-200 px-2.5 py-1 rounded-md border border-indigo-700/50">طيران تاركو (Tarco)</span>
-                        <span class="text-xs text-slate-400">تاريخ الطلب: 10 نوفمبر 2026</span>
+        <!-- 2. محتوى قسم البواخر البحرية -->
+        <section id="content-ferries" class="hidden space-y-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-2xl flex-shrink-0">
+                        🚢
                     </div>
-                    <h2 id="activeCustomerName" class="text-lg font-black text-white">عبد العزيز سليمان أحمد</h2>
-                    <p id="activeRoute" class="text-xs text-slate-300 mt-0.5">رحلة ذهاب فقط: بورتسودان (PZU) ⬅️ القاهرة (CAI) • المسافر: عبد العزيز سليمان أحمد • القيمة: 1,250,000 ج.س</p>
+                    <div>
+                        <h4 class="font-bold text-white text-base">باخرة الركاب السريعة (ميناء سواكن ⬅️ ميناء جدة الإسلامي)</h4>
+                        <p class="text-xs text-slate-400 mt-1">رحلات منتظمة مع خيارات الكبائن الفردية والعائلية وإمكانية شحن السيارات والأمتعة الكبيرة.</p>
+                        <span class="text-[11px] text-teal-400 font-semibold mt-1 block">مواعيد الإبحار: كل يوم أحد وأربعاء • شاملة الوجبات</span>
+                    </div>
                 </div>
-
-                <!-- أزرار تغيير حالة الحجز وإجراءات الموظف -->
-                <div class="flex items-center gap-2 w-full md:w-auto">
-                    <select id="statusSelect" onchange="updateBookingStatus(this.value)" class="bg-slate-900 text-xs font-bold text-amber-400 border border-slate-700 rounded-xl px-3 py-2 focus:outline-none">
-                        <option value="in_review">قيد المراجعة والتدقيق</option>
-                        <option value="awaiting_payment">بانتظار الدفع وتأكيد الحوالة</option>
-                        <option value="ticket_issued">تم إصدار التذكرة الرسمية ✅</option>
-                        <option value="cancelled">إلغاء الطلب</option>
-                    </select>
-
-                    <button onclick="openUploadTicketModal()" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-emerald-600/20">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                        رفع التذكرة / الفاتورة
+                <div class="flex items-center gap-5">
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 block">التذكرة تبدأ من</span>
+                        <span class="text-xl font-black text-amber-400">750,000 ج.س</span>
+                    </div>
+                    <button onclick="openBookingFlowModal('باخرة سواكن - جدة', '750,000 ج.س')" class="px-6 py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs transition shadow-lg">
+                        إتمام الحجز
                     </button>
                 </div>
             </div>
 
-            <!-- تقسيم أفقي: شاشة الدردشة المباشرة (يسار/يمين) + نافذة المستندات المرفقة -->
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 flex-1">
-                
-                <!-- نافذة الشات المباشر مع العميل (7 أعمدة) -->
-                <div class="md:col-span-7 bg-slate-800 rounded-2xl border border-slate-700 flex flex-col h-[520px] shadow-xl overflow-hidden">
-                    
-                    <!-- ترويسة الشات -->
-                    <div class="p-3 bg-slate-850 border-b border-slate-700 flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span class="text-xs font-bold text-white">الدردشة الحية مع العميل</span>
-                        </div>
-                        <div class="text-[11px] text-slate-400">
-                            محادثة مشفرة ومحفوظة في SQLite
-                        </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-2xl flex-shrink-0">
+                        🚢
                     </div>
-
-                    <!-- صندوق الرسائل -->
-                    <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-900/70 text-xs">
-                        
-                        <!-- رسالة نظام -->
-                        <div class="text-center my-1">
-                            <span class="bg-slate-800 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-slate-700">
-                                تم فتح المحادثة بعد رفع مستندات الهوية بنجاح • 10:14 ص
-                            </span>
-                        </div>
-
-                        <!-- رسالة من العميل -->
-                        <div class="flex items-start gap-2 max-w-[85%]">
-                            <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                                ع.س
-                            </div>
-                            <div>
-                                <div class="bg-slate-800 border border-slate-700 rounded-2xl rounded-tr-none p-3 text-slate-200">
-                                    مرحباً، لقد قمت برفع صورة جواز السفر وأريد تأكيد مقعد على رحلة تاركو من بورتسودان إلى القاهرة يوم 20 نوفمبر القادم.
-                                </div>
-                                <span class="text-[10px] text-slate-500 mt-1 block">10:15 ص</span>
-                            </div>
-                        </div>
-
-                        <!-- رسالة من الموظف -->
-                        <div class="flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse">
-                            <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                                موظف
-                            </div>
-                            <div>
-                                <div class="bg-indigo-600 text-white rounded-2xl rounded-tl-none p-3 shadow-md">
-                                    أهلاً بك أستاذ عبد العزيز. تم استلام صورة الجواز وجاري التحقق منها وحجز مقعدك على رحلة تاركو (3W-112) عبر بوابة TT Interactive.
-                                </div>
-                                <span class="text-[10px] text-slate-400 mt-1 block text-left">10:16 ص • تمت القراءة</span>
-                            </div>
-                        </div>
-
-                        <!-- رسالة من الموظف: إرسال بيانات الدفع بالجنيه السوداني -->
-                        <div class="flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse">
-                            <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                                موظف
-                            </div>
-                            <div>
-                                <div class="bg-indigo-900/90 border border-indigo-500/50 text-white rounded-2xl rounded-tl-none p-3">
-                                    قيمة التذكرة الإجمالية: <strong>1,250,000 جنيه سوداني</strong>. يمكنك التحويل عبر تطبيق بنكك على حساب الوكالة برقم: <code>2198031</code> بنكك (وكالة هامور للسفر).
-                                </div>
-                                <span class="text-[10px] text-slate-400 mt-1 block text-left">10:18 ص</span>
-                            </div>
-                        </div>
-
+                    <div>
+                        <h4 class="font-bold text-white text-base">باخرة العودة (ميناء جدة الإسلامي ⬅️ ميناء سواكن)</h4>
+                        <p class="text-xs text-slate-400 mt-1">خدمة نقل المسافرين والعفش الزائد مع توفير كافة سبل الراحة والمتابعة المباشرة من الوكالة.</p>
+                        <span class="text-[11px] text-teal-400 font-semibold mt-1 block">مواعيد الإبحار: كل يوم إثنين وخميس</span>
                     </div>
-
-                    <!-- أزرار الردود السريعة للموظف -->
-                    <div class="px-3 py-1.5 bg-slate-850 border-t border-slate-700/60 flex items-center gap-1.5 overflow-x-auto text-[11px]">
-                        <span class="text-slate-400 text-[10px] whitespace-nowrap">ردود سريعة:</span>
-                        <button onclick="sendQuickReply('تم التحقق من الجواز وجاري إصدار التذكرة عبر نظام TT Interactive.')" class="bg-slate-750 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded border border-slate-600 whitespace-nowrap">تم التحقق من الجواز</button>
-                        <button onclick="sendQuickReply('قيمة التذكرة 1,250,000 ج.س. الرجاء إرسال إشعار تحويل بنكك لتأكيد التذكرة فوراً.')" class="bg-slate-750 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded border border-slate-600 whitespace-nowrap">طلب إشعار بنكك</button>
-                        <button onclick="sendQuickReply('تم إصدار التذكرة بنجاح! يمكنك تحميلها الآن من الرابط المرفق.')" class="bg-slate-750 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded border border-slate-600 whitespace-nowrap">إشعار صدور التذكرة</button>
-                    </div>
-
-                    <!-- صندوق كتابة الرسالة -->
-                    <form onsubmit="handleStaffSendMessage(event)" class="p-2.5 bg-slate-850 border-t border-slate-700 flex items-center gap-2">
-                        <input type="text" id="staffMessageInput" placeholder="اكتب ردك للعميل هنا..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1 shadow-md">
-                            <span>إرسال</span>
-                            <svg class="w-3.5 h-3.5 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
-                        </button>
-                    </form>
                 </div>
-
-                <!-- نافذة فحص وتدقيق المستندات المرفوعة (5 أعمدة) -->
-                <div class="md:col-span-5 bg-slate-800 rounded-2xl border border-slate-700 flex flex-col h-[520px] shadow-xl p-4">
-                    <div class="flex items-center justify-between pb-3 border-b border-slate-700 mb-3">
-                        <h4 class="font-bold text-xs text-white flex items-center gap-2">
-                            <span>المستندات المرفوعة من العميل (KYC)</span>
-                        </h4>
-                        <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-mono">1 مستند</span>
+                <div class="flex items-center gap-5">
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 block">التذكرة</span>
+                        <span class="text-xl font-black text-amber-400">750,000 ج.س</span>
                     </div>
-
-                    <!-- عارض صورة الجواز / الهوية -->
-                    <div class="flex-1 flex flex-col justify-between bg-slate-900 rounded-xl p-3 border border-slate-700/80">
-                        <div>
-                            <div class="flex items-center justify-between text-xs text-slate-300 mb-2">
-                                <span class="font-bold text-amber-400">جواز سفر المسافر (رسمي)</span>
-                                <span class="text-[10px] text-slate-400">passport_aziz_2026.jpg</span>
-                            </div>
-                            
-                            <!-- معاينة الصورة مع زر تكبير -->
-                            <div class="relative rounded-lg overflow-hidden border border-slate-700 group cursor-pointer" onclick="openDocPreviewModal()">
-                                <img id="activeDocImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" alt="صورة الجواز" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300">
-                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                                    <span class="bg-slate-900/90 text-white text-xs px-3 py-1.5 rounded-lg border border-slate-600 flex items-center gap-1 font-bold">
-                                        🔍 تكبير وفحص البيانات
-                                    </span>
-                                </div>
-                            </div>
-
-                            <!-- بيانات الجواز المقروءة -->
-                            <div class="mt-3 bg-slate-950/70 rounded-lg p-2.5 text-[11px] space-y-1.5 border border-slate-850">
-                                <div class="flex justify-between">
-                                    <span class="text-slate-400">الاسم بالجواز:</span>
-                                    <span class="text-white font-bold">ABDELAZIZ SULIMAN AHMED</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-400">رقم الجواز:</span>
-                                    <span class="text-amber-300 font-mono font-bold">P0129388</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="text-slate-400">تاريخ الانتهاء:</span>
-                                    <span class="text-emerald-400 font-semibold">14/08/2030 (صالح)</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- أزرار اعتماد المستند -->
-                        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
-                            <button onclick="verifyDoc(true)" class="flex-1 bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                اعتماد المستند
-                            </button>
-                            <button onclick="verifyDoc(false)" class="bg-rose-900/50 hover:bg-rose-800 text-rose-300 border border-rose-700/60 font-bold px-3 py-2 rounded-xl text-xs transition">
-                                طلب إعادة رفع
-                            </button>
-                        </div>
-                    </div>
-
+                    <button onclick="openBookingFlowModal('باخرة جدة - سواكن', '750,000 ج.س')" class="px-6 py-3 rounded-xl bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs transition shadow-lg">
+                        إتمام الحجز
+                    </button>
                 </div>
+            </div>
+        </section>
 
+        <!-- 3. محتوى قسم التأشيرات -->
+        <section id="content-visas" class="hidden space-y-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl flex-shrink-0">
+                        📄
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">تأشيرة دخول المملكة العربية السعودية (سياحية / تجارية / زيارة)</h4>
+                        <p class="text-xs text-slate-400 mt-1">إصدار سريع خلال 24 إلى 48 ساعة • تتطلب فقط صورة الجواز وصورة شخصية بخلفية بيضاء.</p>
+                        <span class="text-[11px] text-amber-400 font-semibold mt-1 block">صلاحية لمدة سنة مع دخول متعدد</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-5">
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 block">الرسوم الشاملة</span>
+                        <span class="text-xl font-black text-amber-400">520,000 ج.س</span>
+                    </div>
+                    <button onclick="openBookingFlowModal('تأشيرة السعودية متعددة', '520,000 ج.س')" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition shadow-lg">
+                        تقديم وإتمام الطلب
+                    </button>
+                </div>
             </div>
 
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-2xl flex-shrink-0">
+                        📄
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">تأشيرة دخول دولة الإمارات العربية المتحدة (سياحة 60 يوماً)</h4>
+                        <p class="text-xs text-slate-400 mt-1">تأشيرة إلكترونية سريعة شاملة التأمين الصحي الإلزامي ومطابقة اشتراطات الدخول.</p>
+                        <span class="text-[11px] text-amber-400 font-semibold mt-1 block">إصدار فوري خلال 3 أيام عمل</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-5">
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 block">الرسوم</span>
+                        <span class="text-xl font-black text-amber-400">680,000 ج.س</span>
+                    </div>
+                    <button onclick="openBookingFlowModal('تأشيرة الإمارات 60 يوماً', '680,000 ج.س')" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs transition shadow-lg">
+                        تقديم وإتمام الطلب
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. محتوى قسم بصات السفر -->
+        <section id="content-buses" class="hidden space-y-4">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
+                <div class="flex items-center gap-4">
+                    <div class="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-2xl flex-shrink-0">
+                        🚌
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-base">بصات السفر الفاخرة (VIP) - بورتسودان ⬅️ عطبرة / كسلا / القضارف</h4>
+                        <p class="text-xs text-slate-400 mt-1">بصات مجهزة ومكيفة مع مقاعد مريحة وتأمين سفر ووجبة خفيفة أثناء الطريق.</p>
+                        <span class="text-[11px] text-emerald-400 font-semibold mt-1 block">رحلات يومية صباحية ومسائية</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-5">
+                    <div class="text-right">
+                        <span class="text-[10px] text-slate-400 block">التذكرة</span>
+                        <span class="text-xl font-black text-amber-400">45,000 ج.س</span>
+                    </div>
+                    <button onclick="openBookingFlowModal('بص VIP بورتسودان - عطبرة', '45,000 ج.س')" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-lg">
+                        إتمام الحجز
+                    </button>
+                </div>
+            </div>
         </section>
 
     </main>
 
-    <!-- نافذة رفع التذكرة والفاتورة -->
-    <div id="uploadTicketModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-800 border border-slate-700 w-full max-w-md rounded-2xl p-5 shadow-2xl">
-            <div class="flex items-center justify-between pb-3 border-b border-slate-700 mb-4">
-                <h3 class="font-bold text-white text-sm flex items-center gap-2">
-                    <span>إصدار ورفع التذكرة والفاتورة الرسمية</span>
-                </h3>
-                <button onclick="closeUploadTicketModal()" class="text-slate-400 hover:text-white">✕</button>
-            </div>
+    <!-- نافذة التدفق الفوري (Modal) لإتمام الحجز والتسجيل ورفع المستندات والشات -->
+    <div id="bookingFlowModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl flex flex-col">
             
-            <div class="space-y-3 text-xs">
+            <!-- شريط العنوان والخطوات -->
+            <div class="bg-slate-850 px-6 py-4 border-b border-slate-800 flex items-center justify-between">
                 <div>
-                    <label class="block text-slate-300 mb-1 font-semibold">رقم التذكرة الإلكترونية (e-Ticket No):</label>
-                    <input type="text" id="eTicketNumber" value="3W-082-99120485" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-amber-300 font-mono">
+                    <h3 id="modalTitle" class="font-black text-white text-base">إتمام حجز رحلة طيران</h3>
+                    <p id="modalSub" class="text-xs text-amber-400 mt-0.5">السعر: 1,250,000 ج.س</p>
                 </div>
-                <div>
-                    <label class="block text-slate-300 mb-1 font-semibold">رقم الفاتورة الضريبية:</label>
-                    <input type="text" id="invoiceNumber" value="INV-2026-00941" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono">
+                <button onclick="closeBookingFlowModal()" class="text-slate-400 hover:text-white p-1 rounded-lg">✕</button>
+            </div>
+
+            <!-- مؤشر الخطوات -->
+            <div class="bg-slate-950 px-6 py-3 border-b border-slate-850 flex items-center justify-between text-xs font-bold">
+                <div id="stepIndicator-1" class="flex items-center gap-1.5 text-amber-400">
+                    <span class="w-5 h-5 rounded-full bg-amber-500 text-slate-950 flex items-center justify-center text-[10px]">1</span>
+                    <span>إنشاء حساب</span>
                 </div>
-                <div>
-                    <label class="block text-slate-300 mb-1 font-semibold">المبلغ بالجنيه السوداني:</label>
-                    <input type="text" id="invoiceAmount" value="1,250,000 ج.س" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-emerald-400 font-bold font-mono">
+                <span class="text-slate-700">───</span>
+                <div id="stepIndicator-2" class="flex items-center gap-1.5 text-slate-500">
+                    <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center text-[10px]">2</span>
+                    <span>رفع المستندات (KYC)</span>
                 </div>
+                <span class="text-slate-700">───</span>
+                <div id="stepIndicator-3" class="flex items-center gap-1.5 text-slate-500">
+                    <span class="w-5 h-5 rounded-full bg-slate-800 text-slate-300 flex items-center justify-center text-[10px]">3</span>
+                    <span>الدردشة وتأكيد الحجز</span>
+                </div>
+            </div>
+
+            <!-- محتوى الخطوة 1: إنشاء الحساب أو تسجيل الدخول السريع -->
+            <div id="stepContent-1" class="p-6 space-y-4">
+                <div class="bg-indigo-950/40 border border-indigo-500/20 rounded-xl p-3 text-xs text-indigo-300">
+                    🔒 لحماية بيانات سفرك وتوثيق التذكرة باسمك في سجلات الطيران، يرجى إدخال بياناتك الأساسية للمتابعة:
+                </div>
+                
                 <div>
-                    <label class="block text-slate-300 mb-1 font-semibold">ملف التذكرة (PDF):</label>
-                    <div class="border-2 border-dashed border-slate-600 rounded-xl p-4 text-center bg-slate-900/50 hover:border-indigo-500 cursor-pointer">
-                        <svg class="w-8 h-8 text-indigo-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
-                        <p class="text-[11px] text-slate-300 font-semibold">اضغط لاختيار ملف التذكرة الصادرة من TT Interactive</p>
-                        <p class="text-[10px] text-slate-500 mt-0.5">Tarco_Ticket_P0129388.pdf (جاهز للإرسال)</p>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">الاسم الكامل (كما هو مكتوب في الجواز / الهوية):</label>
+                    <input type="text" id="custName" value="عبد العزيز سليمان أحمد" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">رقم الهاتف (واتساب):</label>
+                        <input type="text" id="custPhone" value="+249123456789" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">البريد الإلكتروني:</label>
+                        <input type="email" id="custEmail" value="aziz@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
                     </div>
                 </div>
+
+                <button onclick="goToStep(2)" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl text-xs transition shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 mt-2">
+                    <span>متابعة لرفع مستندات الهوية</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                </button>
             </div>
 
-            <div class="flex items-center gap-2 mt-5">
-                <button onclick="confirmTicketIssue()" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 rounded-xl text-xs shadow-lg transition">
-                    إرسال التذكرة للعميل مباشرة في الشات وحسابه
-                </button>
-                <button onclick="closeUploadTicketModal()" class="bg-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-xs font-bold">
-                    إلغاء
-                </button>
+            <!-- محتوى الخطوة 2: رفع المستندات الثبوتية -->
+            <div id="stepContent-2" class="hidden p-6 space-y-4">
+                <div class="bg-amber-950/40 border border-amber-500/20 rounded-xl p-3 text-xs text-amber-300">
+                    📸 الرجاء إرفاق صورة واضحة لجواز السفر (صفحة البيانات) أو البطاقة الشخصية لإصدار التذكرة:
+                </div>
+
+                <div class="border-2 border-dashed border-slate-700 hover:border-amber-400 rounded-2xl p-6 text-center bg-slate-950 cursor-pointer transition" onclick="simulateFileUpload()">
+                    <div id="fileUploadState">
+                        <svg class="w-10 h-10 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        <p class="text-xs font-bold text-white">اضغط هنا لرفع صورة جواز السفر / بطاقة الهوية</p>
+                        <p class="text-[10px] text-slate-400 mt-1">يدعم ملفات JPG, PNG, PDF (حد أقصى 10 ميجابايت)</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="goToStep(1)" class="bg-slate-800 text-slate-300 font-bold px-4 py-3 rounded-xl text-xs">رجوع</button>
+                    <button onclick="goToStep(3)" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
+                        <span>إرسال الطلب وفتح الدردشة مع الموظف</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                </div>
             </div>
+
+            <!-- محتوى الخطوة 3: نافذة الدردشة المباشرة مع الموظف -->
+            <div id="stepContent-3" class="hidden flex flex-col h-[480px]">
+                <div class="px-5 py-2.5 bg-slate-950 border-b border-slate-850 flex items-center justify-between text-xs">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span class="font-bold text-white">الموظف المسؤول: محمد أحمد عثمان (حجوزات الطيران)</span>
+                    </div>
+                    <span class="text-amber-400 font-mono text-[11px]">رقم الحجز: BK-2026-TR884</span>
+                </div>
+
+                <div id="customerChatArea" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-950/90 text-xs">
+                    <div class="text-center my-1">
+                        <span class="bg-slate-800 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-slate-700">
+                            تم استلام المستندات وجاري ربطك بموظف الوكالة
+                        </span>
+                    </div>
+
+                    <div class="flex items-start gap-2 max-w-[85%]">
+                        <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                            موظف
+                        </div>
+                        <div>
+                            <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-3 shadow-md" id="chatInitialMsg">
+                                مرحباً بك أستاذ عبد العزيز! استلمت بيانات الرحلة وصورة الجواز، وأنا الآن على بوابة TT Interactive لتثبيت مقاعدك وإصدار التذكرة الرسمية. هل تفضل التحويل عبر تطبيق بنكك؟
+                            </div>
+                            <span class="text-[10px] text-slate-500 mt-1 block">الآن</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form onsubmit="handleCustomerSendMessage(event)" class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
+                    <input type="text" id="custMsgInput" placeholder="اكتب ردك لموظف الوكالة هنا..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+                    <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2.5 rounded-xl font-black text-xs flex items-center gap-1 shadow-md">
+                        إرسال
+                    </button>
+                </form>
+            </div>
+
         </div>
     </div>
 
-    <!-- نافذة تكبير المستند -->
-    <div id="docPreviewModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeDocPreviewModal()">
-        <div class="max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 overflow-hidden" onclick="event.stopPropagation()">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
-                <span class="text-xs font-bold text-white">معاينة جواز السفر - عبد العزيز سليمان أحمد</span>
-                <button onclick="closeDocPreviewModal()" class="text-slate-400 hover:text-white text-sm">✕ إغلاق</button>
-            </div>
-            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80" alt="صورة الجواز مكبرة" class="w-full h-auto rounded-lg max-h-[70vh] object-contain">
-        </div>
-    </div>
+    <!-- تذييل الصفحة -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-6 px-4 lg:px-8 text-center text-xs text-slate-400">
+        <p>جميع الحقوق محفوظة © 2026 • وكالة هامور للسفر والسياحة - HAMOOR TRAVEL (تاركو للطيران • طيران بدر • شبكة مطارات السودان، الخليج وإفريقيا)</p>
+    </footer>
 
+    <!-- جافاسكريبت محرك البحث الشامل وقاعدة بيانات الرحلات الموسعة -->
     <script>
-        function toggleIframeModal() {
-            const modal = document.getElementById('ttModal');
-            modal.classList.toggle('hidden');
+        // قاعدة بيانات الرحلات الشاملة لجميع خطوط السودان والخليج وإفريقيا
+        const ALL_FLIGHTS = [
+            // 1. بورتسودان ⬅️ القاهرة
+            {
+                id: 'F1',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-112',
+                origin: 'بورتسودان (PZU)',
+                destination: 'القاهرة (CAI)',
+                depTime: '10:30 ص',
+                arrTime: '12:45 م',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 1250000,
+                priceRound: 2350000,
+                baggage: '2 حقيبة (23 كجم لكل حقيبة) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+            {
+                id: 'F2',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-604',
+                origin: 'بورتسودان (PZU)',
+                destination: 'القاهرة (CAI)',
+                depTime: '02:00 م',
+                arrTime: '04:15 م',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 1220000,
+                priceRound: 2300000,
+                baggage: '46 كجم + وجبة ساخنة مشمولة',
+                badgeColor: 'indigo'
+            },
+
+            // 2. بورتسودان ⬅️ جدة
+            {
+                id: 'F3',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-601',
+                origin: 'بورتسودان (PZU)',
+                destination: 'جدة (JED)',
+                depTime: '04:00 م',
+                arrTime: '05:10 م',
+                duration: 'ساعة و 10 دقائق',
+                priceOneWay: 1150000,
+                priceRound: 2150000,
+                baggage: '46 كجم + وجبة ساخنة مشمولة',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F4',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-204',
+                origin: 'بورتسودان (PZU)',
+                destination: 'جدة (JED)',
+                depTime: '08:30 ص',
+                arrTime: '09:40 ص',
+                duration: 'ساعة و 10 دقائق',
+                priceOneWay: 1180000,
+                priceRound: 2200000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+
+            // 3. بورتسودان ⬅️ الرياض
+            {
+                id: 'F5',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-310',
+                origin: 'بورتسودان (PZU)',
+                destination: 'الرياض (RUH)',
+                depTime: '03:30 م',
+                arrTime: '06:15 م',
+                duration: 'ساعتان و 45 دقيقة',
+                priceOneWay: 1350000,
+                priceRound: 2550000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+            {
+                id: 'F6',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-712',
+                origin: 'بورتسودان (PZU)',
+                destination: 'الرياض (RUH)',
+                depTime: '11:00 ص',
+                arrTime: '01:45 م',
+                duration: 'ساعتان و 45 دقيقة',
+                priceOneWay: 1350000,
+                priceRound: 2550000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo'
+            },
+
+            // 4. بورتسودان ⬅️ الدمام والمدينة المنورة
+            {
+                id: 'F7',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-730',
+                origin: 'بورتسودان (PZU)',
+                destination: 'الدمام (DMM)',
+                depTime: '01:30 م',
+                arrTime: '04:45 م',
+                duration: '3 ساعات و 15 دقيقة',
+                priceOneWay: 1380000,
+                priceRound: 2600000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F8',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-220',
+                origin: 'بورتسودان (PZU)',
+                destination: 'المدينة المنورة (MED)',
+                depTime: '09:00 ص',
+                arrTime: '10:20 ص',
+                duration: 'ساعة و 20 دقيقة',
+                priceOneWay: 1200000,
+                priceRound: 2250000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+
+            // 5. بورتسودان ⬅️ دبي، الشارقة، وأبوظبي
+            {
+                id: 'F9',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-802',
+                origin: 'بورتسودان (PZU)',
+                destination: 'دبي (DXB)',
+                depTime: '09:00 ص',
+                arrTime: '01:30 م',
+                duration: '3 ساعات و 30 دقيقة',
+                priceOneWay: 1480000,
+                priceRound: 2800000,
+                baggage: '46 كجم + وجبة ساخنة مشمولة',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F10',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-550',
+                origin: 'بورتسودان (PZU)',
+                destination: 'الشارقة (SHJ)',
+                depTime: '01:00 م',
+                arrTime: '05:30 م',
+                duration: '3 ساعات و 30 دقيقة',
+                priceOneWay: 1450000,
+                priceRound: 2750000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+            {
+                id: 'F11',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-570',
+                origin: 'بورتسودان (PZU)',
+                destination: 'أبوظبي (AUH)',
+                depTime: '10:00 ص',
+                arrTime: '02:30 م',
+                duration: '3 ساعات و 30 دقيقة',
+                priceOneWay: 1460000,
+                priceRound: 2780000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+
+            // 6. بورتسودان ⬅️ الدوحة ومسقط والكويت والبحرين
+            {
+                id: 'F12',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-410',
+                origin: 'بورتسودان (PZU)',
+                destination: 'الدوحة (DOH)',
+                depTime: '08:00 ص',
+                arrTime: '11:45 ص',
+                duration: 'ساعتان و 45 دقيقة',
+                priceOneWay: 1420000,
+                priceRound: 2700000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+            {
+                id: 'F13',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-910',
+                origin: 'بورتسودان (PZU)',
+                destination: 'مسقط (MCT)',
+                depTime: '11:30 ص',
+                arrTime: '04:15 م',
+                duration: '3 ساعات و 45 دقيقة',
+                priceOneWay: 1400000,
+                priceRound: 2650000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F14',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-460',
+                origin: 'بورتسودان (PZU)',
+                destination: 'الكويت (KWI)',
+                depTime: '02:15 م',
+                arrTime: '05:45 م',
+                duration: 'ساعتان و 30 دقيقة',
+                priceOneWay: 1390000,
+                priceRound: 2650000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+
+            // 7. بورتسودان ⬅️ وجهات إفريقيا (أديس أبابا، إنجمينا، جوبا، أسمرة، الإسكندرية، أسوان)
+            {
+                id: 'F15',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-301',
+                origin: 'بورتسودان (PZU)',
+                destination: 'أديس أبابا (ADD)',
+                depTime: '07:30 ص',
+                arrTime: '09:45 ص',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 1100000,
+                priceRound: 2050000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F16',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-705',
+                origin: 'بورتسودان (PZU)',
+                destination: 'إنجمينا (NDJ)',
+                depTime: '09:30 ص',
+                arrTime: '12:45 م',
+                duration: '3 ساعات و 15 دقيقة',
+                priceOneWay: 1300000,
+                priceRound: 2450000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+            {
+                id: 'F17',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-340',
+                origin: 'بورتسودان (PZU)',
+                destination: 'جوبا (JUB)',
+                depTime: '10:00 ص',
+                arrTime: '12:15 م',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 950000,
+                priceRound: 1800000,
+                baggage: '46 كجم + وجبة خفيفة',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F18',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-180',
+                origin: 'بورتسودان (PZU)',
+                destination: 'أسمرة (ASM)',
+                depTime: '08:00 ص',
+                arrTime: '09:10 ص',
+                duration: 'ساعة و 10 دقائق',
+                priceOneWay: 850000,
+                priceRound: 1600000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+            {
+                id: 'F19',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-116',
+                origin: 'بورتسودان (PZU)',
+                destination: 'برج العرب (HBE)',
+                depTime: '12:00 م',
+                arrTime: '02:30 م',
+                duration: 'ساعتان و 30 دقيقة',
+                priceOneWay: 1250000,
+                priceRound: 2350000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+
+            // 8. رحلات داخلية في مطارات السودان
+            {
+                id: 'F20',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-102',
+                origin: 'بورتسودان (PZU)',
+                destination: 'كسلا (KAS)',
+                depTime: '07:00 ص',
+                arrTime: '07:45 ص',
+                duration: '45 دقيقة',
+                priceOneWay: 450000,
+                priceRound: 850000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F21',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-050',
+                origin: 'بورتسودان (PZU)',
+                destination: 'دنقلا (DOG)',
+                depTime: '08:30 ص',
+                arrTime: '09:30 ص',
+                duration: 'ساعة واحدة',
+                priceOneWay: 480000,
+                priceRound: 900000,
+                baggage: '30 كجم + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+
+            // 9. رحلات العودة إلى بورتسودان والسودان
+            {
+                id: 'F22',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-113',
+                origin: 'القاهرة (CAI)',
+                destination: 'بورتسودان (PZU)',
+                depTime: '02:00 م',
+                arrTime: '04:15 م',
+                duration: 'ساعتان و 15 دقيقة',
+                priceOneWay: 1250000,
+                priceRound: 2350000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            },
+            {
+                id: 'F23',
+                airline: 'Badr',
+                airlineName: 'طيران بدر (Badr Airlines)',
+                flightNo: 'J4-602',
+                origin: 'جدة (JED)',
+                destination: 'بورتسودان (PZU)',
+                depTime: '06:30 م',
+                arrTime: '07:40 م',
+                duration: 'ساعة و 10 دقائق',
+                priceOneWay: 1150000,
+                priceRound: 2150000,
+                baggage: '46 كجم + وجبة ساخنة',
+                badgeColor: 'indigo'
+            },
+            {
+                id: 'F24',
+                airline: 'Tarco',
+                airlineName: 'طيران تاركو (Tarco Aviation)',
+                flightNo: '3W-311',
+                origin: 'الرياض (RUH)',
+                destination: 'بورتسودان (PZU)',
+                depTime: '07:30 م',
+                arrTime: '10:15 م',
+                duration: 'ساعتان و 45 دقيقة',
+                priceOneWay: 1350000,
+                priceRound: 2550000,
+                baggage: '2 حقيبة (23 كجم) + 7 كجم يد',
+                badgeColor: 'amber'
+            }
+        ];
+
+        let currentTripType = 'oneway'; // oneway or round
+
+        // تبديل نوع الرحلة (ذهاب / ذهاب وعودة)
+        function toggleTripType(type) {
+            currentTripType = type;
+            const retContainer = document.getElementById('returnDateContainer');
+            const summary = document.getElementById('searchSummaryText');
+
+            if(type === 'round') {
+                retContainer.classList.remove('hidden');
+                document.getElementById('lblTripRound').classList.add('border-amber-400', 'bg-amber-500/10');
+                document.getElementById('lblTripOneWay').classList.remove('border-amber-400', 'bg-amber-500/10');
+                summary.innerText = 'مسار البحث: رحلة ذهاب وعودة (تذكرة راوند) • العملة بالجنيه السوداني';
+            } else {
+                retContainer.classList.add('hidden');
+                document.getElementById('lblTripOneWay').classList.add('border-amber-400', 'bg-amber-500/10');
+                document.getElementById('lblTripRound').classList.remove('border-amber-400', 'bg-amber-500/10');
+                summary.innerText = 'مسار البحث: رحلة ذهاب فقط • العملة بالجنيه السوداني';
+            }
+
+            // إعادة عرض النتائج بالأسعار المناسبة
+            handleFlightSearch();
         }
 
-        function openDocPreviewModal() {
-            document.getElementById('docPreviewModal').classList.remove('hidden');
+        function formatSDG(num) {
+            return new Intl.NumberFormat('ar-SD').format(num) + ' ج.س';
         }
 
-        function closeDocPreviewModal() {
-            document.getElementById('docPreviewModal').classList.add('hidden');
+        // عرض كروت الرحلات
+        function renderFlights(flights) {
+            const container = document.getElementById('flightsResultsContainer');
+            const countLabel = document.getElementById('resultsCount');
+            const depDate = document.getElementById('searchDepartureDate').value;
+            const retDate = document.getElementById('searchReturnDate').value;
+
+            if (!flights || flights.length === 0) {
+                countLabel.innerText = 'لم يتم العثور على رحلات مطابقة للمسار المحدد';
+                container.innerHTML = `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-400">
+                        <div class="w-12 h-12 rounded-full bg-slate-800 text-amber-400 mx-auto flex items-center justify-center text-xl mb-3">🔍</div>
+                        <h4 class="text-white font-bold text-sm mb-1">لا توجد رحلات مباشرة مجدولة لهذا المسار في تاريخ ${depDate}</h4>
+                        <p class="text-xs text-slate-400 max-w-md mx-auto mb-4">
+                            يمكنك تجربة مسار رئيسي آخر (مثل بورتسودان إلى القاهرة، جدة، الرياض، دبي، أو أديس أبابا) أو التواصل مع الموظف لطلب حجز طيران مخصص.
+                        </p>
+                        <button onclick="resetFlightFilters()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition">
+                            عرض كافة الرحلات المتوفرة (24 رحلة)
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            countLabel.innerText = `عرض ${flights.length} رحلة متوفرة ومؤكدة (${currentTripType === 'round' ? 'ذهاب وعودة' : 'ذهاب فقط'})`;
+
+            container.innerHTML = flights.map(f => {
+                const price = currentTripType === 'round' ? f.priceRound : f.priceOneWay;
+                const tripLabel = currentTripType === 'round' ? 'ذهاب وعودة' : 'ذهاب فقط';
+                const dateDetail = currentTripType === 'round' ? `الذهاب: ${depDate} • العودة: ${retDate}` : `تاريخ الرحلة: ${depDate}`;
+
+                return `
+                <div class="bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-2xl p-5 transition-all duration-200 shadow-lg flex flex-col md:flex-row items-center justify-between gap-5">
+                    <div class="flex items-center gap-4 w-full md:w-auto">
+                        <div class="w-14 h-14 rounded-xl ${f.badgeColor === 'amber' ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' : 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400'} border flex items-center justify-center font-black text-base flex-shrink-0">
+                            ${f.airline === 'Tarco' ? 'تاركو' : 'بدر'}
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="font-black text-white text-base">${f.airlineName}</span>
+                                <span class="text-[10px] ${f.badgeColor === 'amber' ? 'bg-amber-950 text-amber-300 border-amber-800' : 'bg-indigo-950 text-indigo-300 border-indigo-800'} border px-2 py-0.5 rounded font-mono font-bold">رحلة ${f.flightNo}</span>
+                                <span class="text-[10px] bg-slate-800 text-amber-400 border border-slate-700 px-2 py-0.5 rounded-full font-bold">${tripLabel}</span>
+                            </div>
+                            <div class="text-xs text-slate-400 mt-1 flex items-center gap-2 flex-wrap">
+                                <span class="text-slate-200 font-semibold">${f.origin} ${f.depTime}</span>
+                                <span>⬅️ ${f.duration} ⬅️</span>
+                                <span class="text-slate-200 font-semibold">${f.destination} ${f.arrTime}</span>
+                            </div>
+                            <div class="text-[11px] text-slate-300 mt-1 flex items-center gap-3 flex-wrap">
+                                <span class="text-indigo-400 font-semibold">📅 ${dateDetail}</span>
+                                <span class="text-emerald-400 font-semibold">✓ ${f.baggage}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between md:justify-end gap-6 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-slate-800">
+                        <div class="text-right">
+                            <span class="text-[10px] text-slate-400 block">${tripLabel} للشخص</span>
+                            <span class="text-xl lg:text-2xl font-black text-amber-400">${formatSDG(price)}</span>
+                        </div>
+                        
+                        <button onclick="openBookingFlowModal('${f.airlineName} (${f.origin} ⬅️ ${f.destination}) - ${tripLabel}', '${formatSDG(price)}')" class="px-6 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-extrabold text-xs shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5 flex items-center gap-1.5 whitespace-nowrap">
+                            <span>إتمام الحجز</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                    </div>
+                </div>
+                `;
+            }).join('');
         }
 
-        function openUploadTicketModal() {
-            document.getElementById('uploadTicketModal').classList.remove('hidden');
+        // تنفيذ البحث
+        function handleFlightSearch(e) {
+            if(e) e.preventDefault();
+            const origin = document.getElementById('searchOrigin').value;
+            const destination = document.getElementById('searchDestination').value;
+            const airline = document.getElementById('searchAirline').value;
+
+            const btn = document.getElementById('searchSubmitBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = `<span class="animate-spin text-sm">⌛</span> <span>جاري البحث في رحلات تاركو وبدر...</span>`;
+
+            setTimeout(() => {
+                let filtered = ALL_FLIGHTS.filter(flight => {
+                    const matchOrigin = (origin === 'ALL') || (flight.origin === origin);
+                    const matchDestination = (destination === 'ALL') || (flight.destination === destination);
+                    const matchAirline = (airline === 'ALL') || (flight.airline === airline);
+                    return matchOrigin && matchDestination && matchAirline;
+                });
+
+                renderFlights(filtered);
+                btn.innerHTML = originalHTML;
+            }, 250);
         }
 
-        function closeUploadTicketModal() {
-            document.getElementById('uploadTicketModal').classList.add('hidden');
+        // إعادة تعيين الفلاتر
+        function resetFlightFilters() {
+            document.getElementById('searchOrigin').value = 'ALL';
+            document.getElementById('searchDestination').value = 'ALL';
+            document.getElementById('searchAirline').value = 'ALL';
+            document.getElementById('searchDepartureDate').value = '2026-11-20';
+            document.getElementById('searchReturnDate').value = '2026-11-30';
+            renderFlights(ALL_FLIGHTS);
         }
 
-        function sendQuickReply(text) {
-            appendMessage(text, 'employee');
+        // التنقل بين الأقسام من قائمة الـ li في الهيدر
+        function switchTab(tabId) {
+            const tabs = ['flights', 'ferries', 'visas', 'buses'];
+            tabs.forEach(id => {
+                document.getElementById('content-' + id).classList.add('hidden');
+                
+                const navBtn = document.getElementById('nav-' + id);
+                if (navBtn) {
+                    navBtn.className = 'flex items-center gap-1.5 px-4 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all';
+                }
+                
+                const mobBtn = document.getElementById('mob-' + id);
+                if (mobBtn) {
+                    mobBtn.className = 'text-slate-400 hover:text-white px-3 py-1.5 rounded-xl';
+                }
+            });
+
+            document.getElementById('content-' + tabId).classList.remove('hidden');
+            
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.className = 'nav-active flex items-center gap-1.5 px-4 py-2 rounded-xl transition-all';
+            }
+
+            const activeMob = document.getElementById('mob-' + tabId);
+            if (activeMob) {
+                activeMob.className = 'nav-active px-3 py-1.5 rounded-xl';
+            }
         }
 
-        function handleStaffSendMessage(e) {
+        function openBookingFlowModal(title, price) {
+            document.getElementById('modalTitle').innerText = 'إتمام حجز: ' + title;
+            document.getElementById('modalSub').innerText = 'السعر الإجمالي: ' + price;
+            document.getElementById('bookingFlowModal').classList.remove('hidden');
+            goToStep(1);
+        }
+
+        function closeBookingFlowModal() {
+            document.getElementById('bookingFlowModal').classList.add('hidden');
+        }
+
+        function goToStep(step) {
+            [1, 2, 3].forEach(s => {
+                document.getElementById('stepContent-' + s).classList.add('hidden');
+                const ind = document.getElementById('stepIndicator-' + s);
+                ind.classList.remove('text-amber-400');
+                ind.classList.add('text-slate-500');
+            });
+
+            document.getElementById('stepContent-' + step).classList.remove('hidden');
+            const activeInd = document.getElementById('stepIndicator-' + step);
+            activeInd.classList.remove('text-slate-500');
+            activeInd.classList.add('text-amber-400');
+        }
+
+        function simulateFileUpload() {
+            const el = document.getElementById('fileUploadState');
+            el.innerHTML = `
+                <div class="text-emerald-400 flex flex-col items-center">
+                    <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <p class="text-xs font-bold text-white">تم رفع صورة الجواز بنجاح ✅</p>
+                    <p class="text-[10px] text-slate-300 font-mono mt-1">passport_aziz_2026.jpg (تم التحقق من الوضوح)</p>
+                </div>
+            `;
+        }
+
+        function handleCustomerSendMessage(e) {
             e.preventDefault();
-            const input = document.getElementById('staffMessageInput');
+            const input = document.getElementById('custMsgInput');
             const msg = input.value.trim();
             if(!msg) return;
-            appendMessage(msg, 'employee');
-            input.value = '';
-        }
 
-        function appendMessage(text, sender) {
-            const container = document.getElementById('chatMessages');
-            const time = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
-            
+            const chat = document.getElementById('customerChatArea');
             const div = document.createElement('div');
-            div.className = sender === 'employee' 
-                ? 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse' 
-                : 'flex items-start gap-2 max-w-[85%]';
-            
+            div.className = 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse';
             div.innerHTML = `
-                <div class="w-7 h-7 rounded-full ${sender === 'employee' ? 'bg-amber-600 text-slate-950' : 'bg-slate-700 text-white'} flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                    ${sender === 'employee' ? 'موظف' : 'عميل'}
+                <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                    أنت
                 </div>
                 <div>
-                    <div class="${sender === 'employee' ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-200 border border-slate-700'} rounded-2xl p-3 shadow-md">
-                        ${text}
+                    <div class="bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none p-3 shadow-md">
+                        ${msg}
                     </div>
-                    <span class="text-[10px] text-slate-400 mt-1 block ${sender === 'employee' ? 'text-left' : 'text-right'}">${time}</span>
+                    <span class="text-[10px] text-slate-500 mt-1 block text-left">الآن</span>
                 </div>
             `;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
+            chat.appendChild(div);
+            input.value = '';
+            chat.scrollTop = chat.scrollHeight;
 
-        function confirmTicketIssue() {
-            const ticketNo = document.getElementById('eTicketNumber').value;
-            const invoiceNo = document.getElementById('invoiceNumber').value;
-            const amount = document.getElementById('invoiceAmount').value;
-            
-            closeUploadTicketModal();
-            document.getElementById('statusSelect').value = 'ticket_issued';
-
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse my-2';
-            div.innerHTML = `
-                <div class="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                    تذكرة
-                </div>
-                <div class="bg-gradient-to-r from-emerald-900 to-slate-800 border-2 border-emerald-500 text-white rounded-2xl rounded-tl-none p-3 shadow-xl">
-                    <div class="flex items-center gap-1.5 text-emerald-400 font-bold mb-1">
-                        <span>✈️ تم إصدار التذكرة الرسمية بنجاح!</span>
+            setTimeout(() => {
+                const rep = document.createElement('div');
+                rep.className = 'flex items-start gap-2 max-w-[85%]';
+                rep.innerHTML = `
+                    <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                        موظف
                     </div>
-                    <div class="text-[11px] text-slate-200 space-y-0.5 mb-2">
-                        <div>رقم التذكرة: <strong class="text-amber-300 font-mono">${ticketNo}</strong></div>
-                        <div>رقم الفاتورة: <strong class="text-slate-300 font-mono">${invoiceNo}</strong></div>
-                        <div>المبلغ المسدد: <strong class="text-emerald-400 font-mono font-bold">${amount}</strong></div>
+                    <div>
+                        <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-3 shadow-md">
+                            ممتاز أستاذ عبد العزيز. تم استلام تفاصيل طلبك بالجنيه السوداني. يرجى التحويل عبر تطبيق بنكك إلى رقم الحساب 2198031 وتأكيد الإشعار لنصدر التذكرة فوراً عبر TT Interactive.
+                        </div>
+                        <span class="text-[10px] text-slate-500 mt-1 block">الآن</span>
                     </div>
-                    <a href="javascript:alert('تم بدء تحميل ملف التذكرة الإلكترونية بصيغة PDF')" class="inline-flex items-center gap-1 text-[11px] bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3 py-1.5 rounded-lg">
-                        📥 تحميل التذكرة الإلكترونية (PDF)
-                    </a>
-                </div>
-            `;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-
-            alert('تم إصدار التذكرة بنجاح، وتحديث الحالة إلى "تم إصدار التذكرة"، وإشعار العميل.');
+                `;
+                chat.appendChild(rep);
+                chat.scrollTop = chat.scrollHeight;
+            }, 1200);
         }
 
-        function verifyDoc(isApproved) {
-            if(isApproved) {
-                alert('✅ تم اعتماد المستند وجواز السفر بنجاح.');
-                appendMessage('تمت مراجعة جواز السفر واعتماده بنجاح. البيانات مطابقة.', 'employee');
-            } else {
-                const reason = prompt('يرجى كتابة سبب طلب إعادة الرفع (مثلاً: الصورة غير واضحة):', 'صورة صفحة البيانات في الجواز غير واضحة، يرجى إعادة رفعها بدقة أعلى.');
-                if(reason) {
-                    appendMessage('تنبيه بخصوص المستند: ' + reason, 'employee');
-                }
-            }
-        }
-
-        function updateBookingStatus(newStatus) {
-            alert('تم تغيير حالة الحجز إلى: ' + newStatus);
-        }
-
-        function selectBooking(id) {
-            document.querySelectorAll('[id^="bookingCard-"]').forEach(el => {
-                el.classList.remove('border-indigo-500', 'border-2');
-                el.classList.add('border-slate-700');
-            });
-            const activeCard = document.getElementById(`bookingCard-${id}`);
-            if(activeCard) {
-                activeCard.classList.add('border-indigo-500', 'border-2');
-                activeCard.classList.remove('border-slate-700');
-            }
-
-            if(id === 2) {
-                document.getElementById('activeRef').innerText = 'BK-2026-BD502';
-                document.getElementById('activeProvider').innerText = 'طيران بدر (Badr)';
-                document.getElementById('activeCustomerName').innerText = 'مريم عبد القادر إبراهيم';
-                document.getElementById('activeRoute').innerText = 'رحلة ذهاب وعودة: بورتسودان (PZU) ⬅️ جدة (JED) • 2 مسافرين • القيمة: 2,300,000 ج.س';
-            } else if(id === 3) {
-                document.getElementById('activeRef').innerText = 'BK-2026-CR104';
-                document.getElementById('activeProvider').innerText = 'بواخر الركاب السريعة';
-                document.getElementById('activeCustomerName').innerText = 'عثمان طه الأمين';
-                document.getElementById('activeRoute').innerText = 'رحلة بحرية: ميناء سواكن ⬅️ ميناء جدة الإسلامي • القيمة: 750,000 ج.س';
-            } else if(id === 4) {
-                document.getElementById('activeRef').innerText = 'BK-2026-VS319';
-                document.getElementById('activeProvider').innerText = 'خدمات التأشيرات';
-                document.getElementById('activeCustomerName').innerText = 'ياسر بشير الفاضل';
-                document.getElementById('activeRoute').innerText = 'استخراج تأشيرة سياحية للمملكة العربية السعودية • القيمة: 520,000 ج.س';
-            } else {
-                document.getElementById('activeRef').innerText = 'BK-2026-TR884';
-                document.getElementById('activeProvider').innerText = 'طيران تاركو (Tarco)';
-                document.getElementById('activeCustomerName').innerText = 'عبد العزيز سليمان أحمد';
-                document.getElementById('activeRoute').innerText = 'رحلة ذهاب فقط: بورتسودان (PZU) ⬅️ القاهرة (CAI) • المسافر: عبد العزيز سليمان • القيمة: 1,250,000 ج.س';
-            }
-        }
-
-        function filterBookings(type) {
-            console.log('Filter:', type);
-        }
+        // تشغيل أولي
+        renderFlights(ALL_FLIGHTS);
     </script>
 </body>
 </html>
