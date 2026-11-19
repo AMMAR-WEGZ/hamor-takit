@@ -578,16 +578,16 @@
                 
                 <div>
                     <label class="block text-xs font-semibold text-slate-300 mb-1">الاسم الكامل (كما هو مكتوب في الجواز / الهوية):</label>
-                    <input type="text" id="custName" value="عبد العزيز سليمان أحمد" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                    <input type="text" id="custName" placeholder="أدخل اسمك الكامل الثلاثي (مثال: أحمد عبد الله عمر)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">رقم الهاتف (واتساب):</label>
-                        <input type="text" id="custPhone" value="+249123456789" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                        <input type="text" id="custPhone" placeholder="+249912345678" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">البريد الإلكتروني:</label>
-                        <input type="email" id="custEmail" value="aziz@example.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
+                        <input type="email" id="custEmail" placeholder="yourname@gmail.com" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-xs text-white focus:outline-none focus:border-indigo-500">
                     </div>
                 </div>
 
@@ -597,63 +597,72 @@
                 </button>
             </div>
 
-            <!-- محتوى الخطوة 2: رفع المستندات الثبوتية -->
+            <!-- محتوى الخطوة 2: رفع المستندات الثبوتية الفعلي المباشر -->
             <div id="stepContent-2" class="hidden p-6 space-y-4">
                 <div class="bg-amber-950/40 border border-amber-500/20 rounded-xl p-3 text-xs text-amber-300">
                     📸 الرجاء إرفاق صورة واضحة لجواز السفر (صفحة البيانات) أو البطاقة الشخصية لإصدار التذكرة:
                 </div>
 
-                <div class="border-2 border-dashed border-slate-700 hover:border-amber-400 rounded-2xl p-6 text-center bg-slate-950 cursor-pointer transition" onclick="simulateFileUpload()">
-                    <div id="fileUploadState">
-                        <svg class="w-10 h-10 text-slate-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        <p class="text-xs font-bold text-white">اضغط هنا لرفع صورة جواز السفر / بطاقة الهوية</p>
-                        <p class="text-[10px] text-slate-400 mt-1">يدعم ملفات JPG, PNG, PDF (حد أقصى 10 ميجابايت)</p>
+                <!-- زر اختيار الملف الصريح والمباشر -->
+                <div class="space-y-3">
+                    <input type="file" id="realDocUploadInput" accept="image/*,application/pdf" class="hidden" onchange="handleRealDocUpload(event)">
+                    
+                    <button type="button" onclick="document.getElementById('realDocUploadInput').click()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-4 px-4 rounded-2xl text-xs flex items-center justify-center gap-2.5 shadow-xl shadow-amber-500/20 transition transform hover:-translate-y-0.5 cursor-pointer">
+                        <svg class="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        <span class="text-sm">📁 اضغط هنا لاختيار ملف الجواز / الهوية من جهازك</span>
+                    </button>
+
+                    <!-- بطاقة حالة ومعاينة المستند المرفوع -->
+                    <div id="fileUploadContainer" class="border-2 border-dashed border-slate-700 rounded-2xl p-4 text-center bg-slate-950/90 transition min-h-[140px] flex items-center justify-center">
+                        <div id="fileUploadState">
+                            <svg class="w-10 h-10 text-slate-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                            <p class="text-xs font-bold text-slate-300">لم يتم اختيار أي ملف حتى الآن</p>
+                            <p class="text-[10px] text-slate-500 mt-1">اضغط على الزر الذهبي أعلاه لاختيار صورة الجواز (يدعم JPG, PNG, PDF)</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    <button onclick="goToStep(1)" class="bg-slate-800 text-slate-300 font-bold px-4 py-3 rounded-xl text-xs">رجوع</button>
-                    <button onclick="goToStep(3)" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
-                        <span>إرسال الطلب وفتح الدردشة مع الموظف</span>
+                <div class="flex items-center gap-3 pt-2">
+                    <button onclick="goToStep(1)" class="bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold px-4 py-3 rounded-xl text-xs transition">رجوع</button>
+                    <button onclick="goToStep(3)" class="flex-1 bg-indigo-600 hover:bg-indigo-500 text-white font-black py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30">
+                        <span>إرسال الطلب وفتح الدردشة المباشرة مع الموظف</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
                 </div>
             </div>
 
-            <!-- محتوى الخطوة 3: نافذة الدردشة المباشرة مع الموظف -->
-            <div id="stepContent-3" class="hidden flex flex-col h-[480px]">
-                <div class="px-5 py-2.5 bg-slate-950 border-b border-slate-850 flex items-center justify-between text-xs">
+            <!-- محتوى الخطوة 3: نافذة الدردشة المباشرة التفاعلية مع الموظف -->
+            <div id="stepContent-3" class="hidden flex flex-col h-[500px]">
+                <div class="px-5 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between text-xs">
                     <div class="flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                        <span class="font-bold text-white">الموظف المسؤول: محمد أحمد عثمان (حجوزات الطيران)</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span id="chatStaffAssignName" class="font-bold text-white">الموظف المسؤول متصل الآن (دردشة حية مباشرة)</span>
                     </div>
-                    <span class="text-amber-400 font-mono text-[11px]">رقم الحجز: BK-2026-TR884</span>
+                    <span id="bookingRefSpan" class="text-amber-400 font-mono text-[11px] bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800">رقم الحجز: BK-2026-TR884</span>
+                </div>
+
+                <!-- شريط الحالة الحي -->
+                <div class="bg-indigo-950/60 border-b border-indigo-900/60 px-4 py-1.5 text-[11px] text-indigo-300 flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span>محادثة حية ثنائية الاتجاه مع لوحة تحكم الموظفين</span>
+                    </div>
+                    <span id="liveTypingStatus" class="text-[10px] text-slate-400">متصل باللوحة</span>
                 </div>
 
                 <div id="customerChatArea" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-950/90 text-xs">
                     <div class="text-center my-1">
-                        <span class="bg-slate-800 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-slate-700">
-                            تم استلام المستندات وجاري ربطك بموظف الوكالة
+                        <span class="bg-slate-800/80 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-slate-700">
+                            تم ربطك بالموظف المسؤول • الرسائل تصل فوراً في الوقت الحقيقي
                         </span>
-                    </div>
-
-                    <div class="flex items-start gap-2 max-w-[85%]">
-                        <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                            موظف
-                        </div>
-                        <div>
-                            <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-3 shadow-md" id="chatInitialMsg">
-                                مرحباً بك أستاذ عبد العزيز! استلمت بيانات الرحلة وصورة الجواز، وأنا الآن على بوابة TT Interactive لتثبيت مقاعدك وإصدار التذكرة الرسمية. هل تفضل التحويل عبر تطبيق بنكك؟
-                            </div>
-                            <span class="text-[10px] text-slate-500 mt-1 block">الآن</span>
-                        </div>
                     </div>
                 </div>
 
                 <form onsubmit="handleCustomerSendMessage(event)" class="p-3 bg-slate-900 border-t border-slate-800 flex items-center gap-2">
-                    <input type="text" id="custMsgInput" placeholder="اكتب ردك لموظف الوكالة هنا..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
-                    <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-4 py-2.5 rounded-xl font-black text-xs flex items-center gap-1 shadow-md">
-                        إرسال
+                    <input type="text" id="custMsgInput" placeholder="اكتب رسالتك للموظف واضغط إرسال..." class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-amber-500">
+                    <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 px-5 py-2.5 rounded-xl font-black text-xs flex items-center gap-1 shadow-md transition">
+                        <span>إرسال</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
                     </button>
                 </form>
             </div>
@@ -2123,9 +2132,116 @@
             }
         }
 
+        // قناة الاتصال الحي والمباشر مع لوحة تحكم الموظفين (Real-time BroadcastChannel)
+        const liveChatChannel = new BroadcastChannel('hamoor_live_omnichat');
+
+        let uploadedDocData = null;
+        let uploadedDocName = '';
+        let uploadedDocSize = '';
+        let currentCustName = '';
+        let currentCustPhone = '';
+        let currentCustEmail = '';
+        let currentBookingTitle = '';
+        let currentBookingPrice = '';
+        let currentBookingRef = '';
+
+        // الاستماع اللحظي للرسائل القادمة من شاشة الموظف
+        liveChatChannel.onmessage = function(event) {
+            const data = event.data;
+            if (!data) return;
+
+            if (data.type === 'STAFF_MSG') {
+                appendStaffMessageToCustomerChat(data.staffName, data.text, data.time);
+            } else if (data.type === 'TICKET_ISSUED') {
+                appendTicketCardToCustomerChat(data);
+            }
+        };
+
+        // استماع إضافي عبر storage event للعمل عبر أي نافذة أو تبويب
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'hamoor_last_staff_action' && e.newValue) {
+                try {
+                    const data = JSON.parse(e.newValue);
+                    if (data.type === 'STAFF_MSG') {
+                        appendStaffMessageToCustomerChat(data.staffName, data.text, data.time);
+                    } else if (data.type === 'TICKET_ISSUED') {
+                        appendTicketCardToCustomerChat(data);
+                    }
+                } catch(err) {}
+            }
+        });
+
+        function appendStaffMessageToCustomerChat(staffName, text, time) {
+            const chat = document.getElementById('customerChatArea');
+            if (!chat) return;
+
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-2 max-w-[85%] animate-fade-in';
+            div.innerHTML = `
+                <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow">
+                    م
+                </div>
+                <div>
+                    <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-3 shadow-md">
+                        <div class="text-[10px] text-amber-300 font-bold mb-0.5">الموظف (${staffName || 'المسؤول'}):</div>
+                        ${text}
+                    </div>
+                    <span class="text-[10px] text-slate-500 mt-1 block">${time || 'الآن'}</span>
+                </div>
+            `;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+
+            const status = document.getElementById('liveTypingStatus');
+            if (status) status.innerText = `وصل رد حي من: ${staffName || 'الموظف'}`;
+        }
+
+        function appendTicketCardToCustomerChat(data) {
+            const chat = document.getElementById('customerChatArea');
+            if (!chat) return;
+
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-2 max-w-[85%] my-2';
+            div.innerHTML = `
+                <div class="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                    تذكرة
+                </div>
+                <div class="bg-gradient-to-r from-emerald-900 to-slate-800 border-2 border-emerald-500 text-white rounded-2xl rounded-tr-none p-3.5 shadow-xl">
+                    <div class="flex items-center gap-1.5 text-emerald-400 font-bold mb-1">
+                        <span>✈️ أصدر الموظف تذكرتك الرسمية الآن!</span>
+                    </div>
+                    <div class="text-[11px] text-slate-200 space-y-0.5 mb-2.5">
+                        <div>رقم التذكرة: <strong class="text-amber-300 font-mono">${data.ticketNo}</strong></div>
+                        <div>رقم الفاتورة: <strong class="text-slate-300 font-mono">${data.invoiceNo}</strong></div>
+                        <div>المبلغ المسدد: <strong class="text-emerald-400 font-mono font-bold">${data.amount}</strong></div>
+                    </div>
+                    <a href="javascript:alert('تم بدء تحميل التذكرة الإلكترونية الرسمية بصيغة PDF!')" class="inline-flex items-center gap-1.5 text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-2 rounded-xl transition shadow">
+                        📥 تحميل التذكرة الإلكترونية (PDF)
+                    </a>
+                </div>
+            `;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
         function openBookingFlowModal(title, price) {
+            currentBookingTitle = title;
+            currentBookingPrice = price;
+            currentBookingRef = 'BK-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+            
             document.getElementById('modalTitle').innerText = 'إتمام حجز: ' + title;
             document.getElementById('modalSub').innerText = 'السعر الإجمالي: ' + price;
+            const refSpan = document.getElementById('bookingRefSpan');
+            if (refSpan) refSpan.innerText = 'رقم الحجز: ' + currentBookingRef;
+            
+            try {
+                const empSession = JSON.parse(localStorage.getItem('hamoor_employee_session') || '{}');
+                const staffSpan = document.getElementById('chatStaffAssignName');
+                if (staffSpan && empSession.name) {
+                    staffSpan.innerText = `الموظف المسؤول: ${empSession.name} (${empSession.role || 'حجوزات هامور'})`;
+                }
+            } catch(e) {}
+
             document.getElementById('bookingFlowModal').classList.remove('hidden');
             goToStep(1);
         }
@@ -2135,6 +2251,74 @@
         }
 
         function goToStep(step) {
+            if (step === 2) {
+                const nameInput = document.getElementById('custName').value.trim();
+                currentCustName = nameInput || 'العميل';
+                currentCustPhone = document.getElementById('custPhone').value.trim();
+                currentCustEmail = document.getElementById('custEmail').value.trim();
+            }
+
+            if (step === 3) {
+                const nameInput = document.getElementById('custName').value.trim();
+                if (nameInput) currentCustName = nameInput;
+                if (!currentCustName) currentCustName = 'العميل';
+
+                const chatArea = document.getElementById('customerChatArea');
+                chatArea.innerHTML = `
+                    <div class="text-center my-1">
+                        <span class="bg-slate-800/80 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-slate-700">
+                            تم ربطك بالموظف المسؤول • الرسائل تصل فوراً في الوقت الحقيقي
+                        </span>
+                    </div>
+                `;
+
+                // إضافة رسالة افتتاحية توضح طلب العميل ومستنده المرفوع
+                const customerInitMsg = document.createElement('div');
+                customerInitMsg.className = 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse';
+                const docText = uploadedDocName ? `وقمت برفع المستند: (${uploadedDocName})` : 'وأريد تأكيد الحجز';
+                customerInitMsg.innerHTML = `
+                    <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow">
+                        أنت
+                    </div>
+                    <div>
+                        <div class="bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none p-3 shadow-md">
+                            مرحباً، أنا <strong>${currentCustName}</strong>، أرسلت طلبي لـ (${currentBookingTitle}) ${docText}.
+                        </div>
+                        <span class="text-[10px] text-slate-500 mt-1 block text-left">الآن</span>
+                    </div>
+                `;
+                chatArea.appendChild(customerInitMsg);
+
+                // حفظ الحجز وإرساله فوراً للوحة الموظفين
+                const bookingObj = {
+                    id: Date.now(),
+                    ref: currentBookingRef || ('BK-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000)),
+                    customer: currentCustName,
+                    phone: currentCustPhone,
+                    email: currentCustEmail,
+                    route: currentBookingTitle || 'رحلة مجدولة',
+                    provider: currentBookingTitle.includes('بدر') ? 'طيران بدر (Badr)' : (currentBookingTitle.includes('باخرة') ? 'بواخر الركاب السريعة' : (currentBookingTitle.includes('تأشيرة') ? 'خدمات التأشيرات' : 'طيران تاركو (Tarco)')),
+                    price: currentBookingPrice || '1,250,000 ج.س',
+                    docName: uploadedDocName || 'جواز_سفر.jpg',
+                    docData: uploadedDocData || null,
+                    date: new Date().toLocaleDateString('ar-EG'),
+                    status: 'pending_review'
+                };
+
+                try {
+                    const existing = JSON.parse(localStorage.getItem('hamoor_bookings') || '[]');
+                    existing.unshift(bookingObj);
+                    localStorage.setItem('hamoor_bookings', JSON.stringify(existing));
+                    localStorage.setItem('hamoor_latest_booking', JSON.stringify(bookingObj));
+                } catch(e) {}
+
+                // إشعار لوحة الموظف بالطلب الجديد
+                liveChatChannel.postMessage({
+                    type: 'NEW_BOOKING_SUBMITTED',
+                    booking: bookingObj
+                });
+            }
+
             [1, 2, 3].forEach(s => {
                 document.getElementById('stepContent-' + s).classList.add('hidden');
                 const ind = document.getElementById('stepIndicator-' + s);
@@ -2148,14 +2332,70 @@
             activeInd.classList.add('text-amber-400');
         }
 
-        function simulateFileUpload() {
+        function handleRealDocUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            uploadedDocName = file.name;
+            const sizeKB = (file.size / 1024).toFixed(1);
+            uploadedDocSize = sizeKB > 1024 ? (sizeKB / 1024).toFixed(2) + ' MB' : sizeKB + ' KB';
+
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const maxDim = 1000;
+                        let w = img.width;
+                        let h = img.height;
+                        if (w > maxDim || h > maxDim) {
+                            if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+                            else { w = Math.round((w * maxDim) / h); h = maxDim; }
+                        }
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        uploadedDocData = canvas.toDataURL('image/jpeg', 0.85);
+                        renderUploadPreview(uploadedDocName, uploadedDocSize, uploadedDocData, true);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                uploadedDocData = null;
+                renderUploadPreview(uploadedDocName, uploadedDocSize, null, false);
+            }
+        }
+
+        function renderUploadPreview(name, size, previewUrl, isImg) {
             const el = document.getElementById('fileUploadState');
             el.innerHTML = `
-                <div class="text-emerald-400 flex flex-col items-center">
-                    <svg class="w-10 h-10 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <p class="text-xs font-bold text-white">تم رفع صورة الجواز بنجاح ✅</p>
-                    <p class="text-[10px] text-slate-300 font-mono mt-1">passport_aziz_2026.jpg (تم التحقق من الوضوح)</p>
+                <div class="text-emerald-400 flex flex-col items-center gap-2 p-2">
+                    ${isImg && previewUrl ? `<img src="${previewUrl}" class="w-28 h-28 object-cover rounded-2xl border-2 border-emerald-500 shadow-xl mb-1">` : `<div class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center text-3xl border border-emerald-500/50">📄</div>`}
+                    <div class="flex items-center gap-1.5 font-bold text-white text-xs">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>تم اختيار المستند الحقيقي بنجاح ✅</span>
+                    </div>
+                    <p class="text-[11px] text-amber-300 font-mono">${name} (${size})</p>
+                    <button type="button" onclick="cancelUploadedDoc()" class="text-[11px] text-rose-400 hover:text-rose-300 underline mt-1">
+                        ✕ إلغاء أو اختيار مستند آخر
+                    </button>
                 </div>
+            `;
+        }
+
+        function cancelUploadedDoc() {
+            uploadedDocData = null;
+            uploadedDocName = '';
+            uploadedDocSize = '';
+            document.getElementById('realDocUploadInput').value = '';
+            const el = document.getElementById('fileUploadState');
+            el.innerHTML = `
+                <svg class="w-10 h-10 text-slate-500 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                <p class="text-xs font-bold text-slate-300">لم يتم اختيار أي ملف حتى الآن</p>
+                <p class="text-[10px] text-slate-500 mt-1">اضغط على الزر الذهبي أعلاه لاختيار صورة الجواز (يدعم JPG, PNG, PDF)</p>
             `;
         }
 
@@ -2165,41 +2405,46 @@
             const msg = input.value.trim();
             if(!msg) return;
 
+            const time = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
             const chat = document.getElementById('customerChatArea');
+            
+            // 1. إضافة الرسالة في شات العميل
             const div = document.createElement('div');
             div.className = 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse';
             div.innerHTML = `
-                <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow">
                     أنت
                 </div>
                 <div>
                     <div class="bg-slate-800 text-white border border-slate-700 rounded-2xl rounded-tl-none p-3 shadow-md">
                         ${msg}
                     </div>
-                    <span class="text-[10px] text-slate-500 mt-1 block text-left">الآن</span>
+                    <span class="text-[10px] text-slate-500 mt-1 block text-left">${time}</span>
                 </div>
             `;
             chat.appendChild(div);
             input.value = '';
             chat.scrollTop = chat.scrollHeight;
 
-            setTimeout(() => {
-                const rep = document.createElement('div');
-                rep.className = 'flex items-start gap-2 max-w-[85%]';
-                rep.innerHTML = `
-                    <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                        موظف
-                    </div>
-                    <div>
-                        <div class="bg-indigo-600 text-white rounded-2xl rounded-tr-none p-3 shadow-md">
-                            ممتاز أستاذ عبد العزيز. تم استلام تفاصيل طلبك بالجنيه السوداني. يرجى التحويل عبر تطبيق بنكك إلى رقم الحساب 2198031 وتأكيد الإشعار لنصدر التذكرة فوراً عبر TT Interactive.
-                        </div>
-                        <span class="text-[10px] text-slate-500 mt-1 block">الآن</span>
-                    </div>
-                `;
-                chat.appendChild(rep);
-                chat.scrollTop = chat.scrollHeight;
-            }, 1200);
+            // 2. إرسال الرسالة في الوقت الحقيقي للموظف بدون أي رد آلي مزيف
+            const payload = {
+                type: 'CUSTOMER_MSG',
+                customer: currentCustName || 'العميل',
+                text: msg,
+                time: time,
+                bookingRef: currentBookingRef
+            };
+            liveChatChannel.postMessage(payload);
+
+            try {
+                localStorage.setItem('hamoor_last_customer_action', JSON.stringify({
+                    ...payload,
+                    timestamp: Date.now()
+                }));
+            } catch(err) {}
+
+            const status = document.getElementById('liveTypingStatus');
+            if (status) status.innerText = 'تم إرسال رسالتك إلى لوحة الموظفين بنجاح 🟢 (بانتظار رد الموظف)';
         }
 
         // تشغيل أولي عند تحميل الصفحة

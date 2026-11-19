@@ -28,21 +28,24 @@
             </div>
         </div>
 
-        <!-- حالة الموظف والمعلومات -->
-        <div class="flex items-center gap-4">
+        <!-- حالة الموظف والمعلومات مع إمكانية التبديل وتسجيل الخروج -->
+        <div class="flex items-center gap-3">
             <div class="hidden md:flex items-center gap-2 bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-700/60 text-xs">
                 <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span class="text-slate-300">الحالة: <strong class="text-emerald-400">متصل (متاح لاستقبال الحجوزات)</strong></span>
             </div>
 
-            <div class="flex items-center gap-3 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
-                <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-sm font-bold text-white">
+            <div class="flex items-center gap-2.5 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
+                <div id="headerEmpAvatar" class="w-8 h-8 rounded-full bg-gradient-to-tr from-amber-500 to-indigo-600 flex items-center justify-center text-xs font-black text-white shadow">
                     م.أ
                 </div>
                 <div class="text-right">
-                    <div class="text-xs font-bold text-white">محمد أحمد عثمان</div>
-                    <div class="text-[10px] text-amber-400">مشرف حجوزات طيران تاركو وبدر (موظف 1 من 10)</div>
+                    <div id="headerEmpName" class="text-xs font-bold text-white">محمد أحمد عثمان</div>
+                    <div id="headerEmpRole" class="text-[10px] text-amber-400">مشرف حجوزات طيران</div>
                 </div>
+                <button onclick="openEmployeeLoginModal(true)" class="p-1.5 rounded-lg bg-slate-750 hover:bg-rose-950/80 border border-slate-650 hover:border-rose-500 text-slate-400 hover:text-rose-300 text-xs transition" title="تسجيل خروج / تبديل الموظف">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+                </button>
             </div>
 
             <!-- رابط سريع لواجهة العميل للتجربة -->
@@ -102,23 +105,32 @@
 
     <!-- النافذة المنبثقة لإطار TT Interactive داخل الشاشة -->
     <div id="ttModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-700 w-full max-w-6xl h-[85vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl">
-            <div class="px-5 py-3 bg-slate-800 border-b border-slate-700 flex items-center justify-between">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-2xl rounded-3xl flex flex-col overflow-hidden shadow-2xl p-6 text-center space-y-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
                 <div class="flex items-center gap-2">
-                    <span class="text-sm font-bold text-white">نظام TT Interactive السحابي</span>
-                    <span class="text-xs text-slate-400">(emea.ttinteractive.com)</span>
+                    <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                    <span class="text-sm font-bold text-white">بوابة TT Interactive العالمية (GDS)</span>
                 </div>
-                <div class="flex items-center gap-3">
-                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" class="text-xs text-amber-400 hover:underline flex items-center gap-1 font-semibold">
-                        فتح في نافذة جديدة
-                    </a>
-                    <button onclick="toggleIframeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-700">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
+                <button onclick="toggleIframeModal()" class="text-slate-400 hover:text-white p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 transition">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
-            <div class="flex-1 bg-white relative">
-                <iframe src="https://emea.ttinteractive.com/otds/index.asp" class="w-full h-full border-0"></iframe>
+            
+            <div class="p-6 bg-slate-950/70 rounded-2xl border border-slate-800 space-y-4">
+                <div class="w-16 h-16 bg-gradient-to-tr from-amber-500 to-indigo-600 rounded-2xl mx-auto flex items-center justify-center text-3xl shadow-xl shadow-amber-500/20">
+                    ✈️
+                </div>
+                <h3 class="text-lg font-black text-white">فتح بوابة إصدار تذاكر الطيران الرسمية</h3>
+                <p class="text-xs text-slate-300 max-w-md mx-auto leading-relaxed">
+                    نظراً لسياسات الأمان والحماية المصرفية العالمية المشددة لسيرفر TT Interactive (X-Frame-Options)، تفتح البوابة في نافذة آمنة مستقلة لإصدار التذاكر المباشرة وتثبيت المقاعد.
+                </p>
+                
+                <div class="pt-3">
+                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" onclick="toggleIframeModal()" class="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm rounded-xl shadow-xl shadow-amber-500/30 transition transform hover:scale-105">
+                        <svg class="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        <span>فتح بوابة TT Interactive الآن (نافذة آمنة)</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -347,16 +359,16 @@
                         <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-mono">1 مستند</span>
                     </div>
 
-                    <!-- عارض صورة الجواز / الهوية -->
+                    <!-- عارض صورة الجواز / الهوية الفعلي -->
                     <div class="flex-1 flex flex-col justify-between bg-slate-900 rounded-xl p-3 border border-slate-700/80">
                         <div>
                             <div class="flex items-center justify-between text-xs text-slate-300 mb-2">
-                                <span class="font-bold text-amber-400">جواز سفر المسافر (رسمي)</span>
-                                <span class="text-[10px] text-slate-400">passport_aziz_2026.jpg</span>
+                                <span id="activeDocTypeTitle" class="font-bold text-amber-400">جواز سفر المسافر (رسمي)</span>
+                                <span id="activeDocFileName" class="text-[10px] text-slate-400 font-mono">passport_aziz_2026.jpg</span>
                             </div>
                             
                             <!-- معاينة الصورة مع زر تكبير -->
-                            <div class="relative rounded-lg overflow-hidden border border-slate-700 group cursor-pointer" onclick="openDocPreviewModal()">
+                            <div class="relative rounded-lg overflow-hidden border border-slate-700 group cursor-pointer bg-slate-950 flex items-center justify-center min-h-[176px]" onclick="openDocPreviewModal()">
                                 <img id="activeDocImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" alt="صورة الجواز" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300">
                                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
                                     <span class="bg-slate-900/90 text-white text-xs px-3 py-1.5 rounded-lg border border-slate-600 flex items-center gap-1 font-bold">
@@ -369,15 +381,15 @@
                             <div class="mt-3 bg-slate-950/70 rounded-lg p-2.5 text-[11px] space-y-1.5 border border-slate-850">
                                 <div class="flex justify-between">
                                     <span class="text-slate-400">الاسم بالجواز:</span>
-                                    <span class="text-white font-bold">ABDELAZIZ SULIMAN AHMED</span>
+                                    <span id="kycPassportName" class="text-white font-bold">ABDELAZIZ SULIMAN AHMED</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-slate-400">رقم الجواز:</span>
-                                    <span class="text-amber-300 font-mono font-bold">P0129388</span>
+                                    <span id="kycPassportNo" class="text-amber-300 font-mono font-bold">P0129388</span>
                                 </div>
                                 <div class="flex justify-between">
                                     <span class="text-slate-400">تاريخ الانتهاء:</span>
-                                    <span class="text-emerald-400 font-semibold">14/08/2030 (صالح)</span>
+                                    <span id="kycPassportExpiry" class="text-emerald-400 font-semibold">14/08/2030 (صالح)</span>
                                 </div>
                             </div>
                         </div>
@@ -446,18 +458,166 @@
         </div>
     </div>
 
-    <!-- نافذة تكبير المستند -->
+    <!-- نافذة تكبير وفحص المستند الحقيقي -->
     <div id="docPreviewModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeDocPreviewModal()">
         <div class="max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 overflow-hidden" onclick="event.stopPropagation()">
             <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
-                <span class="text-xs font-bold text-white">معاينة جواز السفر - عبد العزيز سليمان أحمد</span>
+                <span id="docPreviewCustomerName" class="text-xs font-bold text-white">معاينة المستند الثبوتي للمسافر</span>
                 <button onclick="closeDocPreviewModal()" class="text-slate-400 hover:text-white text-sm">✕ إغلاق</button>
             </div>
-            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80" alt="صورة الجواز مكبرة" class="w-full h-auto rounded-lg max-h-[70vh] object-contain">
+            <div class="flex items-center justify-center bg-slate-950 rounded-lg p-2 max-h-[70vh] overflow-hidden">
+                <img id="docPreviewModalImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80" alt="صورة المستند مكبرة" class="w-full h-auto rounded-lg max-h-[65vh] object-contain">
+            </div>
+        </div>
+    </div>
+
+    <!-- فورم تسجيل ودخول الموظفين المشروط بكلمة السر @Hamor7777 -->
+    <div id="employeeLoginModal" class="hidden fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-xl flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="text-center mb-6 relative z-10">
+                <div class="w-14 h-14 rounded-2xl overflow-hidden border border-amber-500/50 shadow-xl shadow-amber-500/20 mx-auto mb-3 bg-slate-950 flex items-center justify-center">
+                    <img src="assets/hamoor_logo.jpg" onerror="this.onerror=null; this.src='../assets/hamoor_logo.jpg';" alt="شعار هامور" class="w-full h-full object-cover">
+                </div>
+                <h2 class="text-lg font-black text-white">بوابة تسجيل دخول الموظفين</h2>
+                <p class="text-xs text-amber-400 font-semibold mt-0.5">منصة وكالة هامور للسفر والسياحة</p>
+                <p class="text-[11px] text-slate-400 mt-1">يرجى تسجيل اسمك وكلمة المرور الموحدة لربط هويتك باللوحة</p>
+            </div>
+
+            <form onsubmit="handleEmployeeLogin(event)" class="space-y-4 relative z-10">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">اسم الموظف (سيتم اعتماده في الصفحة والدردشة):</label>
+                    <input type="text" id="empNameInput" placeholder="أدخل اسمك الكريم (مثلاً: أحمد علي أو سارة محمود)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500" required>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1.5">القسم / التخصص:</label>
+                    <select id="empRoleSelect" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500">
+                        <option value="مشرف حجوزات طيران تاركو وبدر">مشرف حجوزات طيران تاركو وبدر</option>
+                        <option value="مسؤول إصدار تذاكر TT Interactive">مسؤول إصدار تذاكر TT Interactive</option>
+                        <option value="مشرف الحجوزات البحرية والبصات">مشرف الحجوزات البحرية والبصات</option>
+                        <option value="مسؤول قسم التأشيرات والسياحة">مسؤول قسم التأشيرات والسياحة</option>
+                        <option value="مدير العمليات الميدانية">مدير العمليات الميدانية</option>
+                    </select>
+                </div>
+
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="block text-xs font-semibold text-slate-300">كلمة المرور الموحدة:</label>
+                        <span class="text-[10px] text-amber-400 font-mono">كلمة السر المعتمدة</span>
+                    </div>
+                    <input type="password" id="empPassInput" placeholder="أدخل كلمة المرور الرسمية" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500" required>
+                    <p class="text-[10px] text-slate-400 mt-1 flex items-center gap-1">
+                        <span>🔒 كلمة المرور الموحدة:</span>
+                        <code class="text-amber-400 bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800 font-mono">@Hamor7777</code>
+                    </p>
+                </div>
+
+                <div id="empLoginError" class="hidden text-xs text-rose-400 bg-rose-950/60 border border-rose-800/80 rounded-xl p-2.5 text-center font-bold"></div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black py-3 rounded-xl text-xs transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+                    <span>تسجيل الدخول وفتح لوحة التحكم</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/></svg>
+                </button>
+            </form>
         </div>
     </div>
 
     <script>
+        let currentEmployee = {
+            name: 'محمد أحمد عثمان',
+            role: 'مشرف حجوزات طيران',
+            initials: 'م.أ'
+        };
+
+        // التحقق من تسجيل دخول الموظف فور فتح الصفحة
+        function checkEmployeeAuth() {
+            try {
+                const sessionStr = localStorage.getItem('hamoor_employee_session');
+                if (!sessionStr) {
+                    openEmployeeLoginModal(false);
+                } else {
+                    const session = JSON.parse(sessionStr);
+                    if (session && session.name) {
+                        applyEmployeeSession(session);
+                    } else {
+                        openEmployeeLoginModal(false);
+                    }
+                }
+            } catch(e) {
+                openEmployeeLoginModal(false);
+            }
+        }
+
+        function openEmployeeLoginModal(allowClose) {
+            const modal = document.getElementById('employeeLoginModal');
+            modal.classList.remove('hidden');
+            const err = document.getElementById('empLoginError');
+            if(err) err.classList.add('hidden');
+        }
+
+        function handleEmployeeLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('empNameInput').value.trim();
+            const role = document.getElementById('empRoleSelect').value;
+            const pass = document.getElementById('empPassInput').value.trim();
+            const err = document.getElementById('empLoginError');
+
+            if (!name) {
+                err.innerText = 'يرجى كتابة اسم الموظف للمتابعة.';
+                err.classList.remove('hidden');
+                return;
+            }
+
+            // الشرط الصارم: كلمة السر الموحدة هي @Hamor7777
+            if (pass !== '@Hamor7777') {
+                err.innerText = 'عذراً، كلمة المرور غير صحيحة! كلمة المرور الموحدة هي: @Hamor7777';
+                err.classList.remove('hidden');
+                return;
+            }
+
+            // استخراج الحروف الأولى للموظف
+            const nameParts = name.split(' ').filter(p => p.length > 0);
+            let inits = 'م.ع';
+            if (nameParts.length >= 2) {
+                inits = nameParts[0][0] + '.' + nameParts[1][0];
+            } else if (nameParts.length === 1) {
+                inits = nameParts[0].substring(0, 2);
+            }
+
+            const session = {
+                name: name,
+                role: role,
+                initials: inits,
+                loginTime: new Date().toLocaleTimeString('ar-EG')
+            };
+
+            localStorage.setItem('hamoor_employee_session', JSON.stringify(session));
+            document.getElementById('employeeLoginModal').classList.add('hidden');
+            applyEmployeeSession(session);
+            alert(`مرحباً بك أستاذ ${name}، تم ربط حسابك بلوحة العمليات بنجاح!`);
+        }
+
+        function applyEmployeeSession(session) {
+            currentEmployee = session;
+            const nameEl = document.getElementById('headerEmpName');
+            const roleEl = document.getElementById('headerEmpRole');
+            const avatarEl = document.getElementById('headerEmpAvatar');
+            
+            if (nameEl) nameEl.innerText = session.name;
+            if (roleEl) roleEl.innerText = session.role;
+            if (avatarEl) avatarEl.innerText = session.initials;
+        }
+
+        function handleEmployeeLogout() {
+            if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج وتبديل الموظف؟')) {
+                localStorage.removeItem('hamoor_employee_session');
+                openEmployeeLoginModal(false);
+            }
+        }
+
         function toggleIframeModal() {
             const modal = document.getElementById('ttModal');
             modal.classList.toggle('hidden');
@@ -479,8 +639,80 @@
             document.getElementById('uploadTicketModal').classList.add('hidden');
         }
 
+        // قناة الاتصال الحي والمباشر ثنائية الاتجاه مع العميل (Real-time BroadcastChannel)
+        const liveChatChannel = new BroadcastChannel('hamoor_live_omnichat');
+
+        // الاستماع الفوري لرسائل العميل وطلباته في الوقت الحقيقي
+        liveChatChannel.onmessage = function(event) {
+            const data = event.data;
+            if (!data) return;
+
+            if (data.type === 'CUSTOMER_MSG') {
+                appendCustomerLiveMessage(data.customer, data.text, data.time);
+            } else if (data.type === 'NEW_BOOKING_SUBMITTED') {
+                handleIncomingLiveBooking(data.booking);
+            }
+        };
+
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'hamoor_last_customer_action' && e.newValue) {
+                try {
+                    const data = JSON.parse(e.newValue);
+                    if (data.type === 'CUSTOMER_MSG') {
+                        appendCustomerLiveMessage(data.customer, data.text, data.time);
+                    }
+                } catch(err) {}
+            }
+        });
+
+        function playNotificationSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+                gain.gain.setValueAtTime(0.15, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.3);
+            } catch(e) {}
+        }
+
+        function appendCustomerLiveMessage(customer, text, time) {
+            const container = document.getElementById('chatMessages');
+            if (!container) return;
+
+            playNotificationSound();
+
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-2 max-w-[85%] animate-fade-in';
+            div.innerHTML = `
+                <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow">
+                    ع
+                </div>
+                <div>
+                    <div class="bg-slate-800 border-2 border-indigo-500/60 rounded-2xl rounded-tr-none p-3 text-slate-200 shadow-lg">
+                        <div class="text-[10px] text-indigo-300 font-bold mb-0.5">العميل (${customer || 'المسافر'}):</div>
+                        ${text}
+                    </div>
+                    <span class="text-[10px] text-slate-500 mt-1 block">${time || 'الآن'}</span>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleIncomingLiveBooking(booking) {
+            playNotificationSound();
+            loadDynamicBookings();
+            alert(`⚡ تنبيه: وصل طلب حجز جديد من العميل (${booking.customer}) لرحلة (${booking.route})! تم إدراجه في أعلى القائمة.`);
+        }
+
         function sendQuickReply(text) {
-            appendMessage(text, 'employee');
+            broadcastStaffMessage(text);
         }
 
         function handleStaffSendMessage(e) {
@@ -488,8 +720,32 @@
             const input = document.getElementById('staffMessageInput');
             const msg = input.value.trim();
             if(!msg) return;
-            appendMessage(msg, 'employee');
+            broadcastStaffMessage(msg);
             input.value = '';
+        }
+
+        function broadcastStaffMessage(msg) {
+            const time = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            
+            // 1. عرض الرسالة محلياً في شاشة الموظف
+            appendMessage(msg, 'employee');
+
+            // 2. إرسال الرسالة الحقيقية في نفس اللحظة إلى شاشة العميل عبر BroadcastChannel
+            const payload = {
+                type: 'STAFF_MSG',
+                staffName: currentEmployee.name || 'الموظف المسؤول',
+                staffRole: currentEmployee.role || 'مشرف العمليات',
+                text: msg,
+                time: time
+            };
+            liveChatChannel.postMessage(payload);
+
+            try {
+                localStorage.setItem('hamoor_last_staff_action', JSON.stringify({
+                    ...payload,
+                    timestamp: Date.now()
+                }));
+            } catch(e) {}
         }
 
         function appendMessage(text, sender) {
@@ -501,12 +757,16 @@
                 ? 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse' 
                 : 'flex items-start gap-2 max-w-[85%]';
             
+            const senderLabel = sender === 'employee' ? (currentEmployee.name || 'الموظف') : 'العميل';
+            const senderInit = sender === 'employee' ? (currentEmployee.initials || 'م') : 'ع';
+
             div.innerHTML = `
-                <div class="w-7 h-7 rounded-full ${sender === 'employee' ? 'bg-amber-600 text-slate-950' : 'bg-slate-700 text-white'} flex items-center justify-center font-bold text-[10px] flex-shrink-0">
-                    ${sender === 'employee' ? 'موظف' : 'عميل'}
+                <div class="w-7 h-7 rounded-full ${sender === 'employee' ? 'bg-amber-600 text-slate-950' : 'bg-slate-700 text-white'} flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow">
+                    ${senderInit}
                 </div>
                 <div>
                     <div class="${sender === 'employee' ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-200 border border-slate-700'} rounded-2xl p-3 shadow-md">
+                        <div class="text-[10px] text-amber-300 font-bold mb-0.5">${senderLabel}:</div>
                         ${text}
                     </div>
                     <span class="text-[10px] text-slate-400 mt-1 block ${sender === 'employee' ? 'text-left' : 'text-right'}">${time}</span>
@@ -528,7 +788,7 @@
             const div = document.createElement('div');
             div.className = 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse my-2';
             div.innerHTML = `
-                <div class="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                <div class="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0 shadow">
                     تذكرة
                 </div>
                 <div class="bg-gradient-to-r from-emerald-900 to-slate-800 border-2 border-emerald-500 text-white rounded-2xl rounded-tl-none p-3 shadow-xl">
@@ -548,17 +808,37 @@
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
 
-            alert('تم إصدار التذكرة بنجاح، وتحديث الحالة إلى "تم إصدار التذكرة"، وإشعار العميل.');
+            // إرسال كرت التذكرة فوراً لشاشة العميل الحية
+            liveChatChannel.postMessage({
+                type: 'TICKET_ISSUED',
+                staffName: currentEmployee.name || 'الموظف المسؤول',
+                ticketNo: ticketNo,
+                invoiceNo: invoiceNo,
+                amount: amount
+            });
+
+            try {
+                localStorage.setItem('hamoor_last_staff_action', JSON.stringify({
+                    type: 'TICKET_ISSUED',
+                    staffName: currentEmployee.name,
+                    ticketNo: ticketNo,
+                    invoiceNo: invoiceNo,
+                    amount: amount,
+                    timestamp: Date.now()
+                }));
+            } catch(e) {}
+
+            alert('تم إصدار التذكرة بنجاح، وتحديث الحالة، وإرسالها فوراً في شاشة العميل!');
         }
 
         function verifyDoc(isApproved) {
             if(isApproved) {
                 alert('✅ تم اعتماد المستند وجواز السفر بنجاح.');
-                appendMessage('تمت مراجعة جواز السفر واعتماده بنجاح. البيانات مطابقة.', 'employee');
+                broadcastStaffMessage('تمت مراجعة المستند واعتماده بنجاح. البيانات مطابقة تماماً وجاري إصدار التذكرة.');
             } else {
                 const reason = prompt('يرجى كتابة سبب طلب إعادة الرفع (مثلاً: الصورة غير واضحة):', 'صورة صفحة البيانات في الجواز غير واضحة، يرجى إعادة رفعها بدقة أعلى.');
                 if(reason) {
-                    appendMessage('تنبيه بخصوص المستند: ' + reason, 'employee');
+                    broadcastStaffMessage('تنبيه بخصوص المستند: ' + reason);
                 }
             }
         }
@@ -567,43 +847,267 @@
             alert('تم تغيير حالة الحجز إلى: ' + newStatus);
         }
 
+        // قاعدة بيانات الحجوزات الأساسية + الحجوزات الديناميكية الواردة من العميل
+        let BOOKING_DATA = {
+            1: {
+                ref: 'BK-2026-TR884',
+                provider: 'طيران تاركو (Tarco)',
+                customer: 'عبد العزيز سليمان أحمد',
+                route: 'رحلة ذهاب فقط: بورتسودان (PZU) ⬅️ القاهرة (CAI) • القيمة: 1,250,000 ج.س',
+                docType: 'جواز سفر المسافر (رسمي)',
+                docName: 'passport_aziz_2026.jpg',
+                docImg: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
+                passportName: 'ABDELAZIZ SULIMAN AHMED',
+                passportNo: 'P0129388',
+                passportExpiry: '14/08/2030 (صالح)',
+                status: 'pending_review'
+            },
+            2: {
+                ref: 'BK-2026-BD502',
+                provider: 'طيران بدر (Badr)',
+                customer: 'مريم عبد القادر إبراهيم',
+                route: 'رحلة ذهاب وعودة: بورتسودان (PZU) ⬅️ جدة (JED) • 2 مسافرين • القيمة: 2,300,000 ج.س',
+                docType: 'جواز سفر رسمي',
+                docName: 'passport_maryam_2026.jpg',
+                docImg: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
+                passportName: 'MARYAM ABDELQADER IBRAHIM',
+                passportNo: 'P0845112',
+                passportExpiry: '22/01/2029 (صالح)',
+                status: 'pending_payment'
+            },
+            3: {
+                ref: 'BK-2026-CR104',
+                provider: 'بواخر الركاب السريعة',
+                customer: 'عثمان طه الأمين',
+                route: 'رحلة بحرية: ميناء سواكن ⬅️ ميناء جدة الإسلامي • كابينة أولى • القيمة: 750,000 ج.س',
+                docType: 'بطاقة هوية / جواز',
+                docName: 'id_othman_sudan.jpg',
+                docImg: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
+                passportName: 'OTHMAN TAHA ELAMIN',
+                passportNo: 'P0339821',
+                passportExpiry: '05/11/2028 (صالح)',
+                status: 'new_request'
+            },
+            4: {
+                ref: 'BK-2026-VS319',
+                provider: 'خدمات التأشيرات',
+                customer: 'ياسر بشير الفاضل',
+                route: 'استخراج تأشيرة سياحية للمملكة العربية السعودية • 1 سنة متعددة • القيمة: 520,000 ج.س',
+                docType: 'جواز سفر رسمي',
+                docName: 'passport_yasser_2026.jpg',
+                docImg: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
+                passportName: 'YASSER BASHIR ELFADIL',
+                passportNo: 'P0912443',
+                passportExpiry: '19/04/2031 (صالح)',
+                status: 'ticket_issued'
+            }
+        };
+
+        // تحميل ودمج حجوزات العميل الفعلية المحفوظة في localStorage
+        function loadDynamicBookings() {
+            try {
+                // إزالة أي بطاقات ديناميكية سابقة لتفادي التكرار عند التحديث اللحظي
+                document.querySelectorAll('[id^="bookingCard-dyn-"]').forEach(el => el.remove());
+
+                const dynamicList = JSON.parse(localStorage.getItem('hamoor_bookings') || '[]');
+                if (dynamicList && dynamicList.length > 0) {
+                    const listContainer = document.getElementById('bookingsList');
+                    dynamicList.forEach((bk, index) => {
+                        const customId = 'dyn-' + (bk.id || index);
+                        BOOKING_DATA[customId] = {
+                            ref: bk.ref || 'BK-NEW',
+                            provider: bk.provider || 'طيران تاركو',
+                            customer: bk.customer || 'العميل الجديد',
+                            route: `${bk.route} • الهاتف: ${bk.phone || 'غير مسجل'} • القيمة: ${bk.price}`,
+                            docType: 'المستند الفعلي المرفوع من العميل',
+                            docName: bk.docName || 'مستند_مرفوع.jpg',
+                            docImg: bk.docData || 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80',
+                            passportName: bk.customer.toUpperCase(),
+                            passportNo: 'DOC-' + Math.floor(100000 + Math.random() * 900000),
+                            passportExpiry: 'ساري وموثق',
+                            status: bk.status || 'pending_review'
+                        };
+
+                        // إنشاء بطاقة الحجز الحقيقي في أعلى القائمة
+                        const cardDiv = document.createElement('div');
+                        cardDiv.id = `bookingCard-${customId}`;
+                        cardDiv.onclick = () => selectBooking(customId);
+                        cardDiv.className = 'cursor-pointer bg-gradient-to-r from-indigo-950/80 to-slate-800 hover:bg-slate-750 border-2 border-amber-500 rounded-2xl p-4 transition-all shadow-lg relative mb-3';
+                        cardDiv.innerHTML = `
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-mono font-bold text-amber-300 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-600">${bk.ref}</span>
+                                <span class="text-[11px] font-bold text-emerald-300 bg-emerald-950 px-2 py-0.5 rounded-full border border-emerald-600 animate-pulse">وارد حديثاً ⚡</span>
+                            </div>
+                            <div class="text-sm font-black text-white flex items-center gap-1.5">
+                                <span>${bk.customer}</span>
+                                <span class="text-[10px] bg-indigo-600 text-white px-1.5 py-0.2 rounded font-normal">طلب عميل حقيقي</span>
+                            </div>
+                            <div class="text-xs text-indigo-300 flex items-center gap-1 mt-1 font-semibold">
+                                <span>✈️ ${bk.provider}</span> • <span>${bk.route}</span>
+                            </div>
+                            <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
+                                <span>${bk.date || 'اليوم'} • مرفق: ${bk.docName}</span>
+                                <span class="text-amber-300 font-bold">${bk.price}</span>
+                            </div>
+                        `;
+                        if (listContainer) {
+                            listContainer.insertBefore(cardDiv, listContainer.firstChild);
+                        }
+                    });
+
+                    // تحديث شارة عدد الطلبات
+                    const badge = document.getElementById('bookingCountBadge');
+                    if (badge) {
+                        badge.innerText = `${4 + dynamicList.length} طلبات`;
+                    }
+
+                    // اختيار أول حجز ديناميكي تلقائياً
+                    selectBooking('dyn-' + (dynamicList[0].id || 0));
+                }
+            } catch(e) {
+                console.warn('Error loading dynamic bookings:', e);
+            }
+        }
+
         function selectBooking(id) {
             document.querySelectorAll('[id^="bookingCard-"]').forEach(el => {
-                el.classList.remove('border-indigo-500', 'border-2');
+                el.classList.remove('border-indigo-500', 'border-amber-500', 'border-2');
                 el.classList.add('border-slate-700');
             });
             const activeCard = document.getElementById(`bookingCard-${id}`);
             if(activeCard) {
-                activeCard.classList.add('border-indigo-500', 'border-2');
+                activeCard.classList.add('border-amber-500', 'border-2');
                 activeCard.classList.remove('border-slate-700');
             }
 
-            if(id === 2) {
-                document.getElementById('activeRef').innerText = 'BK-2026-BD502';
-                document.getElementById('activeProvider').innerText = 'طيران بدر (Badr)';
-                document.getElementById('activeCustomerName').innerText = 'مريم عبد القادر إبراهيم';
-                document.getElementById('activeRoute').innerText = 'رحلة ذهاب وعودة: بورتسودان (PZU) ⬅️ جدة (JED) • 2 مسافرين • القيمة: 2,300,000 ج.س';
-            } else if(id === 3) {
-                document.getElementById('activeRef').innerText = 'BK-2026-CR104';
-                document.getElementById('activeProvider').innerText = 'بواخر الركاب السريعة';
-                document.getElementById('activeCustomerName').innerText = 'عثمان طه الأمين';
-                document.getElementById('activeRoute').innerText = 'رحلة بحرية: ميناء سواكن ⬅️ ميناء جدة الإسلامي • القيمة: 750,000 ج.س';
-            } else if(id === 4) {
-                document.getElementById('activeRef').innerText = 'BK-2026-VS319';
-                document.getElementById('activeProvider').innerText = 'خدمات التأشيرات';
-                document.getElementById('activeCustomerName').innerText = 'ياسر بشير الفاضل';
-                document.getElementById('activeRoute').innerText = 'استخراج تأشيرة سياحية للمملكة العربية السعودية • القيمة: 520,000 ج.س';
-            } else {
-                document.getElementById('activeRef').innerText = 'BK-2026-TR884';
-                document.getElementById('activeProvider').innerText = 'طيران تاركو (Tarco)';
-                document.getElementById('activeCustomerName').innerText = 'عبد العزيز سليمان أحمد';
-                document.getElementById('activeRoute').innerText = 'رحلة ذهاب فقط: بورتسودان (PZU) ⬅️ القاهرة (CAI) • المسافر: عبد العزيز سليمان • القيمة: 1,250,000 ج.س';
+            const data = BOOKING_DATA[id] || BOOKING_DATA[1];
+            
+            // تحديث الترويسة الرئيسية
+            document.getElementById('activeRef').innerText = data.ref;
+            document.getElementById('activeProvider').innerText = data.provider;
+            document.getElementById('activeCustomerName').innerText = data.customer;
+            document.getElementById('activeRoute').innerText = data.route;
+
+            // تحديث نافذة المستندات الفعلية (KYC)
+            const docTypeEl = document.getElementById('activeDocTypeTitle');
+            if (docTypeEl) docTypeEl.innerText = data.docType || 'مستند العميل الثبوتي';
+
+            const docNameEl = document.getElementById('activeDocFileName');
+            if (docNameEl) docNameEl.innerText = data.docName || 'document.jpg';
+
+            const docImgEl = document.getElementById('activeDocImg');
+            if (docImgEl && data.docImg) {
+                docImgEl.src = data.docImg;
+            }
+
+            const modalDocImg = document.getElementById('docPreviewModalImg');
+            if (modalDocImg && data.docImg) {
+                modalDocImg.src = data.docImg;
+            }
+
+            const modalCustName = document.getElementById('docPreviewCustomerName');
+            if (modalCustName) {
+                modalCustName.innerText = `معاينة المستند الثبوتي للمسافر: ${data.customer}`;
+            }
+
+            const kycName = document.getElementById('kycPassportName');
+            if (kycName) kycName.innerText = data.passportName || data.customer;
+
+            const kycNo = document.getElementById('kycPassportNo');
+            if (kycNo) kycNo.innerText = data.passportNo || 'DOC-P99201';
+
+            const kycExp = document.getElementById('kycPassportExpiry');
+            if (kycExp) kycExp.innerText = data.passportExpiry || '14/08/2030 (صالح)';
+
+            // تحديث رسائل الشات لتخاطب العميل المحدد باسمه الفعلي
+            const chatBox = document.getElementById('chatMessages');
+            if (chatBox) {
+                chatBox.innerHTML = `
+                    <div class="text-center my-1">
+                        <span class="bg-slate-800 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-slate-700">
+                            تم فتح المحادثة الخاصة بالطلب: ${data.ref} (${data.customer})
+                        </span>
+                    </div>
+
+                    <div class="flex items-start gap-2 max-w-[85%]">
+                        <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                            عميل
+                        </div>
+                        <div>
+                            <div class="bg-slate-800 border border-slate-700 rounded-2xl rounded-tr-none p-3 text-slate-200">
+                                مرحباً، أنا <strong>${data.customer}</strong>، قمت برفع المستند (${data.docName}) وأرغب في تأكيد ${data.route}.
+                            </div>
+                            <span class="text-[10px] text-slate-500 mt-1 block">10:15 ص</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse">
+                        <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                            ${currentEmployee.initials || 'م'}
+                        </div>
+                        <div>
+                            <div class="bg-indigo-600 text-white rounded-2xl rounded-tl-none p-3 shadow-md">
+                                <div class="text-[10px] text-amber-300 font-bold mb-0.5">${currentEmployee.name || 'الموظف المسؤول'}:</div>
+                                أهلاً بك أستاذ/ة <strong>${data.customer}</strong>. تم استلام المستند وجاري التحقق منه وحجز مقعدك على رحلتك عبر بوابة TT Interactive. هل تفضل الدفع عبر تطبيق بنكك؟
+                            </div>
+                            <span class="text-[10px] text-slate-400 mt-1 block text-left">10:16 ص • تمت القراءة</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse">
+                        <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                            ${currentEmployee.initials || 'م'}
+                        </div>
+                        <div>
+                            <div class="bg-indigo-900/90 border border-indigo-500/50 text-white rounded-2xl rounded-tl-none p-3">
+                                <div class="text-[10px] text-amber-300 font-bold mb-0.5">${currentEmployee.name || 'الموظف المسؤول'}:</div>
+                                يمكنك إتمام التحويل عبر تطبيق بنكك على حساب وكالة هامور برقم: <code>2198031</code> بنكك (وكالة هامور للسفر).
+                            </div>
+                            <span class="text-[10px] text-slate-400 mt-1 block text-left">10:18 ص</span>
+                        </div>
+                    </div>
+                `;
             }
         }
 
         function filterBookings(type) {
-            console.log('Filter:', type);
+            const cards = document.querySelectorAll('[id^="bookingCard-"]');
+            cards.forEach(card => {
+                if(type === 'all') {
+                    card.classList.remove('hidden');
+                } else if(type === 'flight') {
+                    const isFlight = card.innerText.includes('طيران') || card.innerText.includes('تاركو') || card.innerText.includes('بدر');
+                    card.classList.toggle('hidden', !isFlight);
+                } else if(type === 'cruise') {
+                    const isCruise = card.innerText.includes('باخرة') || card.innerText.includes('بواخر');
+                    card.classList.toggle('hidden', !isCruise);
+                } else if(type === 'visa') {
+                    const isVisa = card.innerText.includes('تأشيرة');
+                    card.classList.toggle('hidden', !isVisa);
+                }
+            });
         }
+
+        // فلتر البحث اللحظي وتجهيز الصفحة فور التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            // فحص تسجيل الدخول الإجباري للموظف
+            checkEmployeeAuth();
+
+            // تحميل الحجوزات الحقيقية
+            loadDynamicBookings();
+
+            const searchInput = document.getElementById('bookingSearch');
+            if(searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase().trim();
+                    const cards = document.querySelectorAll('[id^="bookingCard-"]');
+                    cards.forEach(card => {
+                        const text = card.innerText.toLowerCase();
+                        card.classList.toggle('hidden', !text.includes(term));
+                    });
+                });
+            }
+        });
     </script>
 </body>
 </html>

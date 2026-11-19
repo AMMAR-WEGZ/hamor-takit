@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الموظفين - وكالة السفر الرقمية الذكية</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white">
+
+    <!-- شريط التنقل العلوي للموظف -->
+    <header class="bg-slate-800/90 border-b border-slate-700/80 sticky top-0 z-50 backdrop-blur-md px-4 lg:px-8 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl overflow-hidden border border-amber-500/50 shadow-lg shadow-amber-500/20 flex-shrink-0 bg-slate-900">
+                <img src="../assets/hamoor_logo.jpg" alt="شعار هامور" class="w-full h-full object-cover">
+            </div>
+            <div>
+                <h1 class="text-lg font-bold text-white flex items-center gap-2">
+                    <span>هامور</span>
+                    <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-semibold">لوحة تحكم الموظفين والعمليات</span>
+                </h1>
+                <p class="text-xs text-slate-400">وكالة هامور للسفر والسياحة • إصدار تذاكر تاركو وبدر عبر TT Interactive</p>
+            </div>
+        </div>
+
+        <!-- حالة الموظف والمعلومات -->
+        <div class="flex items-center gap-4">
+            <div class="hidden md:flex items-center gap-2 bg-slate-950/60 px-3 py-1.5 rounded-xl border border-slate-700/60 text-xs">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-slate-300">الحالة: <strong class="text-emerald-400">متصل (متاح لاستقبال الحجوزات)</strong></span>
+            </div>
+
+            <div class="flex items-center gap-3 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700">
+                <div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-sm font-bold text-white">
+                    م.أ
+                </div>
+                <div class="text-right">
+                    <div class="text-xs font-bold text-white">محمد أحمد عثمان</div>
+                    <div class="text-[10px] text-amber-400">مشرف حجوزات طيران تاركو وبدر (موظف 1 من 10)</div>
+                </div>
+            </div>
+
+            <!-- رابط سريع لواجهة العميل للتجربة -->
+            <a href="index.html" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white px-3 py-2 rounded-xl transition flex items-center gap-1 font-semibold shadow-md">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                معاينة واجهة العميل
+            </a>
+        </div>
+    </header>
+
+    <!-- بطاقة بوابة الطيران التفاعلية المركزية (المطلوبة في الخطة بدقة) -->
+    <div class="max-w-7xl mx-auto w-full px-4 lg:px-8 mt-5">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-950 border-2 border-indigo-500/40 p-5 shadow-2xl hover:border-indigo-400 transition-all duration-300 group">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
+                <div class="flex items-center gap-5 w-full lg:w-auto">
+                    <!-- صورة الطيران التفاعلية التي تفتح الرابط عند الضغط عليها -->
+                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" title="اضغط لفتح بوابة TT Interactive لإصدار التذاكر" class="relative block rounded-xl overflow-hidden shadow-2xl border-2 border-amber-400/80 group-hover:scale-105 transition duration-300 flex-shrink-0 cursor-pointer">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=400&q=80" alt="نظام طيران TT Interactive" class="w-36 h-24 object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-2 text-center">
+                            <span class="text-[11px] font-extrabold text-amber-300 flex items-center justify-center gap-1">
+                                ✈️ فتح النظام
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                            </span>
+                        </div>
+                    </a>
+
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 mb-1.5">
+                            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+                            بوابة إصدار التذاكر العالمية للموظفين (GDS Portal)
+                        </div>
+                        <h2 class="text-xl font-black text-white flex items-center gap-2">
+                            نظام TT Interactive لحجوزات وإصدار التذاكر
+                        </h2>
+                        <p class="text-sm text-slate-300 mt-1 max-w-xl">
+                            البوابة المعتمدة لموظفي الوكالة لإصدار التذاكر وتثبيت المقاعد الرسمية لشركات الطيران (طيران تاركو وطيران بدر والخطوط المرتبطة) مباشرة أثناء محادثة العميل.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 w-full lg:w-auto justify-end">
+                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" class="px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm flex items-center gap-2 shadow-xl shadow-amber-500/20 transition-all transform hover:-translate-y-0.5">
+                        <svg class="w-5 h-5 text-slate-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        دخول بوابة TT Interactive
+                    </a>
+                    
+                    <button onclick="toggleIframeModal()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 font-bold text-xs flex items-center gap-2 transition">
+                        <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
+                        عرض داخل الشاشة
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- النافذة المنبثقة لإطار TT Interactive داخل الشاشة -->
+    <div id="ttModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-700 w-full max-w-6xl h-[85vh] rounded-2xl flex flex-col overflow-hidden shadow-2xl">
+            <div class="px-5 py-3 bg-slate-800 border-b border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-sm font-bold text-white">نظام TT Interactive السحابي</span>
+                    <span class="text-xs text-slate-400">(emea.ttinteractive.com)</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="https://emea.ttinteractive.com/otds/index.asp" target="_blank" class="text-xs text-amber-400 hover:underline flex items-center gap-1 font-semibold">
+                        فتح في نافذة جديدة
+                    </a>
+                    <button onclick="toggleIframeModal()" class="text-slate-400 hover:text-white p-1 rounded-lg bg-slate-700">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="flex-1 bg-white relative">
+                <iframe src="https://emea.ttinteractive.com/otds/index.asp" class="w-full h-full border-0"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- شبكة مساحة عمل الموظف الرئيسية -->
+    <main class="max-w-7xl mx-auto w-full px-4 lg:px-8 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- العمود الأيمن: قائمة طلبات الحجوزات الواردة (4 أعمدة) -->
+        <section class="lg:col-span-4 flex flex-col gap-4">
+            
+            <!-- شريط التصفية والبحث في الحجوزات -->
+            <div class="bg-slate-800/80 rounded-2xl p-4 border border-slate-700/80 shadow-lg">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                        <span>قائمة الحجوزات الواردة</span>
+                        <span id="bookingCountBadge" class="bg-indigo-600 text-white text-xs px-2 py-0.5 rounded-full font-bold">4 طلبات</span>
+                    </h3>
+                    <div class="flex items-center gap-1">
+                        <button onclick="filterBookings('all')" class="text-[11px] bg-slate-700 text-slate-200 px-2.5 py-1 rounded-lg font-bold hover:bg-slate-600">الكل</button>
+                        <button onclick="filterBookings('flight')" class="text-[11px] bg-indigo-900/60 text-indigo-300 border border-indigo-700/50 px-2 py-1 rounded-lg font-bold">طيران</button>
+                        <button onclick="filterBookings('cruise')" class="text-[11px] bg-teal-900/60 text-teal-300 border border-teal-700/50 px-2 py-1 rounded-lg font-bold">بواخر</button>
+                        <button onclick="filterBookings('visa')" class="text-[11px] bg-amber-900/60 text-amber-300 border border-amber-700/50 px-2 py-1 rounded-lg font-bold">تأشيرة</button>
+                    </div>
+                </div>
+
+                <!-- شريط البحث السريع -->
+                <div class="relative">
+                    <input type="text" id="bookingSearch" placeholder="بحث برقم الحجز، اسم العميل، الوجهة..." class="w-full bg-slate-900/90 border border-slate-700 rounded-xl py-2 px-9 text-xs text-slate-100 placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+                    <svg class="w-4 h-4 text-slate-400 absolute right-3 top-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                </div>
+            </div>
+
+            <!-- بطاقات الحجوزات التفاعلية (مع مبالغ بالجنيه السوداني) -->
+            <div id="bookingsList" class="flex flex-col gap-3 overflow-y-auto max-h-[640px] pr-1">
+                
+                <!-- حجز 1: طيران تاركو (نشط حالياً) -->
+                <div onclick="selectBooking(1)" id="bookingCard-1" class="cursor-pointer bg-slate-800 hover:bg-slate-750 border-2 border-indigo-500 rounded-2xl p-4 transition-all shadow-md relative">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800">BK-2026-TR884</span>
+                        <span class="text-[11px] font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-700">مستندات مرفوعة ✅</span>
+                    </div>
+                    <div class="text-sm font-bold text-white">عبد العزيز سليمان أحمد</div>
+                    <div class="text-xs text-indigo-300 flex items-center gap-1 mt-1 font-semibold">
+                        <span>✈️ طيران تاركو</span> • <span>بورتسودان (PZU) ⬅️ القاهرة (CAI)</span>
+                    </div>
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
+                        <span>20 نوفمبر 2026 • 1 مسافر</span>
+                        <span class="text-amber-300 font-bold">1,250,000 ج.س</span>
+                    </div>
+                </div>
+
+                <!-- حجز 2: طيران بدر -->
+                <div onclick="selectBooking(2)" id="bookingCard-2" class="cursor-pointer bg-slate-800/80 hover:bg-slate-750 border border-slate-700 rounded-2xl p-4 transition-all shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-bold text-slate-300 bg-slate-900 px-2 py-0.5 rounded border border-slate-700">BK-2026-BD502</span>
+                        <span class="text-[11px] font-bold text-yellow-400 bg-yellow-950/80 px-2 py-0.5 rounded-full border border-yellow-700">بانتظار الدفع ⏳</span>
+                    </div>
+                    <div class="text-sm font-bold text-white">مريم عبد القادر إبراهيم</div>
+                    <div class="text-xs text-indigo-300 flex items-center gap-1 mt-1 font-semibold">
+                        <span>✈️ طيران بدر</span> • <span>بورتسودان (PZU) ⬅️ جدة (JED)</span>
+                    </div>
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
+                        <span>24 نوفمبر 2026 • 2 مسافرين</span>
+                        <span class="text-amber-300 font-bold">2,300,000 ج.س</span>
+                    </div>
+                </div>
+
+                <!-- حجز 3: بواخر بحرية -->
+                <div onclick="selectBooking(3)" id="bookingCard-3" class="cursor-pointer bg-slate-800/80 hover:bg-slate-750 border border-slate-700 rounded-2xl p-4 transition-all shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-bold text-teal-400 bg-teal-950/60 px-2 py-0.5 rounded border border-teal-800">BK-2026-CR104</span>
+                        <span class="text-[11px] font-bold text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded-full border border-cyan-700">طلب جديد 💬</span>
+                    </div>
+                    <div class="text-sm font-bold text-white">عثمان طه الأمين</div>
+                    <div class="text-xs text-teal-300 flex items-center gap-1 mt-1 font-semibold">
+                        <span>🚢 باخرة الركاب السريعة</span> • <span>سواكن ⬅️ ميناء جدة الإسلامي</span>
+                    </div>
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
+                        <span>28 نوفمبر 2026 • كابينة أولى</span>
+                        <span class="text-amber-300 font-bold">750,000 ج.س</span>
+                    </div>
+                </div>
+
+                <!-- حجز 4: تأشيرة -->
+                <div onclick="selectBooking(4)" id="bookingCard-4" class="cursor-pointer bg-slate-800/80 hover:bg-slate-750 border border-slate-700 rounded-2xl p-4 transition-all shadow-md">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-800">BK-2026-VS319</span>
+                        <span class="text-[11px] font-bold text-emerald-400 bg-emerald-950/80 px-2 py-0.5 rounded-full border border-emerald-700">تم إصدار التأشيرة 📄</span>
+                    </div>
+                    <div class="text-sm font-bold text-white">ياسر بشير الفاضل</div>
+                    <div class="text-xs text-amber-300 flex items-center gap-1 mt-1 font-semibold">
+                        <span>📄 تأشيرة دخول للمملكة العربية السعودية</span> • <span>زيارة متعددة 1 سنة</span>
+                    </div>
+                    <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-700/60">
+                        <span>جاهزة للتحميل</span>
+                        <span class="text-amber-300 font-bold">520,000 ج.س</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- العمود الأوسط واليسار: الدردشة الحية + فحص المستندات + إجراءات الحجز -->
+        <section class="lg:col-span-8 flex flex-col gap-5">
+            
+            <!-- لوحة تفاصيل الحجز النشط وشريط الإجراءات -->
+            <div class="bg-slate-800 rounded-2xl p-4 border border-slate-700 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span id="activeRef" class="text-xs font-mono font-bold bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-md border border-amber-500/30">BK-2026-TR884</span>
+                        <span id="activeProvider" class="text-xs font-bold bg-indigo-900/70 text-indigo-200 px-2.5 py-1 rounded-md border border-indigo-700/50">طيران تاركو (Tarco)</span>
+                        <span class="text-xs text-slate-400">تاريخ الطلب: 10 نوفمبر 2026</span>
+                    </div>
+                    <h2 id="activeCustomerName" class="text-lg font-black text-white">عبد العزيز سليمان أحمد</h2>
+                    <p id="activeRoute" class="text-xs text-slate-300 mt-0.5">رحلة ذهاب فقط: بورتسودان (PZU) ⬅️ القاهرة (CAI) • المسافر: عبد العزيز سليمان أحمد • القيمة: 1,250,000 ج.س</p>
+                </div>
+
+                <!-- أزرار تغيير حالة الحجز وإجراءات الموظف -->
+                <div class="flex items-center gap-2 w-full md:w-auto">
+                    <select id="statusSelect" onchange="updateBookingStatus(this.value)" class="bg-slate-900 text-xs font-bold text-amber-400 border border-slate-700 rounded-xl px-3 py-2 focus:outline-none">
+                        <option value="in_review">قيد المراجعة والتدقيق</option>
+                        <option value="awaiting_payment">بانتظار الدفع وتأكيد الحوالة</option>
+                        <option value="ticket_issued">تم إصدار التذكرة الرسمية ✅</option>
+                        <option value="cancelled">إلغاء الطلب</option>
+                    </select>
+
+                    <button onclick="openUploadTicketModal()" class="text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-lg shadow-emerald-600/20">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                        رفع التذكرة / الفاتورة
+                    </button>
+                </div>
+            </div>
+
+            <!-- تقسيم أفقي: شاشة الدردشة المباشرة (يسار/يمين) + نافذة المستندات المرفقة -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-5 flex-1">
+                
+                <!-- نافذة الشات المباشر مع العميل (7 أعمدة) -->
+                <div class="md:col-span-7 bg-slate-800 rounded-2xl border border-slate-700 flex flex-col h-[520px] shadow-xl overflow-hidden">
+                    
+                    <!-- ترويسة الشات -->
+                    <div class="p-3 bg-slate-850 border-b border-slate-700 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span class="text-xs font-bold text-white">الدردشة الحية مع العميل</span>
+                        </div>
+                        <div class="text-[11px] text-slate-400">
+                            محادثة مشفرة ومحفوظة في SQLite
+                        </div>
+                    </div>
+
+                    <!-- صندوق الرسائل -->
+                    <div id="chatMessages" class="flex-1 p-4 overflow-y-auto space-y-3 bg-slate-900/70 text-xs">
+                        
+                        <!-- رسالة نظام -->
+                        <div class="text-center my-1">
+                            <span class="bg-slate-800 text-slate-400 text-[10px] px-3 py-1 rounded-full border border-slate-700">
+                                تم فتح المحادثة بعد رفع مستندات الهوية بنجاح • 10:14 ص
+                            </span>
+                        </div>
+
+                        <!-- رسالة من العميل -->
+                        <div class="flex items-start gap-2 max-w-[85%]">
+                            <div class="w-7 h-7 rounded-full bg-slate-700 text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                                ع.س
+                            </div>
+                            <div>
+                                <div class="bg-slate-800 border border-slate-700 rounded-2xl rounded-tr-none p-3 text-slate-200">
+                                    مرحباً، لقد قمت برفع صورة جواز السفر وأريد تأكيد مقعد على رحلة تاركو من بورتسودان إلى القاهرة يوم 20 نوفمبر القادم.
+                                </div>
+                                <span class="text-[10px] text-slate-500 mt-1 block">10:15 ص</span>
+                            </div>
+                        </div>
+
+                        <!-- رسالة من الموظف -->
+                        <div class="flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse">
+                            <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                                موظف
+                            </div>
+                            <div>
+                                <div class="bg-indigo-600 text-white rounded-2xl rounded-tl-none p-3 shadow-md">
+                                    أهلاً بك أستاذ عبد العزيز. تم استلام صورة الجواز وجاري التحقق منها وحجز مقعدك على رحلة تاركو (3W-112) عبر بوابة TT Interactive.
+                                </div>
+                                <span class="text-[10px] text-slate-400 mt-1 block text-left">10:16 ص • تمت القراءة</span>
+                            </div>
+                        </div>
+
+                        <!-- رسالة من الموظف: إرسال بيانات الدفع بالجنيه السوداني -->
+                        <div class="flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse">
+                            <div class="w-7 h-7 rounded-full bg-amber-600 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                                موظف
+                            </div>
+                            <div>
+                                <div class="bg-indigo-900/90 border border-indigo-500/50 text-white rounded-2xl rounded-tl-none p-3">
+                                    قيمة التذكرة الإجمالية: <strong>1,250,000 جنيه سوداني</strong>. يمكنك التحويل عبر تطبيق بنكك على حساب الوكالة برقم: <code>2198031</code> بنكك (وكالة هامور للسفر).
+                                </div>
+                                <span class="text-[10px] text-slate-400 mt-1 block text-left">10:18 ص</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- أزرار الردود السريعة للموظف -->
+                    <div class="px-3 py-1.5 bg-slate-850 border-t border-slate-700/60 flex items-center gap-1.5 overflow-x-auto text-[11px]">
+                        <span class="text-slate-400 text-[10px] whitespace-nowrap">ردود سريعة:</span>
+                        <button onclick="sendQuickReply('تم التحقق من الجواز وجاري إصدار التذكرة عبر نظام TT Interactive.')" class="bg-slate-750 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded border border-slate-600 whitespace-nowrap">تم التحقق من الجواز</button>
+                        <button onclick="sendQuickReply('قيمة التذكرة 1,250,000 ج.س. الرجاء إرسال إشعار تحويل بنكك لتأكيد التذكرة فوراً.')" class="bg-slate-750 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded border border-slate-600 whitespace-nowrap">طلب إشعار بنكك</button>
+                        <button onclick="sendQuickReply('تم إصدار التذكرة بنجاح! يمكنك تحميلها الآن من الرابط المرفق.')" class="bg-slate-750 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded border border-slate-600 whitespace-nowrap">إشعار صدور التذكرة</button>
+                    </div>
+
+                    <!-- صندوق كتابة الرسالة -->
+                    <form onsubmit="handleStaffSendMessage(event)" class="p-2.5 bg-slate-850 border-t border-slate-700 flex items-center gap-2">
+                        <input type="text" id="staffMessageInput" placeholder="اكتب ردك للعميل هنا..." class="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-4 py-2 text-xs text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1 shadow-md">
+                            <span>إرسال</span>
+                            <svg class="w-3.5 h-3.5 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- نافذة فحص وتدقيق المستندات المرفوعة (5 أعمدة) -->
+                <div class="md:col-span-5 bg-slate-800 rounded-2xl border border-slate-700 flex flex-col h-[520px] shadow-xl p-4">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-700 mb-3">
+                        <h4 class="font-bold text-xs text-white flex items-center gap-2">
+                            <span>المستندات المرفوعة من العميل (KYC)</span>
+                        </h4>
+                        <span class="text-[10px] bg-emerald-950 text-emerald-400 border border-emerald-800 px-2 py-0.5 rounded font-mono">1 مستند</span>
+                    </div>
+
+                    <!-- عارض صورة الجواز / الهوية -->
+                    <div class="flex-1 flex flex-col justify-between bg-slate-900 rounded-xl p-3 border border-slate-700/80">
+                        <div>
+                            <div class="flex items-center justify-between text-xs text-slate-300 mb-2">
+                                <span class="font-bold text-amber-400">جواز سفر المسافر (رسمي)</span>
+                                <span class="text-[10px] text-slate-400">passport_aziz_2026.jpg</span>
+                            </div>
+                            
+                            <!-- معاينة الصورة مع زر تكبير -->
+                            <div class="relative rounded-lg overflow-hidden border border-slate-700 group cursor-pointer" onclick="openDocPreviewModal()">
+                                <img id="activeDocImg" src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" alt="صورة الجواز" class="w-full h-44 object-cover group-hover:scale-105 transition duration-300">
+                                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                                    <span class="bg-slate-900/90 text-white text-xs px-3 py-1.5 rounded-lg border border-slate-600 flex items-center gap-1 font-bold">
+                                        🔍 تكبير وفحص البيانات
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- بيانات الجواز المقروءة -->
+                            <div class="mt-3 bg-slate-950/70 rounded-lg p-2.5 text-[11px] space-y-1.5 border border-slate-850">
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">الاسم بالجواز:</span>
+                                    <span class="text-white font-bold">ABDELAZIZ SULIMAN AHMED</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">رقم الجواز:</span>
+                                    <span class="text-amber-300 font-mono font-bold">P0129388</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-slate-400">تاريخ الانتهاء:</span>
+                                    <span class="text-emerald-400 font-semibold">14/08/2030 (صالح)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- أزرار اعتماد المستند -->
+                        <div class="flex items-center gap-2 pt-3 border-t border-slate-800">
+                            <button onclick="verifyDoc(true)" class="flex-1 bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold py-2 rounded-xl text-xs transition flex items-center justify-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                اعتماد المستند
+                            </button>
+                            <button onclick="verifyDoc(false)" class="bg-rose-900/50 hover:bg-rose-800 text-rose-300 border border-rose-700/60 font-bold px-3 py-2 rounded-xl text-xs transition">
+                                طلب إعادة رفع
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- نافذة رفع التذكرة والفاتورة -->
+    <div id="uploadTicketModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-700 w-full max-w-md rounded-2xl p-5 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-700 mb-4">
+                <h3 class="font-bold text-white text-sm flex items-center gap-2">
+                    <span>إصدار ورفع التذكرة والفاتورة الرسمية</span>
+                </h3>
+                <button onclick="closeUploadTicketModal()" class="text-slate-400 hover:text-white">✕</button>
+            </div>
+            
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-300 mb-1 font-semibold">رقم التذكرة الإلكترونية (e-Ticket No):</label>
+                    <input type="text" id="eTicketNumber" value="3W-082-99120485" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-amber-300 font-mono">
+                </div>
+                <div>
+                    <label class="block text-slate-300 mb-1 font-semibold">رقم الفاتورة الضريبية:</label>
+                    <input type="text" id="invoiceNumber" value="INV-2026-00941" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-slate-200 font-mono">
+                </div>
+                <div>
+                    <label class="block text-slate-300 mb-1 font-semibold">المبلغ بالجنيه السوداني:</label>
+                    <input type="text" id="invoiceAmount" value="1,250,000 ج.س" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-emerald-400 font-bold font-mono">
+                </div>
+                <div>
+                    <label class="block text-slate-300 mb-1 font-semibold">ملف التذكرة (PDF):</label>
+                    <div class="border-2 border-dashed border-slate-600 rounded-xl p-4 text-center bg-slate-900/50 hover:border-indigo-500 cursor-pointer">
+                        <svg class="w-8 h-8 text-indigo-400 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                        <p class="text-[11px] text-slate-300 font-semibold">اضغط لاختيار ملف التذكرة الصادرة من TT Interactive</p>
+                        <p class="text-[10px] text-slate-500 mt-0.5">Tarco_Ticket_P0129388.pdf (جاهز للإرسال)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2 mt-5">
+                <button onclick="confirmTicketIssue()" class="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-2.5 rounded-xl text-xs shadow-lg transition">
+                    إرسال التذكرة للعميل مباشرة في الشات وحسابه
+                </button>
+                <button onclick="closeUploadTicketModal()" class="bg-slate-700 text-slate-300 px-4 py-2.5 rounded-xl text-xs font-bold">
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تكبير المستند -->
+    <div id="docPreviewModal" class="hidden fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4" onclick="closeDocPreviewModal()">
+        <div class="max-w-2xl w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 overflow-hidden" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-700">
+                <span class="text-xs font-bold text-white">معاينة جواز السفر - عبد العزيز سليمان أحمد</span>
+                <button onclick="closeDocPreviewModal()" class="text-slate-400 hover:text-white text-sm">✕ إغلاق</button>
+            </div>
+            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=1200&q=80" alt="صورة الجواز مكبرة" class="w-full h-auto rounded-lg max-h-[70vh] object-contain">
+        </div>
+    </div>
+
+    <script>
+        function toggleIframeModal() {
+            const modal = document.getElementById('ttModal');
+            modal.classList.toggle('hidden');
+        }
+
+        function openDocPreviewModal() {
+            document.getElementById('docPreviewModal').classList.remove('hidden');
+        }
+
+        function closeDocPreviewModal() {
+            document.getElementById('docPreviewModal').classList.add('hidden');
+        }
+
+        function openUploadTicketModal() {
+            document.getElementById('uploadTicketModal').classList.remove('hidden');
+        }
+
+        function closeUploadTicketModal() {
+            document.getElementById('uploadTicketModal').classList.add('hidden');
+        }
+
+        function sendQuickReply(text) {
+            appendMessage(text, 'employee');
+        }
+
+        function handleStaffSendMessage(e) {
+            e.preventDefault();
+            const input = document.getElementById('staffMessageInput');
+            const msg = input.value.trim();
+            if(!msg) return;
+            appendMessage(msg, 'employee');
+            input.value = '';
+        }
+
+        function appendMessage(text, sender) {
+            const container = document.getElementById('chatMessages');
+            const time = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            
+            const div = document.createElement('div');
+            div.className = sender === 'employee' 
+                ? 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse' 
+                : 'flex items-start gap-2 max-w-[85%]';
+            
+            div.innerHTML = `
+                <div class="w-7 h-7 rounded-full ${sender === 'employee' ? 'bg-amber-600 text-slate-950' : 'bg-slate-700 text-white'} flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                    ${sender === 'employee' ? 'موظف' : 'عميل'}
+                </div>
+                <div>
+                    <div class="${sender === 'employee' ? 'bg-indigo-600 text-white' : 'bg-slate-800 text-slate-200 border border-slate-700'} rounded-2xl p-3 shadow-md">
+                        ${text}
+                    </div>
+                    <span class="text-[10px] text-slate-400 mt-1 block ${sender === 'employee' ? 'text-left' : 'text-right'}">${time}</span>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function confirmTicketIssue() {
+            const ticketNo = document.getElementById('eTicketNumber').value;
+            const invoiceNo = document.getElementById('invoiceNumber').value;
+            const amount = document.getElementById('invoiceAmount').value;
+            
+            closeUploadTicketModal();
+            document.getElementById('statusSelect').value = 'ticket_issued';
+
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = 'flex items-start gap-2 max-w-[85%] mr-auto flex-row-reverse my-2';
+            div.innerHTML = `
+                <div class="w-7 h-7 rounded-full bg-emerald-500 text-slate-950 flex items-center justify-center font-bold text-[10px] flex-shrink-0">
+                    تذكرة
+                </div>
+                <div class="bg-gradient-to-r from-emerald-900 to-slate-800 border-2 border-emerald-500 text-white rounded-2xl rounded-tl-none p-3 shadow-xl">
+                    <div class="flex items-center gap-1.5 text-emerald-400 font-bold mb-1">
+                        <span>✈️ تم إصدار التذكرة الرسمية بنجاح!</span>
+                    </div>
+                    <div class="text-[11px] text-slate-200 space-y-0.5 mb-2">
+                        <div>رقم التذكرة: <strong class="text-amber-300 font-mono">${ticketNo}</strong></div>
+                        <div>رقم الفاتورة: <strong class="text-slate-300 font-mono">${invoiceNo}</strong></div>
+                        <div>المبلغ المسدد: <strong class="text-emerald-400 font-mono font-bold">${amount}</strong></div>
+                    </div>
+                    <a href="javascript:alert('تم بدء تحميل ملف التذكرة الإلكترونية بصيغة PDF')" class="inline-flex items-center gap-1 text-[11px] bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-3 py-1.5 rounded-lg">
+                        📥 تحميل التذكرة الإلكترونية (PDF)
+                    </a>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+
+            alert('تم إصدار التذكرة بنجاح، وتحديث الحالة إلى "تم إصدار التذكرة"، وإشعار العميل.');
+        }
+
+        function verifyDoc(isApproved) {
+            if(isApproved) {
+                alert('✅ تم اعتماد المستند وجواز السفر بنجاح.');
+                appendMessage('تمت مراجعة جواز السفر واعتماده بنجاح. البيانات مطابقة.', 'employee');
+            } else {
+                const reason = prompt('يرجى كتابة سبب طلب إعادة الرفع (مثلاً: الصورة غير واضحة):', 'صورة صفحة البيانات في الجواز غير واضحة، يرجى إعادة رفعها بدقة أعلى.');
+                if(reason) {
+                    appendMessage('تنبيه بخصوص المستند: ' + reason, 'employee');
+                }
+            }
+        }
+
+        function updateBookingStatus(newStatus) {
+            alert('تم تغيير حالة الحجز إلى: ' + newStatus);
+        }
+
+        function selectBooking(id) {
+            document.querySelectorAll('[id^="bookingCard-"]').forEach(el => {
+                el.classList.remove('border-indigo-500', 'border-2');
+                el.classList.add('border-slate-700');
+            });
+            const activeCard = document.getElementById(`bookingCard-${id}`);
+            if(activeCard) {
+                activeCard.classList.add('border-indigo-500', 'border-2');
+                activeCard.classList.remove('border-slate-700');
+            }
+
+            if(id === 2) {
+                document.getElementById('activeRef').innerText = 'BK-2026-BD502';
+                document.getElementById('activeProvider').innerText = 'طيران بدر (Badr)';
+                document.getElementById('activeCustomerName').innerText = 'مريم عبد القادر إبراهيم';
+                document.getElementById('activeRoute').innerText = 'رحلة ذهاب وعودة: بورتسودان (PZU) ⬅️ جدة (JED) • 2 مسافرين • القيمة: 2,300,000 ج.س';
+            } else if(id === 3) {
+                document.getElementById('activeRef').innerText = 'BK-2026-CR104';
+                document.getElementById('activeProvider').innerText = 'بواخر الركاب السريعة';
+                document.getElementById('activeCustomerName').innerText = 'عثمان طه الأمين';
+                document.getElementById('activeRoute').innerText = 'رحلة بحرية: ميناء سواكن ⬅️ ميناء جدة الإسلامي • القيمة: 750,000 ج.س';
+            } else if(id === 4) {
+                document.getElementById('activeRef').innerText = 'BK-2026-VS319';
+                document.getElementById('activeProvider').innerText = 'خدمات التأشيرات';
+                document.getElementById('activeCustomerName').innerText = 'ياسر بشير الفاضل';
+                document.getElementById('activeRoute').innerText = 'استخراج تأشيرة سياحية للمملكة العربية السعودية • القيمة: 520,000 ج.س';
+            } else {
+                document.getElementById('activeRef').innerText = 'BK-2026-TR884';
+                document.getElementById('activeProvider').innerText = 'طيران تاركو (Tarco)';
+                document.getElementById('activeCustomerName').innerText = 'عبد العزيز سليمان أحمد';
+                document.getElementById('activeRoute').innerText = 'رحلة ذهاب فقط: بورتسودان (PZU) ⬅️ القاهرة (CAI) • المسافر: عبد العزيز سليمان • القيمة: 1,250,000 ج.س';
+            }
+        }
+
+        function filterBookings(type) {
+            console.log('Filter:', type);
+        }
+    </script>
+</body>
+</html>
